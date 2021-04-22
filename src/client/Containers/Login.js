@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../../client/Styles/app.css';
 import ReactImage from '../../client/Assets/react.png';
+import '../../client/Styles/Login.css'
 
 export default class Login extends Component {
   constructor(props) {
@@ -18,10 +19,22 @@ export default class Login extends Component {
   render() {
     const { username } = this.state;
     return (
-      <div>
-        {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>}
-        <img src={ReactImage} alt="react" />
-      </div>
+      <div className="login-wrapper">
+      <h1>Please Log In</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          <p>Username</p>
+          <input type="text" />
+        </label>
+        <label>
+          <p>Password</p>
+          <input type="password" />
+        </label>
+        <div>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
     );
   }
 }
