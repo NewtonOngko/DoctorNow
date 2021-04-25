@@ -14,25 +14,25 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import LoginIMG from '../../client/Assets/Login_IMG.jpg';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="textSecondary" align="center">
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://material-ui.com/">
+//         Your Website
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
   },
   image: {
-    backgroundImage: `url(${LoginIMG})`,
+    backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ),url(${LoginIMG})`,
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
@@ -64,37 +64,39 @@ export default function Login() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={false} sm={4} md={9} className={classes.image} />
+      <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square style={{backgroundColor:'black'}}>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Typography component="h1" variant="h5" style={{color:'white'}}>
+            Welcome Back,
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
-              variant="outlined"
+              variant="standard"
               margin="normal"
               required
               fullWidth
               id="email"
-              label="Email Address"
+              //label="Email Address"
               name="email"
               autoComplete="email"
               autoFocus
+              style={{backgroundColor:'white',borderRadius:10}}
             />
             <TextField
-              variant="outlined"
+              variant="standard"
               margin="normal"
               required
               fullWidth
               name="password"
-              label="Password"
+              //label="Password"
               type="password"
               id="password"
               autoComplete="current-password"
+              style={{backgroundColor:'white',borderRadius:10}}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -122,7 +124,7 @@ export default function Login() {
               </Grid>
             </Grid>
             <Box mt={5}>
-              <Copyright />
+              {/* <Copyright /> */}
             </Box>
           </form>
         </div>
