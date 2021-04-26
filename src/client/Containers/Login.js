@@ -64,7 +64,14 @@ export default function Login() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={9} className={classes.image} />
+      <Grid item xs={false} sm={4} md={9} className={classes.image}>
+        <Typography component="h1" variant="h1" style={{color:'white',fontWeight:700,justifyContent:'center',alignItems:'center',display:'flex',flexDirection:'column',height:'25vw'}}>
+           Doctor Now
+           <Typography component="h1" variant="h4" style={{color:'white',fontWeight:400}}>
+           Where you can find doctor easily
+          </Typography>
+        </Typography>
+      </Grid>
       <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square style={{backgroundColor:'black'}}>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
