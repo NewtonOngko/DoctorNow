@@ -11,6 +11,12 @@ const db = mysql.createPool({
   password: '',
   database: 'campusride',
 });
+// const db = mysql.createPool({
+//   host: 'remotemysql.com',
+//   user: '0fN1VwgpEd',
+//   password: 'hWTYnqfGDt',
+//   database: '0fN1VwgpEd',
+// });
 
 app.use(express.static('dist'));
 

@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import LoginIMG from '../../client/Assets/Login_IMG.jpg';
+import history from '../../client/Route/history';
 
 // function Copyright() {
 //   return (
@@ -115,6 +116,7 @@ export default function Login() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={() => history.push('/dashboard')}
             >
               Sign In
             </Button>
