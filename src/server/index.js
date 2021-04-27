@@ -11,6 +11,7 @@ const db = mysql.createPool({
   password: '',
   database: 'campusride',
 });
+const secretkey ="secretdoctor"
 // const db = mysql.createPool({
 //   host: 'remotemysql.com',
 //   user: '0fN1VwgpEd',
@@ -28,7 +29,7 @@ app.post('/api/login', (req, res) => {
     username: 'john',
     email: 'john@gmail.com',
   };
-  jwt.sign({  user : user }, 'secretkey', (err, token) => { res.json({ token }); });
+  jwt.sign({  user : user }, secretkey, (err, token) => { res.json({ token }); });
 });
 
 app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
