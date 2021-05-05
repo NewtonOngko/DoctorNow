@@ -9,7 +9,7 @@ export const SidebarData = [
     {
         title:"Appointment",
         icon:<DashboardIcon/>,
-        link:"/home"
+        link:"/appointment"
     },
     {
         title:"Doctors",

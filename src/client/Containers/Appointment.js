@@ -1,10 +1,13 @@
 import React from 'react'
 import Sidebar from '../Components/Sidebar'
 
-export default function Dashboard() {
+function Appointment() {
     return (
         <div>
-            <Sidebar/>
+             <Sidebar/>
+           <p>Appointment</p>
         </div>
     )
 }
+
+export default Appointment

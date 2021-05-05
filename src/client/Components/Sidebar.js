@@ -1,6 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {SidebarData} from '../../client/Components/SidebarData';
+import { Router, Switch, Route,Link } from "react-router-dom";
+import history from '../../client/Route/history';
+import Login from '../../client/Containers/Login';
+import Dashboard from '../Containers/DashBoard/Dashboard';
+import Appointment from '../../client/Containers/Appointment';
+
 const useStyles = makeStyles({
     sidebar: {
       width:'250px',
@@ -23,7 +29,8 @@ const useStyles = makeStyles({
       flexDirection:'row',
       color:'white',
       alignItems:'center',
-      textAlign:'left'
+      textAlign:'left', 
+      fontFamily: 'Noto Sans JP',
     },
     icon:{
       width: '2vw',
@@ -40,10 +47,12 @@ const useStyles = makeStyles({
 
 export default function Sidebar() {
     const classes = useStyles();
+
     return (
+        <>
         <div className={classes.sidebar}>
           <ul className={classes.SidebarList}>
-        {SidebarData.map((val, key) => {
+          {SidebarData.map((val, key) => {
           return (
             <li
               key={key}
@@ -59,5 +68,6 @@ export default function Sidebar() {
         })}
       </ul>
       </div>
+        </>
     );
   }
