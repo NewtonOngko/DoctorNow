@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {SidebarData} from '../../client/Components/SidebarData';
 import { Router, Switch, Route,Link } from "react-router-dom";
@@ -6,12 +6,14 @@ import history from '../../client/Route/history';
 import Login from '../../client/Containers/Login';
 import Dashboard from '../Containers/DashBoard/Dashboard';
 import Appointment from '../../client/Containers/Appointment';
+import ProfileAvatar from '../../client/Components/ProfileAvatar'
+import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles({
     sidebar: {
       width:'250px',
       backgroundColor: '#2F4050',
-      height: '100vw',
+      height: 'auto',
       padding: '0 30px',
     },
     SidebarList:{
@@ -21,16 +23,19 @@ const useStyles = makeStyles({
       margin:'0',
     },
     sidebarrow:{
-      width: '10vw',
+      width: '15vw',
       height: '60px',
       listStyleType:'none',
-      margin:'0',
+      padding:'0 0 0 10px',
       display: 'flex',
       flexDirection:'row',
       color:'white',
       alignItems:'center',
       textAlign:'left', 
       fontFamily: 'Noto Sans JP',
+      '&:hover':{
+        backgroundColor:'#4F4050'
+      },
     },
     icon:{
       width: '2vw',
@@ -42,15 +47,25 @@ const useStyles = makeStyles({
     },
     title:{
       textAlign:'left'
+    },
+    menuicon:{
+      padding:'10px 20px',
+      width:'40px',
+      height:'40px',
     }
   });
 
 export default function Sidebar() {
     const classes = useStyles();
+    const [active, setactive] = useState(false)
 
+    const showSidebar =()=>{setactive(!active)}
     return (
         <>
         <div className={classes.sidebar}>
+        <MenuIcon className={classes.menuicon} onClick={}/>
+        <ProfileAvatar/>
+          <nav>
           <ul className={classes.SidebarList}>
           {SidebarData.map((val, key) => {
           return (
@@ -67,6 +82,7 @@ export default function Sidebar() {
           );
         })}
       </ul>
+          </nav>
       </div>
         </>
     );
