@@ -60,10 +60,13 @@ export default function Sidebar() {
     const [active, setactive] = useState(false)
 
     const showSidebar =()=>{setactive(!active)}
+
     return (
         <>
         <div className={classes.sidebar}>
-        <MenuIcon className={classes.menuicon} onClick={}/>
+          <div>
+            <MenuIcon className={classes.menuicon}/>
+          </div>
         <ProfileAvatar/>
           <nav>
           <ul className={classes.SidebarList}>
