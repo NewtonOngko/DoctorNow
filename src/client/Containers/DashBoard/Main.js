@@ -12,7 +12,7 @@ export default function Main() {
     const style = useStyles()
     return (
         <div className={style.container} >
-          ABC
+          Dashboard
         </div>
     )
 }

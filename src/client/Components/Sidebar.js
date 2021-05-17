@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     sidebar: {
       width:'250px',
       backgroundColor: '#2F4050',
-      height: 'auto',
+      height: '1080px',
       padding: '0 30px',
     },
     SidebarList:{
@@ -52,40 +52,49 @@ const useStyles = makeStyles({
       padding:'10px 20px',
       width:'40px',
       height:'40px',
+    },
+    menuiconactive:{
+      padding:'10px 20px',
+      width:'40px',
+      height:'40px',
+      color:'white'
     }
   });
 
 export default function Sidebar() {
     const classes = useStyles();
-    const [active, setactive] = useState(false)
+    const [active, setactive] = useState(true)
 
     const showSidebar =()=>{setactive(!active)}
 
     return (
         <>
-        <div className={classes.sidebar}>
-          <div>
-            <MenuIcon className={classes.menuicon}/>
+        <div className={active ? classes.sidebar : <></>}>
+          <div onClick={showSidebar}>
+            <MenuIcon className={active ? classes.menuiconactive : classes.menuicon}/>
           </div>
-        <ProfileAvatar/>
+          {active ? 
+          <>
+          <ProfileAvatar/>
           <nav>
-          <ul className={classes.SidebarList}>
+          <ul className={ classes.SidebarList}>
           {SidebarData.map((val, key) => {
           return (
             <li
               key={key}
-              className={classes.sidebarrow}
+              className={ classes.sidebarrow}
               id={window.location.pathname == val.link ? "active" : ""}
               onClick={() => {
                 window.location.pathname = val.link;
               }}
             >
-              <div className={classes.icon}>{val.icon}</div> <div classes={classes.title}>{val.title}</div>
+              <div className={ classes.icon}>{val.icon}</div> <div classes={classes.title}>{val.title}</div>
             </li>
           );
         })}
       </ul>
           </nav>
+          </> : <></>}
       </div>
         </>
     );
