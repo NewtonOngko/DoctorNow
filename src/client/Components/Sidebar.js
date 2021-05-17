@@ -51,14 +51,25 @@ const useStyles = makeStyles({
     menuicon:{
       padding:'10px 20px',
       width:'40px',
-      height:'40px',
+      height:'auto',
     },
     menuiconactive:{
       padding:'10px 20px',
       width:'40px',
-      height:'40px',
+      height:'auto',
       color:'white'
-    }
+    },
+    menucontainer:{
+      width:'auto',
+      height:'auto',
+      color:'black',
+    },
+    menucontaineractive:{
+      width:'auto',
+      height:'1080px',
+      color:'black',
+      backgroundColor:'yellow'
+    },
   });
 
 export default function Sidebar() {
@@ -69,8 +80,8 @@ export default function Sidebar() {
 
     return (
         <>
-        <div className={active ? classes.sidebar : <></>}>
-          <div onClick={showSidebar}>
+        <div className={active ? classes.sidebar : classes.sidebarnone}>
+          <div className={active ? classes.menucontainer : classes.menucontaineractive} onClick={showSidebar}>
             <MenuIcon className={active ? classes.menuiconactive : classes.menuicon}/>
           </div>
           {active ? 
