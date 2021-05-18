@@ -86,7 +86,7 @@ export default function Sidebar() {
           </div>
           {active ? 
           <>
-          <ProfileAvatar/>
+          <ProfileAvatar size={100} font={20}/>
           <nav>
           <ul className={ classes.SidebarList}>
           {SidebarData.map((val, key) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import Avatar from 'react-avatar';
+import ProfileAvatar from '../../client/Components/ProfileAvatar'
 
 const useStyles = makeStyles({
     root: {
@@ -10,22 +10,21 @@ const useStyles = makeStyles({
       justifyContent:'center',
       alignItems:'center',
       display:'flex',
-      flexDirection:'column'
+      backgroundColor:'orange'
     },
     name:{
       fontFamily: 'Noto Sans JP',
-      fontSize: props => props.font,
+      fontSize:'20px',
       color:'white',
-      fontWeight:'400' 
+      fontWeight:'400'
     }
   });
 
-export default function ProfileAvatar(props) {
-    const styles = useStyles(props);
+export default function Header() {
+    const styles = useStyles();
     return (
         <div className={styles.root}>
-          <Avatar name="Newton Ongko" size={props.size} round={true} />
-          <p className={styles.name}>Newton Ongko</p>
+            <ProfileAvatar size={30}/>
         </div>
     )
 }
