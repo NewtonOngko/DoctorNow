@@ -11,7 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles({
     sidebar: {
-      width:'250px',
+      width:'auto',
       backgroundColor: '#2F4050',
       height: '1080px',
       padding: '0 30px',
@@ -34,7 +34,8 @@ const useStyles = makeStyles({
       textAlign:'left', 
       fontFamily: 'Noto Sans JP',
       '&:hover':{
-        backgroundColor:'#4F4050'
+        backgroundColor:'#4F4050',
+        width :'14vw',
       },
     },
     icon:{
@@ -68,7 +69,6 @@ const useStyles = makeStyles({
       width:'auto',
       height:'1080px',
       color:'black',
-      backgroundColor:'yellow'
     },
   });
 
@@ -86,7 +86,7 @@ export default function Sidebar() {
           </div>
           {active ? 
           <>
-          <ProfileAvatar size={100} font={20}/>
+          <ProfileAvatar size={100} font={20} flex={'column'} type={'sidebar'}/>
           <nav>
           <ul className={ classes.SidebarList}>
           {SidebarData.map((val, key) => {

@@ -16,7 +16,6 @@ export default function Main() {
       <>
       <div className={style.container} >
         <Header/>
-          Dashboard
         </div>
       </>
         
