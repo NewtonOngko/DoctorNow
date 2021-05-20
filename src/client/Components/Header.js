@@ -4,10 +4,10 @@ import ProfileAvatar from '../../client/Components/ProfileAvatar'
 
 const useStyles = makeStyles({
     root: {
-      width:'auto',
+      width:'1920px',
       height: '30px',
       padding: '30px',
-      justifyContent:'center',
+      justifyContent:'flex-end',
       alignItems:'center',
       display:'flex',
       backgroundColor:'orange'
@@ -24,7 +24,8 @@ export default function Header() {
     const styles = useStyles();
     return (
         <div className={styles.root}>
-            <ProfileAvatar size={30} type ={'header'}/>
+              Dashboard
+            <ProfileAvatar size={45} type ={'header'}/>
         </div>
     )
 }

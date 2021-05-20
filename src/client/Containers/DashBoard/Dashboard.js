@@ -3,6 +3,7 @@ import Sidebar from '../../Components/Sidebar'
 import {Grid} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import Main from './Main';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles({
     root: {
@@ -11,25 +12,54 @@ const useStyles = makeStyles({
       display: 'flex',
       flexDirection :'row',
     },
+      menuicon:{
+        padding:'10px 20px',
+        width:'40px',
+        height:'auto',
+      },
+      menuiconactive:{
+        padding:'10px 20px',
+        width:'40px',
+        height:'auto',
+        color:'white'
+      },
+      menucontainer:{
+          position:'absolute'
+      }
   });
 
 export default function Dashboard() {
     //terserah mw inline atau import css nanti replace aja
-    const style = useStyles();
+    const classes = useStyles();
     const [active, setactive] = useState(true)
 
     const showSidebar =()=>{setactive(!active)}
     
     return (
-        <Grid container component="main" className={style.root}>
+      <Grid container component="main" className={classes.root}>
+        <div className={classes.menucontainer} onClick={showSidebar}>
+          <MenuIcon
+            className={active ? classes.menuiconactive : classes.menuicon}
+          />
+        </div>
+        {active ? (
+          <>
             <Grid item xs={2}>
-                <Sidebar/>
+              <Sidebar />
             </Grid>
             <Grid item xs={10}>
-                <Main/>
+              <Main />
             </Grid>
-        </Grid>
-    )
+          </>
+        ) : (
+          <>
+            <Grid item xs={12}>
+              <Main />
+            </Grid>
+          </>
+        )}
+      </Grid>
+    );
 }
  {/* <Grid container className={css.root}>
                 <Grid item xs={2}>

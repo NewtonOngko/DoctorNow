@@ -4,6 +4,7 @@ import Header from '../../Components/Header'
 const useStyles = makeStyles({
     container: {
       width:'auto',
+      height:'1080px',
       backgroundColor: 'yellow',
       display:'flex',
       flex:'1'

@@ -7,7 +7,7 @@ import Login from '../../client/Containers/Login';
 import Dashboard from '../Containers/DashBoard/Dashboard';
 import Appointment from '../../client/Containers/Appointment';
 import ProfileAvatar from '../../client/Components/ProfileAvatar'
-import MenuIcon from '@material-ui/icons/Menu';
+
 
 const useStyles = makeStyles({
     sidebar: {
@@ -70,6 +70,7 @@ const useStyles = makeStyles({
       height:'1080px',
       color:'black',
     },
+    
   });
 
 export default function Sidebar() {
@@ -81,9 +82,7 @@ export default function Sidebar() {
     return (
         <>
         <div className={active ? classes.sidebar : classes.sidebarnone}>
-          <div className={active ? classes.menucontainer : classes.menucontaineractive} onClick={showSidebar}>
-            <MenuIcon className={active ? classes.menuiconactive : classes.menuicon}/>
-          </div>
+        
           {active ? 
           <>
           <ProfileAvatar size={100} font={20} flex={'column'} type={'sidebar'}/>
