@@ -1,28 +1,32 @@
 const express = require('express');
-const os = require('os');
-
+const bodyParser = require('body-parser');
 const app = express();
-const mysql = require('mysql');
-const jwt = require('jsonwebtoken');
+const port = process.env.PORT || 3000;
+const programmingLanguagesRouter = require('./routes/get_users.js');
 
-const db = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'campusride',
+app.use(bodyParser.json());
+
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
+app.get('/', (req, res) => {
+  res.json({'message': 'ok'});
+})
+
+app.use('/users', programmingLanguagesRouter);
+
+/* Error handler middleware */
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  console.error(err.message, err.stack);
+  res.status(statusCode).json({'message': err.message});
+
+  return;
 });
 
-app.use(express.static('dist'));
-
-app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }),);
-
-app.post('/api/login', (req, res) => {
-  const user = {
-    id: 1,
-    username: 'john',
-    email: 'john@gmail.com',
-  };
-  jwt.sign({  user : user }, 'secretkey', (err, token) => { res.json({ token }); });
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
 });
-
-app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
