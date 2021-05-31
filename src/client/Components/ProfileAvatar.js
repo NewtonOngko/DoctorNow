@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     name:{
       fontFamily: 'Noto Sans JP',
       fontSize: props => props.font,
-      color:'white',
+      color: props => props.color ? props.color : 'white',
       fontWeight:'400' 
     }
   });

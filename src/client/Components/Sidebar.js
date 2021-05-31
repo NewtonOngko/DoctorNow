@@ -13,8 +13,8 @@ const useStyles = makeStyles({
     sidebar: {
       width:'auto',
       backgroundColor: '#2F4050',
-      height: '1080px',
-      padding: '0 30px',
+      height: '1000px',
+      padding: '30px',
     },
     SidebarList:{
       height: 'auto',
@@ -34,7 +34,7 @@ const useStyles = makeStyles({
       textAlign:'left', 
       fontFamily: 'Noto Sans JP',
       '&:hover':{
-        backgroundColor:'#4F4050',
+        backgroundColor:'rgba(159, 162, 180, 0.2)',
         width :'14vw',
       },
     },
@@ -85,7 +85,7 @@ export default function Sidebar() {
         
           {active ? 
           <>
-          <ProfileAvatar size={100} font={20} flex={'column'} type={'sidebar'}/>
+          <ProfileAvatar size={100} font={20} flex={'column'} type={'sidebar'} />
           <nav>
           <ul className={ classes.SidebarList}>
           {SidebarData.map((val, key) => {

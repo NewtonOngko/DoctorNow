@@ -61,10 +61,3 @@ export default function Dashboard() {
       </Grid>
     );
 }
- {/* <Grid container className={css.root}>
-                <Grid item xs={2}>
-                    <Sidebar/>
-                </Grid>
-                <Grid item xs{10}></Grid>
-            </Grid>
-            <Sidebar/> */}
