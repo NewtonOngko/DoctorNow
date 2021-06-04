@@ -82,6 +82,9 @@ export default function Login() {
             Welcome Back,
           </Typography>
           <form className={classes.form} noValidate>
+          <Typography component="h1" variant="h6"  style={{color:'white',fontWeight:400}}>
+          Username :
+          </Typography>
             <TextField
               variant="standard"
               margin="normal"
@@ -94,6 +97,9 @@ export default function Login() {
               autoFocus
               style={{backgroundColor:'white',borderRadius:10}}
             />
+             <Typography component="h1" variant="h6" style={{color:'white',fontWeight:400}}>
+          Password :
+          </Typography>
             <TextField
               variant="standard"
               margin="normal"
