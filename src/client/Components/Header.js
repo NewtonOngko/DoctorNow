@@ -31,7 +31,7 @@ export default function Header() {
             <Icon.Notifications style={{color:'#C5C7CD'}}/>
             <Gap width={10}/>
             <p style={{fontSize:23}}>|</p>
-            <ProfileAvatar size={45} type ={'header'} color={'black'}/>
+            <ProfileAvatar size={45} type ={'header'} color={'black'} name="Newton Ongko"/>
         </div>
     )
 }

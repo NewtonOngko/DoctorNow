@@ -2,6 +2,11 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../Components/Header'
 import { DataGrid } from '@material-ui/data-grid';
+import { FormControlLabel, IconButton } from "@material-ui/core";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from '@material-ui/icons/Delete';
+import { blue, red } from '@material-ui/core/colors';
+
 
 const useStyles = makeStyles({
     container: {
@@ -16,11 +21,51 @@ const useStyles = makeStyles({
       backgroundColor:'white',
       width:'300px',
       height:'100px',
-      margin:'20px'
+      margin:'20px',
+      borderRadius:'20px',
+    },
+    tablestyle:{
+      backgroundColor:'white',
+      height: 400,
+      width: 'auto',
+      margin:'20px',
+      borderRadius:'20px',
+    },
+    data:{
+      border:0,
+      padding:15,
     }
   });
+  const RowEdit = ({ index }) => {
+    const handleEditClick = () => {
+      // some action
+    };
+    return (
+      <FormControlLabel
+        control={
+          <>
+          <IconButton
+            color="secondary"
+            aria-label="add an alarm"
+            onClick={handleEditClick}
+          >
+            <EditIcon style={{ color: blue[500] }} />
+          </IconButton>
+          <IconButton
+            color="secondary"
+            aria-label="add an alarm"
+            onClick={handleEditClick}
+          >
+            <DeleteIcon style={{ color: red[500] }} />
+          </IconButton>
+          </>
+        }
+      />
+    );
+  };
+
   const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
+    { field: 'id', headerName: 'ID', width: 100 },
     { field: 'firstName', headerName: 'First name', width: 150 },
     { field: 'lastName', headerName: 'Last name', width: 150 },
     {
@@ -40,6 +85,23 @@ const useStyles = makeStyles({
           params.getValue(params.id, 'lastName') || ''
         }`,
     },
+    {
+      field: "actions",
+      headerName: "Actions",
+      sortable: false,
+      width: 140,
+      disableClickEventBubbling: true,
+      renderCell: (params) => {
+        return (
+          <div
+            className="d-flex justify-content-between align-items-center"
+            style={{ cursor: "pointer" }}
+          >
+            <RowEdit index={params.row.id} />
+          </div>
+        );
+      }
+    }
   ];
   
   const rows = [
@@ -75,8 +137,8 @@ export default function Main() {
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
          </div>
          </div>
-         <div style={{ height: 400, width: '100%' }}>
-          <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
+         <div className={style.tablestyle}>
+          <DataGrid className={style.data} rows={rows} columns={columns} pageSize={5} checkboxSelection />
         </div>
         </div>
       </>

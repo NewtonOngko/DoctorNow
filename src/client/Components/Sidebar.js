@@ -23,7 +23,7 @@ const useStyles = makeStyles({
       margin:'0',
     },
     sidebarrow:{
-      width: '15vw',
+      width: '14vw',
       height: '60px',
       listStyleType:'none',
       padding:'0 0 0 10px',
@@ -31,7 +31,25 @@ const useStyles = makeStyles({
       flexDirection:'row',
       color:'white',
       alignItems:'center',
-      textAlign:'left', 
+      textAlign:'left',
+      fontFamily: 'Noto Sans JP',
+      '&:hover':{
+        backgroundColor:'rgba(159, 162, 180, 0.2)',
+        width :'14vw',
+      },
+    },
+    sidebarrowactive:{
+      width: '14vw',
+      height: '60px',
+      listStyleType:'none',
+      padding:'0 0 0 10px',
+      display: 'flex',
+      flexDirection:'row',
+      color:'white',
+      alignItems:'center',
+      backgroundColor:'#94a2af',
+      textAlign:'left',
+      borderRadius:'10px',
       fontFamily: 'Noto Sans JP',
       '&:hover':{
         backgroundColor:'rgba(159, 162, 180, 0.2)',
@@ -77,22 +95,20 @@ export default function Sidebar() {
     const classes = useStyles();
     const [active, setactive] = useState(true)
 
-    const showSidebar =()=>{setactive(!active)}
-
     return (
         <>
         <div className={active ? classes.sidebar : classes.sidebarnone}>
         
           {active ? 
           <>
-          <ProfileAvatar size={100} font={20} flex={'column'} type={'sidebar'} />
+          <ProfileAvatar size={100} font={18} flex={'column'} type={'sidebar'} name={'Newton Ongko'} />
           <nav>
           <ul className={ classes.SidebarList}>
           {SidebarData.map((val, key) => {
           return (
             <li
               key={key}
-              className={ classes.sidebarrow}
+              className={window.location.pathname == val.link ? classes.sidebarrowactive:classes.sidebarrow}
               id={window.location.pathname == val.link ? "active" : ""}
               onClick={() => {
                 window.location.pathname = val.link;

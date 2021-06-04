@@ -24,16 +24,16 @@ export default function ProfileAvatar(props) {
       if (type === "sidebar") {
         return (
           <div className={styles.root} >
-            <Avatar name="Newton Ongko" size={props.size} round={true} />
-            <p className={styles.name}>Newton Ongko</p>
+            <Avatar name={props.name} size={props.size} round={true} />
+            <p className={styles.name}>{props.name}</p>
           </div>
         );
       } else if (type === "header") {
         return (
           <div className={styles.root}>
-            <p className={styles.name}>Newton Ongko</p>
+            <p className={styles.name}>{props.name}</p>
             <Gap width={20}/>
-            <Avatar name="Newton Ongko" size={props.size} round={true} />
+            <Avatar name={props.name} size={props.size} round={true} />
           </div>
         );
       }
