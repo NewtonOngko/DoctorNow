@@ -1,6 +1,10 @@
 {
   "parser": "babel-eslint",
-  "extends": ["airbnb"],
+  "extends": ["airbnb",  
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"
+  ],
   "env": {
     "browser": true,
     "node": true
@@ -9,6 +13,11 @@
     "no-console": "off",
     "comma-dangle": "off",
     "react/jsx-filename-extension": "off",
-    "linebreak-style": ["error", "unix"]
+    "linebreak-style": ["error", "unix"],
+    "import/extensions": "off",
+    "import/no-unresolved": [
+      2, 
+      { "caseSensitive": false }
+   ]
   }
 }
