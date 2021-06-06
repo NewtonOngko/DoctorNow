@@ -5,7 +5,7 @@ import { Router, Switch, Route,Link } from "react-router-dom";
 import history from '../../client/Route/history';
 import Login from '../../client/Containers/Login';
 import Dashboard from '../Containers/DashBoard/Dashboard';
-import Appointment from '../../client/Containers/Appointment';
+import Appointment from '../Containers/Appointment/Appointment';
 import ProfileAvatar from '../../client/Components/ProfileAvatar'
 
 
