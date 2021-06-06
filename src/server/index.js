@@ -4,7 +4,6 @@ const app = express();
 const port = process.env.PORT || 3000;
 const programmingLanguagesRouter = require('./routes/get_users.js');
 
-<<<<<<< HEAD
 const db = mysql.createPool({
   host: 'localhost',
   user: 'root',
@@ -18,7 +17,6 @@ const secretkey ="secretdoctor"
 //   password: 'hWTYnqfGDt',
 //   database: '0fN1VwgpEd',
 // });
-=======
 app.use(bodyParser.json());
 
 app.use(
@@ -30,7 +28,6 @@ app.use(
 app.get('/', (req, res) => {
   res.json({'message': 'ok'});
 })
->>>>>>> ef051f7a34c35a73032c63404fbc76e0d0da543e
 
 app.use('/users', programmingLanguagesRouter);
 
@@ -40,7 +37,6 @@ app.use((err, req, res, next) => {
   console.error(err.message, err.stack);
   res.status(statusCode).json({'message': err.message});
 
-<<<<<<< HEAD
 app.post('/api/login', (req, res) => {
   const user = {
     id: 1,
@@ -48,9 +44,7 @@ app.post('/api/login', (req, res) => {
     email: 'john@gmail.com',
   };
   jwt.sign({  user : user }, secretkey, (err, token) => { res.json({ token }); });
-=======
   return;
->>>>>>> ef051f7a34c35a73032c63404fbc76e0d0da543e
 });
 
 app.listen(port, () => {
