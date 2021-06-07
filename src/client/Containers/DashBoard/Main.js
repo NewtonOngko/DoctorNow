@@ -116,7 +116,11 @@ const useStyles = makeStyles({
     { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
     { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
     { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+    { id: 10, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+    { id: 11, lastName: 'Wijaya', firstName: 'Gil', age: 65 },
+    { id: 12, lastName: 'Saputra', firstName: 'Nico', age: 65 },
+    { id: 13, lastName: 'Wong', firstName: 'SOI', age: 65 },
+    { id: 14, lastName: 'Gohza', firstName: 'HER', age: 65 },
   ];
 
 export default function Main() {
@@ -140,19 +144,19 @@ export default function Main() {
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
          </div>
          </div>
-         <div>
-         <div className={style.tablestyle}>
-          <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<AddIcon />}>
-            Add Data
-            </Button>
+          <div>
+          <div className={style.tablestyle}>
+            <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<AddIcon />}>
+              Add Data
+              </Button>
+            </div>
+            <DataGrid className={style.data} rows={rows} columns={columns} pageSize={5} checkboxSelection />
           </div>
-          <DataGrid className={style.data} rows={rows} columns={columns} pageSize={5} checkboxSelection />
-        </div>
-         </div>
+          </div>
         </div>
       </>
     )

@@ -1,10 +1,12 @@
 import React from 'react'
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../Components/Header'
 import { DataGrid } from '@material-ui/data-grid';
 import { FormControlLabel, IconButton } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
 
 
@@ -26,7 +28,7 @@ const useStyles = makeStyles({
     },
     tablestyle:{
       backgroundColor:'white',
-      height: 400,
+      height: '450px',
       width: 'auto',
       margin:'20px',
       borderRadius:'20px',
@@ -34,6 +36,7 @@ const useStyles = makeStyles({
     data:{
       border:0,
       padding:15,
+      height:'400px'
     }
   });
   const RowEdit = ({ index }) => {
@@ -113,7 +116,11 @@ const useStyles = makeStyles({
     { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
     { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
     { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+    { id: 10, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+    { id: 11, lastName: 'Wijaya', firstName: 'Gil', age: 65 },
+    { id: 12, lastName: 'Saputra', firstName: 'Nico', age: 65 },
+    { id: 13, lastName: 'Wong', firstName: 'SOI', age: 65 },
+    { id: 14, lastName: 'Gohza', firstName: 'HER', age: 65 },
   ];
 
 export default function Main() {
@@ -123,7 +130,7 @@ export default function Main() {
       <div className={style.container} >
         <Header/>
         <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Consultation</p>
-         <div style={{display:'flex',flexDirection:'row'}}>
+         {/* <div style={{display:'flex',flexDirection:'row'}}>
          <div className={style.listitem}>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >Total Users</p>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
@@ -136,10 +143,20 @@ export default function Main() {
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Total Doctors</p>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
          </div>
-         </div>
-         <div className={style.tablestyle}>
-          <DataGrid className={style.data} rows={rows} columns={columns} pageSize={5} checkboxSelection />
-        </div>
+         </div> */}
+          <div>
+          <div className={style.tablestyle}>
+            <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<AddIcon />}>
+              Add Data
+              </Button>
+            </div>
+            <DataGrid className={style.data} rows={rows} columns={columns} pageSize={5} checkboxSelection />
+          </div>
+          </div>
         </div>
       </>
     )
