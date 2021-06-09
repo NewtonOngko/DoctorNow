@@ -50,14 +50,9 @@ export default function Main() {
           <div>
           <div className={style.tablestyle}>
           <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Reports</p>
-            {/* <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
-            <Button
-              variant="contained"
-              color="primary"
-              startIcon={<AddIcon />}>
-              Add Data
-              </Button>
-            </div> */}
+          <div style={{backgroundColor:'#FFF4F2',width:'380px',height:'70px',padding:'10px'}}>
+            Report User
+          </div>
           </div>
           </div>
         </div>
