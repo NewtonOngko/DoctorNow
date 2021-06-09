@@ -44,6 +44,22 @@ const useStyles = makeStyles({
     }
   });
 
+  const dataprint = (name) =>{
+    const style = useStyles()
+    return <div style={{backgroundColor:'#FFF4F2',borderRadius:'20px',width:'380px',height:'70px',display:'flex',flexDirection:'row',flex:1,margin:'15px'}}>
+    <div>
+      <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:0,padding:15}}>{name}</p>
+    </div>
+    <div className={style.printbtn}>
+    <Button
+      style={{backgroundColor:'#0081F8',color:'white'}}
+    variant="contained">
+      Print
+    </Button>
+    </div>
+  </div>
+  }
+
 export default function Main() {
     const style = useStyles()
     return (
@@ -53,18 +69,20 @@ export default function Main() {
           <div>
           <div className={style.tablestyle}>
           <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Reports</p>
-            <div style={{backgroundColor:'#FFF4F2',borderRadius:'20px',width:'380px',height:'70px',display:'flex',flexDirection:'row',flex:1}}>
-              <div>
-                <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:0,padding:15}}>Report User</p>
-              </div>
-              <div className={style.printbtn}>
-              <Button
-                style={{backgroundColor:'#0081F8',color:'white'}}
-              variant="contained">
-                Print
-              </Button>
-              </div>
-            </div>
+         <div style={{position:'absolute'}}>
+         <div style={{display:'flex',flexDirection:'row'}}>
+            {dataprint('Reports Users')}
+            {dataprint('Reports Doctors')}
+          </div>
+          <div style={{display:'flex',flexDirection:'row'}}>
+            {dataprint('Reports Transaction')}
+            {dataprint('Reports Appointment')}
+          </div>
+          <div style={{display:'flex',flexDirection:'row'}}>
+            {dataprint('Reports Hospitals')}
+            {dataprint('Reports Consultations')}
+          </div>
+         </div>
           </div>
           </div>
         </div>
