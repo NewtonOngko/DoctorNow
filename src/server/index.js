@@ -1,32 +1,32 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
-const port = process.env.PORT || 3000;
-const programmingLanguagesRouter = require('./routes/get_users.js');
 
+// create express app
+const app = express();
+
+// Setup server port
+const port = process.env.PORT || 5000;
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// parse requests of content-type - application/json
 app.use(bodyParser.json());
 
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
-
+// define a root route
 app.get('/', (req, res) => {
-  res.json({'message': 'ok'});
-})
-
-app.use('/users', programmingLanguagesRouter);
-
-/* Error handler middleware */
-app.use((err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  console.error(err.message, err.stack);
-  res.status(statusCode).json({'message': err.message});
-
-  return;
+  res.send('Hello World');
 });
 
+// set route
+const employeeRoutes = require('./routes/get_users.js');
+const doctorRoutes = require('./routes/get_doctors.js');
+
+// using as middleware
+app.use('/users', employeeRoutes);
+app.use('/doctor', doctorRoutes);
+
+// listen for requests
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`Server is listening on port ${port}`);
 });
