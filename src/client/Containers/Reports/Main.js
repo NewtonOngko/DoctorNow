@@ -38,6 +38,9 @@ const useStyles = makeStyles({
       border:0,
       padding:15,
       height:'400px'
+    },
+    printbtn:{
+      borderRadius:'20px',justifyContent:'flex-end',display:'flex',height:'30px',flex:1,alignItems:'center',padding:'20px'
     }
   });
 
@@ -50,9 +53,18 @@ export default function Main() {
           <div>
           <div className={style.tablestyle}>
           <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Reports</p>
-          <div style={{backgroundColor:'#FFF4F2',width:'380px',height:'70px',padding:'10px'}}>
-            Report User
-          </div>
+            <div style={{backgroundColor:'#FFF4F2',borderRadius:'20px',width:'380px',height:'70px',display:'flex',flexDirection:'row',flex:1}}>
+              <div>
+                <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:0,padding:15}}>Report User</p>
+              </div>
+              <div className={style.printbtn}>
+              <Button
+                style={{backgroundColor:'#0081F8',color:'white'}}
+              variant="contained">
+                Print
+              </Button>
+              </div>
+            </div>
           </div>
           </div>
         </div>
