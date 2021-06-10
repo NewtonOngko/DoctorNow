@@ -6,20 +6,6 @@ const app = express();
 const mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 
-const db = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'campusride',
-});
-const secretkey ="secretdoctor"
-// const db = mysql.createPool({
-//   host: 'remotemysql.com',
-//   user: '0fN1VwgpEd',
-//   password: 'hWTYnqfGDt',
-//   database: '0fN1VwgpEd',
-// });
-
 // Setup server port
 const port = process.env.PORT || 5000;
 
@@ -35,7 +21,7 @@ app.post('/api/login', (req, res) => {
     username: 'john',
     email: 'john@gmail.com',
   };
-  jwt.sign({  user : user }, secretkey, (err, token) => { res.json({ token }); });
+  jwt.sign({  user : user }, secretkey, (err, token) => { res.json({ token }); })});
 // define a root route
 app.get('/', (req, res) => {
   res.send('Hello World');
@@ -43,11 +29,11 @@ app.get('/', (req, res) => {
 
 // set route
 const employeeRoutes = require('./routes/get_users.js');
-const doctorRoutes = require('./routes/get_doctors.js');
+//const doctorRoutes = require('./routes/get_doctors.js');
 
 // using as middleware
 app.use('/users', employeeRoutes);
-app.use('/doctor', doctorRoutes);
+//app.use('/doctor', doctorRoutes);
 
 // listen for requests
 app.listen(port, () => {
