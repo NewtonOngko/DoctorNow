@@ -57,15 +57,17 @@ Doctor.findAll = function getAllDoctor(result) {
 };
 
 Doctor.update = function updateDoctor(id, doctor, result) {
-  dbConn.query('UPDATE doctors SET first_name=?,last_name=?,email=?,phone=? WHERE id = ?', [doctor.full_name,
+  dbConn.query('UPDATE doctors SET full_name=?,str_no=?,email=?,phone_number=?,password=?,work_experience=?,address=?,gender=?,profile_picture=? WHERE id = ?', [
+    doctor.full_name,
+    doctor.str_no,
     doctor.email,
+    doctor.phone_number,
     doctor.password,
+    doctor.work_experience,
     doctor.address,
     doctor.gender,
-    doctor.phone_number,
-    doctor.birthdate,
-    doctor.birthplace,
-    doctor.profile_picture, id], (err, res) => {
+    doctor.profile_picture,
+    doctor.is_active, id], (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(null, err);

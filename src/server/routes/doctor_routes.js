@@ -1,7 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const doctorController = require('../controller/user_helper.js');
+const doctorController = require('../controller/doctor_helper.js');
 
 // Retrieve all doctor
 router.get('/', doctorController.findAll);

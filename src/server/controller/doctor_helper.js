@@ -1,6 +1,6 @@
-const Doctor = require('../model/user_model.js');
+const Doctor = require('../model/doctor_model.js');
 
-exports.findAll = function getUsers(req, res) {
+exports.findAll = function getDoctors(req, res) {
   Doctor.findAll((err, doctors) => {
     console.log('get all doctor');
     if (err) res.send(err);
