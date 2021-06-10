@@ -19,11 +19,11 @@ app.get('/', (req, res) => {
 });
 
 // set route
-const employeeRoutes = require('./routes/get_users.js');
-const doctorRoutes = require('./routes/get_doctors.js');
+const userRoutes = require('./routes/user_routes.js');
+const doctorRoutes = require('./routes/doctor_routes.js');
 
 // using as middleware
-app.use('/users', employeeRoutes);
+app.use('/users', userRoutes);
 app.use('/doctor', doctorRoutes);
 
 // listen for requests
