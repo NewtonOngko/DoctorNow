@@ -129,8 +129,8 @@ export default function Main() {
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Dashboard</p>
-         <div style={{display:'flex',flexDirection:'row'}}>
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Consultation</p>
+         {/* <div style={{display:'flex',flexDirection:'row'}}>
          <div className={style.listitem}>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >Total Users</p>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
@@ -143,7 +143,7 @@ export default function Main() {
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Total Doctors</p>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
          </div>
-         </div>
+         </div> */}
           <div>
           <div className={style.tablestyle}>
             <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
