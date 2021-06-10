@@ -3,7 +3,7 @@
 const dbConn = require('../config/config.js');
 const { generateHash } = require('../config/encrypt_password.js');
 
-// Employee object create
+// doctor object create
 const Doctor = function doctorData(doctor) {
   this.full_name = doctor.full_name;
   this.str_no = doctor.str_no;
