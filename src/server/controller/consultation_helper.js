@@ -1,6 +1,6 @@
 const Consultation = require('../model/appoitment_model.js');
 
-exports.findAll = function getconsultation(req, res) {
+exports.findAll = function getConsultation(req, res) {
   Consultation.findAll((err, consultation) => {
     console.log('get all consultation');
     if (err) res.send(err);
@@ -10,12 +10,12 @@ exports.findAll = function getconsultation(req, res) {
 };
 
 exports.create = function addConsultation(req, res) {
-  const newconsultation = new Consultation(req.body);
+  const newConsultation = new Consultation(req.body);
 
   if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
   } else {
-    Consultation.create(newconsultation, (err, consultation) => {
+    Consultation.create(newConsultation, (err, consultation) => {
       if (err) res.send(err);
       res.json({ error: false, message: 'Consultation added', data: consultation });
     });
