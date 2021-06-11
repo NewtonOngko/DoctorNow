@@ -3,7 +3,7 @@
 const dbConn = require('../config/config.js');
 
 // news object create
-const Rating = function newsData(news) {
+const Rating = function ratingData(news) {
   this.doctor_id = news.doctor_id;
   this.hospital_id = news.hospital_id;
   this.rating = news.rating;

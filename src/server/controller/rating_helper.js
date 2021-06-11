@@ -1,4 +1,4 @@
-const Rating = require('../model/appoitment_model.js');
+const Rating = require('../model/rating_model.js');
 
 exports.findAll = function getRating(req, res) {
   Rating.findAll((err, rating) => {
