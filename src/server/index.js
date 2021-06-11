@@ -22,11 +22,13 @@ app.get('/', (req, res) => {
 const userRoutes = require('./routes/user_routes.js');
 const doctorRoutes = require('./routes/doctor_routes.js');
 const hospitalRoutes = require('./routes/hospital_routes.js');
+const newsRoutes = require('./routes/news_routes.js');
 
 // using as middleware
 app.use('/users', userRoutes);
 app.use('/doctors', doctorRoutes);
 app.use('/hospitals', hospitalRoutes);
+app.use('/news', newsRoutes);
 
 // listen for requests
 app.listen(port, () => {

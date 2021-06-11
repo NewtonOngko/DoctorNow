@@ -44,7 +44,7 @@ exports.update = function updateHospital(req, res) {
 };
 
 
-exports.delete = function deletHospital(req, res) {
+exports.delete = function deleteHospital(req, res) {
   Hospital.delete(req.params.id, (err) => {
     if (err) res.send(err);
     res.json({ error: false, message: 'Hospital deleted' });
