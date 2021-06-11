@@ -24,6 +24,7 @@ const doctorRoutes = require('./routes/doctor_routes.js');
 const hospitalRoutes = require('./routes/hospital_routes.js');
 const newsRoutes = require('./routes/news_routes.js');
 const appoitmentRoutes = require('./routes/appoitment_routes.js');
+const consultationRoutes = require('./routes/consultation_routes.js');
 
 // using as middleware
 app.use('/users', userRoutes);
@@ -31,6 +32,7 @@ app.use('/doctors', doctorRoutes);
 app.use('/hospitals', hospitalRoutes);
 app.use('/news', newsRoutes);
 app.use('/appoitments', appoitmentRoutes);
+app.use('/consultations', consultationRoutes);
 
 // listen for requests
 app.listen(port, () => {
