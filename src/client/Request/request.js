@@ -10,7 +10,7 @@ const getQueryByName = (name, url) => {
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
 }
 
-export default async function request (pack) {
+export async function request (pack) {
   let {
     url,
     method = 'GET',

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../Components/Header'
@@ -8,6 +8,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
+import{GetUserAll}from '../../Request/service/users'
 
 
 const useStyles = makeStyles({
@@ -125,6 +126,11 @@ const useStyles = makeStyles({
 
 export default function Main() {
     const style = useStyles()
+    useEffect(()=>{
+      GetUserAll().then(
+        (res)=> console.log(res))
+        .catch((err)=> console.log(err))
+    },[])
     return (
       <>
       <div className={style.container} >
