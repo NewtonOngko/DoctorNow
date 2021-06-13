@@ -16,6 +16,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
+app.post('/api/login', (req, res) => {
+  const user = {
+    id: 1,
+    username: 'john',
+    email: 'john@gmail.com',
+  };
+  jwt.sign({  user : user }, secretkey, (err, token) => { res.json({ token }); })});
 // define a root route
 app.get('/', (req, res) => {
   res.send('Hello World');
