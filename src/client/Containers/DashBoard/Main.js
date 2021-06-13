@@ -69,26 +69,26 @@ const useStyles = makeStyles({
   };
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'firstName', headerName: 'First name', width: 150 },
-    { field: 'lastName', headerName: 'Last name', width: 150 },
+    { field: 'user_id', headerName: 'ID', width: 100 },
+    { field: 'full_name', headerName: 'First name', width: 150 },
+    { field: 'Gender', headerName: 'Last name', width: 150 },
     {
-      field: 'age',
+      field: 'email',
       headerName: 'Age',
       type: 'number',
       width: 110,
     },
-    {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (params) =>
-        `${params.getValue(params.id, 'firstName') || ''} ${
-          params.getValue(params.id, 'lastName') || ''
-        }`,
-    },
+    // {
+    //   field: 'fullName',
+    //   headerName: 'Full name',
+    //   description: 'This column has a value getter and is not sortable.',
+    //   sortable: false,
+    //   width: 160,
+    //   valueGetter: (params) =>
+    //     `${params.getValue(params.id, 'firstName') || ''} ${
+    //       params.getValue(params.id, 'lastName') || ''
+    //     }`,
+    // },
     {
       field: "actions",
       headerName: "Actions",
@@ -126,9 +126,11 @@ const useStyles = makeStyles({
 
 export default function Main() {
     const style = useStyles()
+    const [data,setdata]=useState([])
     useEffect(()=>{
-      GetUserAll().then(
-        (res)=> console.log(res))
+      GetUserAll()
+      .then((res)=> setdata(res),
+        )
         .catch((err)=> console.log(err))
     },[])
     return (
@@ -160,7 +162,7 @@ export default function Main() {
               Add Data
               </Button>
             </div>
-            <DataGrid className={style.data} rows={rows} columns={columns} pageSize={5} checkboxSelection />
+            <DataGrid getRowId={(r) => r.user_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
           </div>
           </div>
         </div>

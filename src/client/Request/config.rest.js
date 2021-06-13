@@ -1,7 +1,7 @@
 const port01 = 5000
 const port02 = 4000
 //const version = '/api/v1'
-const host = 'localhost'
+const host = 'http://localhost'
 
 export default {
   API_BERIER: 'Bearer',
