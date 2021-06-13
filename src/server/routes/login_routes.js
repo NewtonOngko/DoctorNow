@@ -4,6 +4,6 @@ const router = express.Router();
 const loginController = require('../controller/login_helper.js');
 
 // user login
-router.get('', loginController.login);
+router.post('', loginController.login);
 
 module.exports = router;
