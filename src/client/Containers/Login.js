@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import LoginIMG from '../../client/Assets/Login_IMG.jpg';
 import history from '../../client/Route/history';
+import { UserLogin } from "../Request/service/login";
 
 // function Copyright() {
 //   return (
@@ -61,7 +62,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
+  const [email,setemail]= useState('')
+  const [password,setpassword]= useState('')
+  useEffect(()=>{
+    
+  },[])
 
+  const onLogin = () =>{
+    UserLogin({"email" : email, "password" : password}).then(res => console.log('loginres',res)).catch(err=>console.log('loginerr',err))
+  }
+  
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -94,6 +104,8 @@ export default function Login() {
               //label="Email Address"
               name="email"
               autoComplete="email"
+              value={email}
+              onChange={e=>setemail(e.target.value)}
               autoFocus
               style={{backgroundColor:'white',borderRadius:10}}
             />
@@ -109,20 +121,22 @@ export default function Login() {
               //label="Password"
               type="password"
               id="password"
+              value={password}
+              onChange={e=>setpassword(e.target.value)}
               autoComplete="current-password"
               style={{backgroundColor:'white',borderRadius:10}}
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
-            />
+            /> */}
             <Button
-              type="submit"
+              //type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={() => history.push('/dashboard')}
+              onClick={onLogin}
             >
               Sign In
             </Button>

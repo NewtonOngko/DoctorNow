@@ -12,9 +12,8 @@ export default {
   //API_URL: `${host}${version}`,
   API_URL: `${host}:${port01}`,
   REST: {
-    authApi: {
-      main: '/auth/login',
-      type: '/auth/:type'
+    auth: {
+      login: '/login',
     },
     user: {
       main: '/users',
