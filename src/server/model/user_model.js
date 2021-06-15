@@ -85,4 +85,21 @@ User.delete = function deleteUser(id, result) {
   });
 };
 
+User.login = function loginUser(req, res) {
+  if (req.method === 'POST') {
+    const post = req.body;
+    const { email } = post;
+    const { password } = post;
+    dbConn.query('SELECT user_id, full_name FROM users WHERE email = ? and password = ?', [email, password], (err, result) => {
+      if (err) {
+        res.status(202).send({ error: true, message: 'User not registered' });
+        console.log('error: ', err);
+        // result(null, err);
+      } else {
+        res.status(404).send({ error: result, message: 'login' });
+      }
+    });
+  }
+};
+
 module.exports = User;
