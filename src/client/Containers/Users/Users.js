@@ -3,6 +3,7 @@ import Sidebar from '../../Components/Sidebar'
 import {Grid} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import Main from './Main';
+import Addusers from './AddUsers';
 import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles({
@@ -32,7 +33,8 @@ export default function Users() {
     //terserah mw inline atau import css nanti replace aja
     const classes = useStyles();
     const [active, setactive] = useState(true)
-
+    const [view, setview] = useState('main')
+    
     const showSidebar =()=>{setactive(!active)}
     
     return (

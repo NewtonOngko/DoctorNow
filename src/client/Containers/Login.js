@@ -69,7 +69,10 @@ export default function Login() {
   },[])
 
   const onLogin = () =>{
-    UserLogin({"email" : email, "password" : password}).then(res => console.log('loginres',res)).catch(err=>console.log('loginerr',err))
+    UserLogin({"email" : email, "password" : password})
+    .then((res) => 
+      console.log('loginres',res),history.push('/dashboard'))
+    .catch(err=>console.log('loginerr',err))
   }
   
   return (

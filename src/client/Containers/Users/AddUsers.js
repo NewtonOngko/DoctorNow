@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React from 'react'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../Components/Header'
@@ -8,7 +8,6 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
-import{GetUserAll}from '../../Request/service/users'
 
 
 const useStyles = makeStyles({
@@ -29,7 +28,7 @@ const useStyles = makeStyles({
     },
     tablestyle:{
       backgroundColor:'white',
-      height: '400px',
+      height: '450px',
       width: 'auto',
       margin:'20px',
       borderRadius:'20px',
@@ -69,26 +68,26 @@ const useStyles = makeStyles({
   };
 
   const columns = [
-    { field: 'user_id', headerName: 'ID', width: 100 },
-    { field: 'full_name', headerName: 'First name', width: 150 },
-    { field: 'Gender', headerName: 'Last name', width: 150 },
+    { field: 'id', headerName: 'ID', width: 100 },
+    { field: 'firstName', headerName: 'First name', width: 150 },
+    { field: 'lastName', headerName: 'Last name', width: 150 },
     {
-      field: 'email',
+      field: 'age',
       headerName: 'Age',
       type: 'number',
       width: 110,
     },
-    // {
-    //   field: 'fullName',
-    //   headerName: 'Full name',
-    //   description: 'This column has a value getter and is not sortable.',
-    //   sortable: false,
-    //   width: 160,
-    //   valueGetter: (params) =>
-    //     `${params.getValue(params.id, 'firstName') || ''} ${
-    //       params.getValue(params.id, 'lastName') || ''
-    //     }`,
-    // },
+    {
+      field: 'fullName',
+      headerName: 'Full name',
+      description: 'This column has a value getter and is not sortable.',
+      sortable: false,
+      width: 160,
+      valueGetter: (params) =>
+        `${params.getValue(params.id, 'firstName') || ''} ${
+          params.getValue(params.id, 'lastName') || ''
+        }`,
+    },
     {
       field: "actions",
       headerName: "Actions",
@@ -126,19 +125,12 @@ const useStyles = makeStyles({
 
 export default function Main() {
     const style = useStyles()
-    const [data,setdata]=useState([])
-    useEffect(()=>{
-      GetUserAll()
-      .then((res)=> setdata(res),
-        )
-        .catch((err)=> console.log(err))
-    },[])
     return (
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Dashboard</p>
-         <div style={{display:'flex',flexDirection:'row'}}>
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Add Users</p>
+         {/* <div style={{display:'flex',flexDirection:'row'}}>
          <div className={style.listitem}>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >Total Users</p>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
@@ -151,19 +143,18 @@ export default function Main() {
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Total Doctors</p>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
          </div>
-         </div>
+         </div> */}
           <div>
           <div className={style.tablestyle}>
-            {/* <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
+            <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
             <Button
               variant="contained"
               color="primary"
-              //onClick={history.push('/users/add')}
               startIcon={<AddIcon />}>
               Add Data
               </Button>
-            </div> */}
-            <DataGrid getRowId={(r) => r.user_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
+            </div>
+            <DataGrid className={style.data} rows={rows} columns={columns} pageSize={5} checkboxSelection />
           </div>
           </div>
         </div>
