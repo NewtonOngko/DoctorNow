@@ -8,7 +8,6 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
-import history from '../../Route/history';
 
 
 const useStyles = makeStyles({
@@ -124,13 +123,13 @@ const useStyles = makeStyles({
     { id: 14, lastName: 'Gohza', firstName: 'HER', age: 65 },
   ];
 
-export default function Main() {
+export default function MainAdd() {
     const style = useStyles()
     return (
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Users</p>
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Add Users</p>
          {/* <div style={{display:'flex',flexDirection:'row'}}>
          <div className={style.listitem}>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >Total Users</p>
@@ -151,7 +150,6 @@ export default function Main() {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => history.push('/users/add')}
               startIcon={<AddIcon />}>
               Add Data
               </Button>
