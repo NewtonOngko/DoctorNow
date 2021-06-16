@@ -1,12 +1,12 @@
 import React from 'react'
 //import DashboardIcon from '@material-ui/icons/Dashboard';
-import DashboardIcon from '../Assets/Dashboard.png';
-import AppointmentIcon from '../Assets/Appointment.png';
-import ConsultationIcon from '../Assets/Consultation.png';
-import DoctorIcon from '../Assets/Doctor.png';
-import HealthIcon from '../Assets/Health.png';
-import ReportsIcon from '../Assets/Reports.png';
-import UsersIcon from '../Assets/Users.png';
+import DashboardIcon from '../../client/Assets/Dashboard.png';
+import AppointmentIcon from '../../client/Assets/Appointment.png';
+import ConsultationIcon from '../../client/Assets/Consultation.png';
+import DoctorIcon from '../../client/Assets/Doctor.png';
+import HealthIcon from '../../client/Assets/Health.png';
+import ReportsIcon from '../../client/Assets/Reports.png';
+import UsersIcon from '../../client/Assets/Users.png';
 
 export const SidebarData = [
     {

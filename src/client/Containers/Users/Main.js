@@ -9,6 +9,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
 import history from '../../Route/history';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch
+} from "react-router-dom";
+import MainAdd from './MainAdd'
 
 
 const useStyles = makeStyles({
@@ -126,6 +135,8 @@ const useStyles = makeStyles({
 
 export default function Main() {
     const style = useStyles()
+    let { url } = useRouteMatch();
+    // console.log('url', url)
     return (
       <>
       <div className={style.container} >
@@ -151,7 +162,7 @@ export default function Main() {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => history.push('/users/add')}
+              onClick={() => history.push(`${url}/add`)}
               startIcon={<AddIcon />}>
               Add Data
               </Button>
@@ -159,6 +170,13 @@ export default function Main() {
             <DataGrid className={style.data} rows={rows} columns={columns} pageSize={5} checkboxSelection />
           </div>
           </div>
+            {/* <Switch>
+              <Route exact path={path}>
+              </Route>
+              <Route path={`${path}/:topicId`}>
+                <MainAdd />
+              </Route>
+            </Switch> */}
         </div>
       </>
     )

@@ -28,12 +28,12 @@ const useStyles = makeStyles({
       }
   });
 
-export default function Users() {
+const Users = ({children}) => {
     //terserah mw inline atau import css nanti replace aja
     const classes = useStyles();
     const [active, setactive] = useState(true)
-    
     const showSidebar =()=>{setactive(!active)}
+    console.log('users',children)
 
     // const Changeview =()=>{
     //   if(window.location.pathname == "/users"){
@@ -57,16 +57,17 @@ export default function Users() {
               <Sidebar />
             </Grid>
             <Grid item xs={10}>
-              <Main />
+              {children}
             </Grid>
           </>
         ) : (
           <>
             <Grid item xs={12}>
-              <Main />
+              {children}
             </Grid>
           </>
         )}
       </Grid>
     );
 }
+export default Users;
