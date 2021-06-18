@@ -1,7 +1,12 @@
 /* eslint-disable no-restricted-globals */
-
+const dotenv = require('dotenv');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const dbConn = require('../config/config.js');
 const { generateHash } = require('../config/encrypt_password.js');
+
+// get config vars
+dotenv.config();
 
 // user object create
 const User = function userData(user) {
@@ -92,11 +97,22 @@ User.login = function loginUser(req, res) {
     const { password } = post;
     dbConn.query('SELECT user_id, full_name FROM users WHERE email = ? and password = ?', [email, password], (err, result) => {
       if (err) {
-        res.status(202).send({ error: true, message: 'User not registered' });
+        res.status(404).send({ error: true, message: 'User not registered' });
         console.log('error: ', err);
         // result(null, err);
       } else {
-        res.status(404).send({ error: result, message: 'login' });
+        bcrypt.compare(password, password, (error, e) => {
+          if (error) res.send(error);
+          if (result) {
+            jwt.sign({
+              email: e.email,
+              userId: e.id,
+            }, process.env.ACCESS_TOKEN_SECRET, {
+              expiresIn: '1h'
+            });
+          }
+        });
+        res.status(200).send({ data: result, token: process.env.ACCESS_TOKEN_SECRET, message: 'login' });
       }
     });
   }
