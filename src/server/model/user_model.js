@@ -3,7 +3,8 @@ const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dbConn = require('../config/config.js');
-const { generateHash } = require('../config/encrypt_password.js');
+const { generateHash, checkPassword} = require('../config/encrypt_password.js');
+const { json } = require('body-parser');
 
 // get config vars
 dotenv.config();
@@ -91,28 +92,38 @@ User.delete = function deleteUser(id, result) {
 };
 
 User.login = function loginUser(req, res) {
+  console.log(req.body)
   if (req.method === 'POST') {
-    const post = req.body;
-    const { email } = post;
-    const { password } = post;
-    dbConn.query('SELECT user_id, full_name FROM users WHERE email = ? and password = ?', [email, password], (err, result) => {
-      if (err) {
-        res.status(404).send({ error: true, message: 'User not registered' });
-        console.log('error: ', err);
-        // result(null, err);
-      } else {
-        bcrypt.compare(password, password, (error, e) => {
-          if (error) res.send(error);
-          if (result) {
-            jwt.sign({
-              email: e.email,
-              userId: e.id,
-            }, process.env.ACCESS_TOKEN_SECRET, {
-              expiresIn: '1h'
-            });
-          }
+    const  email  = req.body.email;
+    const  password  = req.body.password;
+    
+    dbConn.query('SELECT password,email,full_name,user_id FROM users WHERE email = ? ', [email], (err, result) => {
+      console.log('amazing',result)
+      if (result=='') {
+        return res.status(404).send({ message: "User Not found." });
+      }
+      // else if(result){
+      //   return res.status(200).send({ message: "User found." });
+      // }
+      else if(result){
+        var passwordIsValid = checkPassword(
+          password,
+          result[0].password
+        );
+        if(!passwordIsValid){
+          return res.status(401).send({
+            accessToken: null,
+            message: "Invalid Password!"
+          });
+        }
+        var token = jwt.sign({ email: result[0].email,userId: result[0].id }, process.env.ACCESS_TOKEN_SECRET, {
+          expiresIn: 86400 // 24 hours
         });
-        res.status(200).send({ data: result, token: process.env.ACCESS_TOKEN_SECRET, message: 'login' });
+        res.status(200).send({
+          id: result[0].user_id,
+          email: result[0].email,
+          accessToken: token
+        });
       }
     });
   }
