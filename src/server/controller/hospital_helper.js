@@ -13,9 +13,12 @@ exports.findAll = function getHospitals(req, res) {
 exports.create = function addHospital(req, res) {
   const newHospital = new Hospital(req.body);
 
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newHospital.hospital_name == null || newHospital.email == null || newHospital.phone_number == null || newHospital.location == null || newHospital.description == null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
-  } else {
+  } else if ((newHospital.hospital_name == '' || newHospital.email == '' || newHospital.phone_number == '' || newHospital.location == '' || newHospital.description == '')) {
+    res.status(400).send({ error: true, message: 'required' });
+  }
+  else {
     Hospital.create(newHospital, (err, hospital) => {
       if (err) res.send(err);
       res.json({ error: false, message: 'Hospital added', data: hospital });
@@ -33,8 +36,10 @@ exports.findById = function getHospitalById(req, res) {
 
 
 exports.update = function updateHospital(req, res) {
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newHospital.hospital_name == null || newHospital.email == null || newHospital.phone_number == null || newHospital.location == null || newHospital.description == null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
+  } else if ((newHospital.hospital_name == '' || newHospital.email == '' || newHospital.phone_number == '' || newHospital.location == '' || newHospital.description == '')) {
+    res.status(400).send({ error: true, message: 'required' });
   } else {
     Hospital.update(req.params.id, new Hospital(req.body), (err) => {
       if (err) res.send(err);

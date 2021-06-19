@@ -12,8 +12,10 @@ exports.findAll = function getConsultation(req, res) {
 exports.create = function addConsultation(req, res) {
   const newConsultation = new Consultation(req.body);
 
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newConsultation.user_id == null || newConsultation.doctor_id == null || newConsultation.hospital_id == null || newConsultation.time == null || newConsultation.price || null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
+  } else if (newConsultation.user_id == '' || newConsultation.doctor_id == '' || newConsultation.hospital_id == '' || newConsultation.time == '' || newConsultation.price || '') {
+    res.status(400).send({ error: true, message: 'required' });
   } else {
     Consultation.create(newConsultation, (err, consultation) => {
       if (err) res.send(err);
@@ -32,8 +34,10 @@ exports.findById = function getConsultationById(req, res) {
 
 
 exports.update = function updateConsultation(req, res) {
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newConsultation.user_id == null || newConsultation.doctor_id == null || newConsultation.hospital_id == null || newConsultation.time == null || newConsultation.price || null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
+  } else if (newConsultation.user_id == '' || newConsultation.doctor_id == '' || newConsultation.hospital_id == '' || newConsultation.time == '' || newConsultation.price || '') {
+    res.status(400).send({ error: true, message: 'required' });
   } else {
     Consultation.update(req.params.id, new Consultation(req.body), (err) => {
       if (err) res.send(err);

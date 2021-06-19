@@ -12,8 +12,10 @@ exports.findAll = function getRecommendation(req, res) {
 exports.create = function addRecommendation(req, res) {
   const newRecommendation = new Recommendation(req.body);
 
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newRecommendation.hospital_id == null || newRecommendation.doctor_id == null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
+  } else if (newRecommendation.hospital_id == null || newRecommendation.doctor_id == null) {
+    res.status(400).send({ error: true, message: 'required' });
   } else {
     Recommendation.create(newRecommendation, (err, recommendation) => {
       if (err) res.send(err);
@@ -32,8 +34,10 @@ exports.findById = function getRecommendationById(req, res) {
 
 
 exports.update = function updateRecommendation(req, res) {
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newRecommendation.hospital_id == null || newRecommendation.doctor_id == null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
+  } else if (newRecommendation.hospital_id == null || newRecommendation.doctor_id == null) {
+    res.status(400).send({ error: true, message: 'required' });
   } else {
     Recommendation.update(req.params.id, new Recommendation(req.body), (err) => {
       if (err) res.send(err);

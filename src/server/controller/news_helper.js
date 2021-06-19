@@ -13,8 +13,10 @@ exports.findAll = function getNews(req, res) {
 exports.create = function addNews(req, res) {
   const newNews = new News(req.body);
 
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newNews.title == null || newNews.description == null || newNews.news_link == null ) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
+  } else if (newNews.title == '' || newNews.description == '' || newNews.news_link == '' ) {
+    res.status(400).send({ error: true, message: 'required' });
   } else {
     News.create(newNews, (err, news) => {
       if (err) res.send(err);
@@ -33,8 +35,10 @@ exports.findById = function getNewsById(req, res) {
 
 
 exports.update = function updateNews(req, res) {
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newNews.title == null || newNews.description == null || newNews.news_link == null ) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
+  } else if (newNews.title == '' || newNews.description == '' || newNews.news_link == '' ) {
+    res.status(400).send({ error: true, message: 'required' });
   } else {
     News.update(req.params.id, new News(req.body), (err) => {
       if (err) res.send(err);

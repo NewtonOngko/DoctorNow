@@ -12,8 +12,10 @@ exports.findAll = function getTransaction(req, res) {
 exports.create = function addTransaction(req, res) {
   const newTransaction = new Transaction(req.body);
 
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newTransaction.user_id == null || newTransaction.purchase_type == null || newTransaction.payment_type == null || newTransaction.price == null || newTransaction.is_paid == null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
+  } else if (newTransaction.user_id == null || newTransaction.purchase_type == null || newTransaction.payment_type == null || newTransaction.price == null || newTransaction.is_paid == null){ 
+    res.status(400).send({ error: true, message: 'required' });
   } else {
     Transaction.create(newTransaction, (err, transaction) => {
       if (err) res.send(err);
@@ -32,8 +34,10 @@ exports.findById = function getTransactionById(req, res) {
 
 
 exports.update = function updateTransaction(req, res) {
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newTransaction.user_id == null || newTransaction.purchase_type == null || newTransaction.payment_type == null || newTransaction.price == null || newTransaction.is_paid == null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
+  } else if (newTransaction.user_id == null || newTransaction.purchase_type == null || newTransaction.payment_type == null || newTransaction.price == null || newTransaction.is_paid == null){ 
+    res.status(400).send({ error: true, message: 'required' });
   } else {
     Transaction.update(req.params.id, new Transaction(req.body), (err) => {
       if (err) res.send(err);

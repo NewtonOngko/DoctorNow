@@ -12,8 +12,10 @@ exports.findAll = function getRating(req, res) {
 exports.create = function addRating(req, res) {
   const newRating = new Rating(req.body);
 
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newRating.doctor_id == null || newRating.hospital_id == null || newRating.rating == null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
+  } else if (newRating.doctor_id == '' || newRating.hospital_id == '' || newRating.rating == '') {
+    res.status(400).send({ error: true, message: 'required' });
   } else {
     Rating.create(newRating, (err, rating) => {
       if (err) res.send(err);
@@ -32,8 +34,10 @@ exports.findById = function getRatingById(req, res) {
 
 
 exports.update = function updateRating(req, res) {
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newRating.doctor_id == null || newRating.hospital_id == null || newRating.rating == null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
+  } else if (newRating.doctor_id == '' || newRating.hospital_id == '' || newRating.rating == '') {
+    res.status(400).send({ error: true, message: 'required' });
   } else {
     Rating.update(req.params.id, new Rating(req.body), (err) => {
       if (err) res.send(err);
