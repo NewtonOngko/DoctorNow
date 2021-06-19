@@ -11,7 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import Gap from '../../Components/Gap'
 
 const useStyles = makeStyles({
     container: {
@@ -94,16 +94,19 @@ export default function MainAdd() {
                 <TextField fullWidth id="standard-required" label="Phone"/>
               </Grid>
           </Grid>
+              <div style={{margin:20,display:'flex',flexDirection:'row'}}>
               <Button
               variant="contained"
               color="primary">
               Save
               </Button>
+              <Gap width={20}/>
               <Button
               variant="contained"
               color="primary">
               Cancel
               </Button>
+              </div>
           </div>
         </div>  
       </>

@@ -127,12 +127,12 @@ const useStyles = makeStyles({
 export default function Main() {
     const style = useStyles()
     const [data,setdata]=useState([])
-    useEffect(()=>{
-      GetUserAll()
-      .then((res)=> setdata(res),
-        )
-        .catch((err)=> console.log(err))
-    },[])
+    // useEffect(()=>{
+    //   GetUserAll()
+    //   .then((res)=> setdata(res),
+    //     )
+    //     .catch((err)=> console.log(err))
+    // },[])
     return (
       <>
       <div className={style.container} >
