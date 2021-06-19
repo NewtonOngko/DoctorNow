@@ -45,6 +45,7 @@
     "react-router": "5",
     "react-router-dom": "5",
     "redux": "^4.1.0",
+    "regex": "^0.1.1",
     "validator": "^13.6.0"
   },
   "devDependencies": {
