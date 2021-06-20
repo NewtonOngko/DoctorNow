@@ -41,7 +41,6 @@ const useStyles = makeStyles({
       padding:15,
       height:'400px'
     },
-    
   });
 
   const Genderoption = [
@@ -58,6 +57,11 @@ const useStyles = makeStyles({
 export default function MainAdd() {
     const style = useStyles()
     const [gender, setGender] = React.useState('');
+    // const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+
+    // const handleDateChange = (date) => {
+    //   setSelectedDate(date);
+    // }
     return (
       <>
       <div className={style.container} >
@@ -79,13 +83,22 @@ export default function MainAdd() {
                 </TextField>
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Date Of Birth" />
+              <TextField
+                fullWidth
+                id="date"
+                label="Date Of Birth"
+                type="date"
+                defaultValue="2017-05-24"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
               </Grid>
               <Grid item xs ={6}>
                 <TextField fullWidth id="standard-required" label="BirthPlace"/>
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Email" />
+                <TextField fullWidth id="standard-required" label="Email" type="email" />
               </Grid>
               <Grid item xs ={6}>
                 <TextField fullWidth id="standard-required" label="Occupation(optional)"/>
