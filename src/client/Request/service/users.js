@@ -10,4 +10,10 @@ export function GetUserAll (body) {
       data :body
     })
   }
-  
+export function AddUser (body) {
+    return request({
+      url:  user.adduser,
+      method: 'POST',
+      data :body
+    })
+  }

@@ -17,6 +17,7 @@ export default {
     },
     user: {
       main: '/users',
+      adduser :'/users'
     }
   }
 }
