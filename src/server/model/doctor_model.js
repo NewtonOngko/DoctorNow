@@ -14,7 +14,7 @@ const Doctor = function doctorData(doctor) {
   this.address = doctor.address;
   this.gender = doctor.gender;
   this.profile_picture = doctor.profile_picture;
-  this.is_active = doctor.is_active ? doctor.is_active : 1;
+  this.is_active = doctor.is_active;
 
   this.created_at = new Date();
   this.updated_at = new Date();

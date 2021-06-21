@@ -12,8 +12,10 @@ exports.findAll = function getAppoitment(req, res) {
 exports.create = function addAppoitment(req, res) {
   const newAppoitment = new Appoitment(req.body);
 
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newAppoitment.user_id == null || newAppoitment.doctor_id == null || newAppoitment.hospital_id == null || newAppoitment.time == null || newAppoitment.price || null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
+  } else if (newAppoitment.user_id == '' || newAppoitment.doctor_id == '' || newAppoitment.hospital_id == '' || newAppoitment.time == '' || newAppoitment.price || '') {
+    res.status(400).send({ error: true, message: 'required' });
   } else {
     Appoitment.create(newAppoitment, (err, appoitment) => {
       if (err) res.send(err);
@@ -32,8 +34,10 @@ exports.findById = function getAppoitmentById(req, res) {
 
 
 exports.update = function updateAppoitment(req, res) {
-  if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+  if (newAppoitment.user_id == null || newAppoitment.doctor_id == null || newAppoitment.hospital_id == null || newAppoitment.time == null || newAppoitment.price || null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
+  } else if (newAppoitment.user_id == '' || newAppoitment.doctor_id == '' || newAppoitment.hospital_id == '' || newAppoitment.time == '' || newAppoitment.price || '') {
+    res.status(400).send({ error: true, message: 'required' });
   } else {
     Appoitment.update(req.params.id, new Appoitment(req.body), (err) => {
       if (err) res.send(err);
