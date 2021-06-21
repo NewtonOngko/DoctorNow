@@ -14,7 +14,7 @@ exports.findAll = function getUsers(req, res) {
 exports.create = function addUser(req, res) {
   const newUser = new User(req.body);
 
-  if ( newUser.full_name == null || newUser.email == null || newUser.password == null || newUser.address == null || newUser.gender == null || newUser.phone_number == null || newUser.birthdate == null || newUser.birthplace == null || newUser.profile_picture == null) {  
+  if ( newUser.full_name == null || newUser.email == null || newUser.password == null || newUser.address == null || newUser.gender == null || newUser.phone_number == null || newUser.birthdate == null || newUser.birthplace == null ) {  
   res.status(400).send({ error: true, message: 'Please provide all required field' });
   } else if (newUser.email == '' && newUser.email != Regex('/^\S+@\S+\.\S+$/')) {
     res.status(400).send({ error: true, message: 'Please input your email' });

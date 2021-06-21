@@ -69,12 +69,13 @@ export default function Login() {
   },[])
 
   const onLogin = () =>{
-    UserLogin({"email" : email, "password" : password})
+    UserLogin({"email" : "nicosps@gmail.com", "password" : "12345678"})
     .then((res) => 
       console.log('loginres',res))
     .catch(err=>console.log('loginerr',err))
   }
-  
+  console.log(email)
+  console.log(password)
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -94,7 +95,7 @@ export default function Login() {
           <Typography component="h1" variant="h5" style={{color:'white'}}>
             Welcome Back,
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={onLogin}>
           <Typography component="h1" variant="h6"  style={{color:'white',fontWeight:400}}>
           Username :
           </Typography>
