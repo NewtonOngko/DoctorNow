@@ -13,7 +13,7 @@ dotenv.config();
 const User = function userData(user) {
   this.full_name = user.full_name;
   this.email = user.email;
-  this.password = user.password;
+  this.password = generateHash(user.password);
   this.address = user.address;
   this.gender = user.gender;
   this.phone_number = user.phone_number;
@@ -129,6 +129,5 @@ User.login = function loginUser(req, res) {
     });
   }
 };
-
 
 module.exports = User;
