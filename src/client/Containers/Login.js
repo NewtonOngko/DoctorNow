@@ -17,6 +17,7 @@ import history from '../../client/Route/history';
 import { UserLogin } from "../Request/service/login";
 import Loading from "../Components/Loading"
 import { useDispatch } from 'react-redux';
+import {login} from '../../client/Features/userSlice'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,6 +61,13 @@ export default function Login() {
     UserLogin({email :email, password : password})
     .then((res) => {
       console.log('loginres',res);
+      dispatch(
+        login({
+          id : res.id,
+          email : res.email,
+        })
+      );
+      localStorage.setItem('token',res.accessToken);
       setloading(false);
     })
     .catch(err=>{
