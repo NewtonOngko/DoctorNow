@@ -18,6 +18,7 @@ import { UserLogin } from "../Request/service/login";
 import Loading from "../Components/Loading"
 import { useDispatch } from 'react-redux';
 import {login} from '../../client/Features/userSlice'
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,6 +50,10 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+const PushAlert =(code)=>{
+   return <Alert severity="error">This is an error alert — check it out!</Alert>
+   
+}
 
 export default function Login() {
   const classes = useStyles();
@@ -61,13 +66,17 @@ export default function Login() {
     UserLogin({email :email, password : password})
     .then((res) => {
       console.log('loginres',res);
-      dispatch(
-        login({
-          id : res.id,
-          email : res.email,
-        })
-      );
-      localStorage.setItem('token',res.accessToken);
+      if(res.status == "200"){
+        dispatch(
+          login({
+            id : res.id,
+            email : res.email,
+          })
+        );
+        localStorage.setItem('token',res.accessToken);
+        history.push('/dashboard')
+      }
+      else if (res.status == "401")
       setloading(false);
     })
     .catch(err=>{
