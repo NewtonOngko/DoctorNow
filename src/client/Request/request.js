@@ -34,8 +34,8 @@ export async function request (pack) {
   return await axios.request({
         url: `${API_URL}${url}`,
         headers: {
-          //'Content-Type': 'application/json;charset=UTF-8',
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
+          //'Content-Type': 'application/x-www-form-urlencoded',
           'Access-Control-Allow-Origin': '*',
          // 'Authorization': `${API_BERIER} ${Token}`
         },

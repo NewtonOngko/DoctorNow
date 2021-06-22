@@ -15,19 +15,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import LoginIMG from '../../client/Assets/Login_IMG.jpg';
 import history from '../../client/Route/history';
 import { UserLogin } from "../Request/service/login";
-
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="textSecondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://material-ui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+import Loading from "../Components/Loading"
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,18 +53,21 @@ export default function Login() {
   const classes = useStyles();
   const [email,setemail]= useState('')
   const [password,setpassword]= useState('')
-  useEffect(()=>{
-    
-  },[])
-
+  const [loading,setloading]= useState(false)
+  const dispatch = useDispatch()
   const onLogin = () =>{
-    UserLogin({"email" : "nicosps@gmail.com", "password" : "12345678"})
-    .then((res) => 
-      console.log('loginres',res))
-    .catch(err=>console.log('loginerr',err))
+    setloading(true);
+    UserLogin({email :email, password : password})
+    .then((res) => {
+      console.log('loginres',res);
+      setloading(false);
+    })
+    .catch(err=>{
+      console.log('loginres',err);
+      setloading(false);
+    })
+    
   }
-  console.log(email)
-  console.log(password)
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -162,6 +154,7 @@ export default function Login() {
           </form>
         </div>
       </Grid>
+      {loading && <Loading/>}
     </Grid>
   );
 }
