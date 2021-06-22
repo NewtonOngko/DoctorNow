@@ -100,7 +100,7 @@ User.login = function loginUser(req, res) {
     dbConn.query('SELECT password,email,full_name,user_id FROM users WHERE email = ? ', [email], (err, result) => {
       console.log('amazing',result)
       if (result=='') {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(404).send({ message: "User Not found.",status :"404" });
       }
       // else if(result){
       //   return res.status(200).send({ message: "User found." });
@@ -113,7 +113,8 @@ User.login = function loginUser(req, res) {
         if(!passwordIsValid){
           return res.status(401).send({
             accessToken: null,
-            message: "Invalid Password!"
+            message: "Invalid Password!",
+            status :"401"
           });
         }
         var token = jwt.sign({ email: result[0].email,userId: result[0].id }, process.env.ACCESS_TOKEN_SECRET, {
@@ -123,7 +124,8 @@ User.login = function loginUser(req, res) {
           id: result[0].user_id,
           email: result[0].email,
           accessToken: token,
-          status:'success'
+          message:'success',
+          status :"200"
         });
       }
     });
