@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     },
     tablestyle:{
       backgroundColor:'white',
-      height: '450px',
+      height: 'auto',
       width: 'auto',
       margin:'20px',
       borderRadius:'20px',
@@ -58,7 +58,15 @@ const useStyles = makeStyles({
 
 export default function MainAdd() {
     const style = useStyles()
+    const [name, setName] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [address, setaddress] = React.useState('');
+    const [phonenumber, setPhonenumber] = React.useState('');
     const [gender, setGender] = React.useState('');
+    const [birthdate, setBirthdate] = React.useState('');
+    const [birthplace, setBirthplace] = React.useState('');
+    const [profile,setProfile]= React.useState('');
+
     const [Errortext, setErrortext] = React.useState('');
     const [Email, setEmail] = React.useState('');
     const allInputs = {imgUrl: ''}
@@ -109,6 +117,23 @@ export default function MainAdd() {
           setEmail(e.target.value)
       }
       console.log(imageAsUrl)
+      const onAddData=()=>{
+        AddUser({
+          full_name: name,
+          email :Email,
+          password :password,
+          address :address,
+          gender:gender,
+          phone_number:phonenumber,
+          birthdate:birthdate,
+          birthplace:birthplace,
+          profilepicture:imageAsUrl,
+      }).then(
+          res =>{ console.log(res)}
+        ).catch(err=>{
+          console.log(err)
+        })
+      }
     return (
       <>
       <div className={style.container} >
@@ -118,7 +143,13 @@ export default function MainAdd() {
           <p style={{fontSize:30,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>BASIC INFORMATION</p>
           <Grid container direction="row" spacing ={2} style={{padding:20}}>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Full Name"  />
+                <TextField fullWidth id="standard-required" label="Full Name" value={name} onChange={e => setName(e.target.value)}  />
+              </Grid>
+              <Grid item xs ={6}>
+                <TextField fullWidth id="standard-required" label="Password" value={password} onChange={e => setPassword(e.target.value)}/>
+              </Grid>
+              <Grid item xs ={6}>
+                <TextField fullWidth id="standard-required" label="Address" value={address} onChange={e => setaddress(e.target.value)}/>
               </Grid>
               <Grid item xs ={6}>
                 <TextField select fullWidth id="standard-select-currency" label="Gender" value={gender} onChange={e => setGender(e.target.value)} >
@@ -135,6 +166,8 @@ export default function MainAdd() {
                 id="date"
                 label="Date Of Birth"
                 type="date"
+                value={birthdate} 
+                onChange={e => setBirthdate(e.target.value)}
                 defaultValue="2017-05-24"
                 InputLabelProps={{
                   shrink: true,
@@ -142,26 +175,23 @@ export default function MainAdd() {
               />
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="BirthPlace"/>
+                <TextField fullWidth id="standard-required" label="BirthPlace" value={birthplace} onChange={e => setBirthplace(e.target.value)} />
               </Grid>
               <Grid item xs ={6}>
                  <TextField fullWidth id="standard-error-helper-text" label="Email" name="email" value={Email} onChange={onChangeEmail} helperText={Errortext} />
               </Grid>
-              <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Occupation(optional)"/>
+              <Grid item xs ={6} >
+                <TextField fullWidth id="standard-required" label="Phone" value={phonenumber} onChange={e => setPhonenumber(e.target.value)}/>
               </Grid>
-              <Grid item xs ={12} sm={6} style={{justifyContent:'flex-start'}}>
-                <TextField fullWidth id="standard-required" label="Phone"/>
+              <Grid item xs={6}>
+                <form>
+                  <input 
+                  // allows you to reach into your file directory and upload image to the browser
+                    type="file"
+                    onChange={handleImageAsFile}
+                  />
+                </form>
               </Grid>
-              <div>
-              <form>
-                <input 
-                 // allows you to reach into your file directory and upload image to the browser
-                  type="file"
-                  onChange={handleImageAsFile}
-                />
-              </form>
-              </div>
           </Grid>
               <div style={{margin:20,display:'flex',flexDirection:'row'}}>
               <Button

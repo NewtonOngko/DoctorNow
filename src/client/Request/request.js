@@ -37,7 +37,7 @@ export async function request (pack) {
           'Content-Type': 'application/json',
           //'Content-Type': 'application/x-www-form-urlencoded',
           'Access-Control-Allow-Origin': '*',
-         // 'Authorization': `${API_BERIER} ${Token}`
+          'Authorization': `${API_BERIER} ${Token}`
         },
         method,
         data: JSON.stringify(body)

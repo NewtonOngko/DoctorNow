@@ -14,6 +14,6 @@ export function AddUser (body) {
     return request({
       url:  user.adduser,
       method: 'POST',
-      data :body
+      body :body
     })
   }

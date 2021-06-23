@@ -19,6 +19,8 @@ import Loading from "../Components/Loading"
 import { useDispatch } from 'react-redux';
 import {login} from '../../client/Features/userSlice'
 import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
+import { Pause } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,19 +52,19 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-const PushAlert =(code)=>{
-   return <Alert severity="error">This is an error alert — check it out!</Alert>
-   
-}
 
 export default function Login() {
   const classes = useStyles();
   const [email,setemail]= useState('')
   const [password,setpassword]= useState('')
+  const [code,setcode]= useState('')
+  const [message,setmessage]= useState('')
   const [loading,setloading]= useState(false)
+  const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch()
   const onLogin = () =>{
     setloading(true);
+    
     UserLogin({email :email, password : password})
     .then((res) => {
       console.log('loginres',res);
@@ -73,10 +75,22 @@ export default function Login() {
             email : res.email,
           })
         );
+        setOpen(true) 
         localStorage.setItem('token',res.accessToken);
+        setcode(res.status)
+        setmessage(res.message)
         history.push('/dashboard')
       }
-      else if (res.status == "401")
+      else if (res.status == "401"){
+        setOpen(true)
+        setcode(res.status)
+        setmessage(res.message)
+      }
+      else if (res.status == "404"){
+        setOpen(true)
+        setcode(res.status)
+        setmessage(res.message)
+      }
       setloading(false);
     })
     .catch(err=>{
@@ -85,8 +99,32 @@ export default function Login() {
     })
     
   }
+  const PushAlert =(code,message)=>{
+    if(code==200){
+     return <Alert severity="success">{message}</Alert>
+    }
+    else if(code==404){
+     return <Alert severity="error">{message}</Alert>
+    }
+    else if(code==401){
+     return <Alert severity="error">{message}</Alert>
+    }
+ }
+
+const handleClose = () => {
+  setOpen(false)
+};
+  //  useEffect(()=>{
+  //     const token = localStorage.getItem('token')
+  //     if( token && token !== "undefined"){
+  //       history.push('/dashboard')
+  //     }
+  //   },[])
   return (
     <Grid container component="main" className={classes.root}>
+        <Snackbar open={open} autoHideDuration={3000}  onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+          {PushAlert(code,message)}
+          </Snackbar>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={9} className={classes.image}>
         <Typography component="h1" variant="h1" style={{color:'white',fontWeight:700,justifyContent:'center',alignItems:'center',display:'flex',flexDirection:'column',height:'25vw'}}>
