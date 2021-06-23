@@ -29,8 +29,8 @@ export async function request (pack) {
       }
     }
   }
-//   const Token = await storages.getItem('token')
-//   console.log('testTOken', Token);
+   const Token = localStorage.getItem('token')
+   console.log('testToken', Token);
   return await axios.request({
         url: `${API_URL}${url}`,
         headers: {
