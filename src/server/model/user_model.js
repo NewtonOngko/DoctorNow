@@ -123,6 +123,7 @@ User.login = function loginUser(req, res) {
         res.status(200).send({
           id: result[0].user_id,
           email: result[0].email,
+          name: result[0].full_name,
           accessToken: token,
           message:'success',
           status :"200"
