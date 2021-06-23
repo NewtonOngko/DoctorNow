@@ -73,6 +73,7 @@ export default function Login() {
           login({
             id : res.id,
             email : res.email,
+            name : res.name,
           })
         );
         setOpen(true) 

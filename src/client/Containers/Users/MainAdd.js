@@ -15,6 +15,7 @@ import Gap from '../../Components/Gap'
 import {AddUser} from '../../Request/service/users'
 import {storage} from "../../Components/Firebase"
 
+
 const useStyles = makeStyles({
     container: {
       width:'auto',
@@ -72,7 +73,7 @@ export default function MainAdd() {
     const allInputs = {imgUrl: ''}
     const [imageAsFile, setImageAsFile] = useState('')
     const [imageAsUrl, setImageAsUrl] = useState(allInputs)
-    console.log(imageAsFile)
+    //console.log(imageAsFile)
     const handleImageAsFile =  async(e) => {
          const image = e.target.files[0]
          setImageAsFile(image)
@@ -128,9 +129,11 @@ export default function MainAdd() {
           birthdate:birthdate,
           birthplace:birthplace,
           profilepicture:imageAsUrl,
-      }).then(
-          res =>{ console.log(res)}
-        ).catch(err=>{
+        }).then(
+          res =>{
+            console.log(res)
+          })
+          .catch(err=>{
           console.log(err)
         })
       }
@@ -197,6 +200,7 @@ export default function MainAdd() {
               <Button
               variant="contained"
               color="primary"
+              onClick={onAddData}
               >
               Save
               </Button>
