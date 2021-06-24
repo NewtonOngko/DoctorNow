@@ -36,8 +36,8 @@ Admin.adminLogin = function loginAdmin(req, res) {
    const username  = req.body.admin_username;
    const password  = req.body.admin_password;
    
-   dbConn.query('SELECT admin_password, admin_id FROM admin WHERE admin_username = ? ', [username], (err, result) => {
-     console.log('amazing',result[0].admin_password)
+   dbConn.query('SELECT admin_password, admin_id,admin_username FROM admin WHERE admin_username = ? ', [username], (err, result) => {
+     console.log('amazing',result)
      if (result=='') {
        return res.status(404).send({ message: "Admin Not found.",status :"404" });
      }
@@ -59,7 +59,7 @@ Admin.adminLogin = function loginAdmin(req, res) {
        });
        res.status(200).send({
          id: result[0].admin_id,
-         username: result[0].username,
+         name: result[0].admin_username,
          accessToken: token,
          message:'success',
          status :"200"

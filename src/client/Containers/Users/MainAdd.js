@@ -16,12 +16,14 @@ import {AddUser} from '../../Request/service/users'
 import {storage} from "../../Components/Firebase"
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
+import history from '../../Route/history';
+import Loading from "../../Components/Loading"
 
 
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1060px',
+      height:'1040px',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
@@ -70,6 +72,7 @@ export default function MainAdd() {
     const [birthplace, setBirthplace] = React.useState('');
     const [profile,setProfile]= React.useState('');
 
+    const [loading,setloading]= useState(false)
     const [code,setcode]= useState('')
     const [message,setmessage]= useState('')
     const [open, setOpen] = React.useState(false);
@@ -124,6 +127,7 @@ export default function MainAdd() {
       }
       console.log(imageAsUrl)
       const onAddData=()=>{
+        setloading(true);
         AddUser({
           full_name: name,
           email :Email,
@@ -141,25 +145,28 @@ export default function MainAdd() {
               setOpen(true)
               setcode(false)
               setmessage(res.message)
+              setTimeout(function(){ history.push('/users'); }, 1000);
             }
             else if (res.error==true){
               setOpen(true)
-              setcode(false)
+              setcode(true)
               setmessage(res.message)
             }
+            setloading(false);
           })
           .catch(err=>{
           console.log(err)
           setOpen(true)
           setcode(true)
           setmessage(res.message)
+          setloading(false);
         })
       }
       const PushAlert =(code,message)=>{
-        if(code==true){
+        if(code==false){
          return <Alert severity="success">{message}</Alert>
         }
-        else if(code==false){
+        else if(code==true){
          return <Alert severity="error">{message}</Alert>
         }
      }
@@ -244,6 +251,7 @@ export default function MainAdd() {
               </Button>
               </div>
           </div>
+          {loading && <Loading/>}
         </div>  
       </>
     )

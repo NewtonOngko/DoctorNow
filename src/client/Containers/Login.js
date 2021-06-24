@@ -65,7 +65,7 @@ export default function Login() {
   const onLogin = () =>{
     setloading(true);
     
-    UserLogin({email :email, password : password})
+    UserLogin({"admin_username" :email, "admin_password" : password})
     .then((res) => {
       console.log('loginres',res);
       if(res.status == "200"){

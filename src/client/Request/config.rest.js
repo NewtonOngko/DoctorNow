@@ -13,11 +13,12 @@ export default {
   API_URL: `${host}:${port01}`,
   REST: {
     auth: {
-      login: '/login/admin',
+      login: '/admin/login',
     },
     user: {
       main: '/users',
-      adduser :'/users'
+      adduser :'/users',
+      updateuser:'/users/:id'
     },
     doctor: {
       main: '/doctors',

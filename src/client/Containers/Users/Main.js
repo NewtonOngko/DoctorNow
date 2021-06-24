@@ -18,12 +18,14 @@ import {
   useRouteMatch
 } from "react-router-dom";
 import MainAdd from './MainAdd'
+import { useDispatch } from 'react-redux';
+import {user} from '../../Features/userSlice'
 
 
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1060px',
+      height:'1040px',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
@@ -50,8 +52,14 @@ const useStyles = makeStyles({
     }
   });
   const RowEdit = ({ index }) => {
+    const dispatch = useDispatch()
     const handleEditClick = () => {
-      console.log(index)
+      history.push('/users/edit')
+      dispatch(
+        user({
+          id : index.id,
+        })
+      );
     };
     const handleDeleteClick = () => {
       // some action
@@ -79,6 +87,7 @@ const useStyles = makeStyles({
       />
     );
   };
+
 
   const columns = [
     { field: 'id', headerName: 'ID', width: 100 },
@@ -145,20 +154,6 @@ export default function Main() {
       <div className={style.container} >
         <Header/>
         <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Users</p>
-         {/* <div style={{display:'flex',flexDirection:'row'}}>
-         <div className={style.listitem}>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >Total Users</p>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
-         </div>
-         <div className={style.listitem}>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Total Consultations</p>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
-         </div>
-         <div className={style.listitem}>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Total Doctors</p>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
-         </div>
-         </div> */}
           <div>
           <div className={style.tablestyle}>
             <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
@@ -173,13 +168,6 @@ export default function Main() {
             <DataGrid className={style.data} rows={rows} columns={columns} pageSize={5} checkboxSelection />
           </div>
           </div>
-            {/* <Switch>
-              <Route exact path={path}>
-              </Route>
-              <Route path={`${path}/:topicId`}>
-                <MainAdd />
-              </Route>
-            </Switch> */}
         </div>
       </>
     )

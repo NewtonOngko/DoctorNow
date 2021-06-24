@@ -20,7 +20,7 @@ import Avatar from 'react-avatar';
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1060px',
+      height:'1040px',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
@@ -144,18 +144,79 @@ export default function EditUser() {
         <Header/>
         <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Users Information</p>
             <Grid container direction="row" spacing={2} style={{padding:20}}>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                     <Avatar round="20px" size="200" facebook-id="invalidfacebookusername" src="http://www.gravatar.com/avatar/a16a38cdfe8b2cbd38e8a56ab93238d3" />
+                    <Grid item style={{padding:20}} >
+                    <form>
+                      <input 
+                      // allows you to reach into your file directory and upload image to the browser
+                        type="file"
+                        onChange={handleImageAsFile}
+                      />
+                    </form>
+                  </Grid>
                 </Grid>
-                <Grid container xs={8} direction="row" spacing={2} >
-                    <Grid item xs ={4}>
-                        <TextField fullWidth variant="filled" id="filled-basic" label="Full Name" value={name} onChange={e => setName(e.target.value)}  />
-                    </Grid>
-                    <Grid item xs ={4}>
-                        <TextField fullWidth variant="filled" id="filled-basic" label="Full Name" value={name} onChange={e => setName(e.target.value)}  />
-                    </Grid>
+                <Grid container xs={9} direction="row" spacing={2} >
+                <Grid item xs ={6}>
+                <TextField fullWidth variant="filled" id="filled-basic" label="Full Name" value={name} onChange={e => setName(e.target.value)}  />
+              </Grid>
+              <Grid item xs ={6}>
+                <TextField fullWidth variant="filled" id="filled-basic" label="Password" value={password} onChange={e => setPassword(e.target.value)}/>
+              </Grid>
+              <Grid item xs ={6}>
+                <TextField fullWidth variant="filled"id="filled-basic" label="Address" value={address} onChange={e => setaddress(e.target.value)}/>
+              </Grid>
+              <Grid item xs ={6}>
+                <TextField select fullWidth variant="filled" id="filled-select-currency" label="Gender" value={gender} onChange={e => setGender(e.target.value)} >
+                    {Genderoption.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs ={6}>
+              <TextField
+                fullWidth
+                id="date"
+                variant="filled"
+                label="Date Of Birth"
+                type="date"
+                value={birthdate} 
+                onChange={e => setBirthdate(e.target.value)}
+                defaultValue="2017-05-24"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              </Grid>
+              <Grid item xs ={6}>
+                <TextField fullWidth variant="filled" id="filled-required" label="BirthPlace" value={birthplace} onChange={e => setBirthplace(e.target.value)} />
+              </Grid>
+              <Grid item xs ={6}>
+                <TextField fullWidth variant="filled" id="filled-error-helper-text" label="Email" name="email" value={Email} onChange={onChangeEmail} helperText={Errortext} />
+              </Grid>
+              <Grid item xs ={6} >
+                <TextField fullWidth variant="filled" id="filled-required" label="Phone" value={phonenumber} onChange={e => setPhonenumber(e.target.value)}/>
+              </Grid>
+              
                 </Grid>
             </Grid>
+            <div style={{margin:20,display:'flex',flexDirection:'row'}}>
+              <Button
+              variant="contained"
+              color="primary"
+              onClick={onAddData}
+              >
+              Save
+              </Button>
+              <Gap width={20}/>
+              <Button
+              variant="contained"
+              color="primary">
+              Cancel
+              </Button>
+              </div>
         </div>  
       </>
     )
