@@ -192,7 +192,7 @@ const handleClose = () => {
             >
               Sign In
             </Button>
-            <Grid container>
+            {/* <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
@@ -203,7 +203,7 @@ const handleClose = () => {
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
-            </Grid>
+            </Grid> */}
             <Box mt={5}>
               {/* <Copyright /> */}
             </Box>
