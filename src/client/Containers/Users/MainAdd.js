@@ -14,6 +14,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Gap from '../../Components/Gap'
 import {AddUser} from '../../Request/service/users'
 import {storage} from "../../Components/Firebase"
+import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 
 
 const useStyles = makeStyles({
@@ -68,6 +70,9 @@ export default function MainAdd() {
     const [birthplace, setBirthplace] = React.useState('');
     const [profile,setProfile]= React.useState('');
 
+    const [code,setcode]= useState('')
+    const [message,setmessage]= useState('')
+    const [open, setOpen] = React.useState(false);
     const [Errortext, setErrortext] = React.useState('');
     const [Email, setEmail] = React.useState('');
     const allInputs = {imgUrl: ''}
@@ -132,11 +137,35 @@ export default function MainAdd() {
         }).then(
           res =>{
             console.log(res)
+            if(res.error==false){
+              setOpen(true)
+              setcode(false)
+              setmessage(res.message)
+            }
+            else if (res.error==true){
+              setOpen(true)
+              setcode(false)
+              setmessage(res.message)
+            }
           })
           .catch(err=>{
           console.log(err)
+          setOpen(true)
+          setcode(true)
+          setmessage(res.message)
         })
       }
+      const PushAlert =(code,message)=>{
+        if(code==true){
+         return <Alert severity="success">{message}</Alert>
+        }
+        else if(code==false){
+         return <Alert severity="error">{message}</Alert>
+        }
+     }
+    const handleClose = () => {
+      setOpen(false)
+    };
     return (
       <>
       <div className={style.container} >
@@ -145,6 +174,9 @@ export default function MainAdd() {
           <div className={style.tablestyle}>
           <p style={{fontSize:30,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>BASIC INFORMATION</p>
           <Grid container direction="row" spacing ={2} style={{padding:20}}>
+          <Snackbar open={open} autoHideDuration={3000}  onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+            {PushAlert(code,message)}
+          </Snackbar>
               <Grid item xs ={6}>
                 <TextField fullWidth id="standard-required" label="Full Name" value={name} onChange={e => setName(e.target.value)}  />
               </Grid>

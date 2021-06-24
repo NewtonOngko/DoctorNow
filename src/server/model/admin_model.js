@@ -24,7 +24,7 @@ Admin.create = function createAdmin(newAdmin, result) {
       console.log('error: ', err);
       result(err, null);
     } else {
-      console.log(res.insertId);
+      console.log(res);
       result(null, res.insertId);
     }
   });
@@ -37,15 +37,15 @@ Admin.adminLogin = function loginAdmin(req, res) {
    const password  = req.body.admin_password;
    
    dbConn.query('SELECT admin_password, admin_id FROM admin WHERE admin_username = ? ', [username], (err, result) => {
-     console.log('amazing',result)
+     console.log('amazing',result[0].admin_password)
      if (result=='') {
        return res.status(404).send({ message: "Admin Not found.",status :"404" });
      }
 
      else if(result){
        var passwordIsValid = checkPassword(
-        result[0].admin_password,
         password,
+        result[0].admin_password
        );
        if(!passwordIsValid){
          return res.status(401).send({
