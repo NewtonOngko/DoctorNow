@@ -7,6 +7,8 @@ import Login from '../../client/Containers/Login';
 import Dashboard from '../Containers/DashBoard/Dashboard';
 import Appointment from '../Containers/Appointment/Appointment';
 import ProfileAvatar from '../../client/Components/ProfileAvatar'
+import {selectUser} from "../Features/userSlice"
+import { useSelector } from 'react-redux';
 
 
 const useStyles = makeStyles({
@@ -94,14 +96,14 @@ const useStyles = makeStyles({
 export default function Sidebar() {
     const classes = useStyles();
     const [active, setactive] = useState(true)
-
+    const user = useSelector(selectUser);
     return (
         <>
         <div className={active ? classes.sidebar : classes.sidebarnone}>
         
           {active ? 
           <>
-          <ProfileAvatar size={100} font={18} flex={'column'} type={'sidebar'} name={'Newton Ongko'} />
+          <ProfileAvatar size={100} font={18} flex={'column'} type={'sidebar'} name= {user.name} />
           <nav>
           <ul className={ classes.SidebarList}>
           {SidebarData.map((val, key) => {

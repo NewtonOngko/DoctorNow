@@ -9,6 +9,7 @@ import Doctors from '../Containers/Doctors/Doctors';
 import Users from '../Containers/Users/Users';
 import UsersMain from '../Containers/Users/Main';
 import AddUsers from '../Containers/Users/MainAdd';
+import EditUsers from '../Containers/Users/EditUser';
 import Hospital from '../Containers/Hospital/Hospital';
 import Consultation from '../Containers/Consultation/Consultation';
 import Reports from '../Containers/Reports/Reports';
@@ -36,6 +37,7 @@ export default class Routers extends Component {
                               component={UsersMain}
                             />
                             <Route path={`${path}/add`} component={AddUsers} />
+                            <Route path={`${path}/edit`} component={EditUsers} />
                             <Redirect exact from={path + "/"} to={path} />
                           </Switch>
                         </Users>

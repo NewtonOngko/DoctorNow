@@ -51,6 +51,9 @@ const useStyles = makeStyles({
   });
   const RowEdit = ({ index }) => {
     const handleEditClick = () => {
+      console.log(index)
+    };
+    const handleDeleteClick = () => {
       // some action
     };
     return (
@@ -67,7 +70,7 @@ const useStyles = makeStyles({
           <IconButton
             color="secondary"
             aria-label="add an alarm"
-            onClick={handleEditClick}
+            onClick={handleDeleteClick}
           >
             <DeleteIcon style={{ color: red[500] }} />
           </IconButton>
@@ -110,7 +113,7 @@ const useStyles = makeStyles({
             className="d-flex justify-content-between align-items-center"
             style={{ cursor: "pointer" }}
           >
-            <RowEdit index={params.row.id} />
+            <RowEdit index={params.row} />
           </div>
         );
       }

@@ -27,14 +27,15 @@ const useStyles = makeStyles({
 export default function Header() {
     const styles = useStyles();
     const user = useSelector(selectUser);
+    //console.log("name",user.name)
     return (
         <div className={styles.root}>
             <Icon.Search style={{color:'#C5C7CD'}}/>
             <Gap width={10}/>
             <Icon.Notifications style={{color:'#C5C7CD'}}/>
             <Gap width={10}/>
-            <p style={{fontSize:23}}>| {user}</p>
-            <ProfileAvatar size={45} type ={'header'} color={'black'} name={"user.name"}/>
+            <p style={{fontSize:23}}>|</p>
+            <ProfileAvatar size={45} type ={'header'} color={'black'} name= {user.name}/>
         </div>
     )
 }
