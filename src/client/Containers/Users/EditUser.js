@@ -12,10 +12,11 @@ import { blue, red } from '@material-ui/core/colors';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Gap from '../../Components/Gap'
-import {AddUser} from '../../Request/service/users'
+import {UpdateUser,GetUserByID} from '../../Request/service/users'
 import {storage} from "../../Components/Firebase"
 import Avatar from 'react-avatar';
-
+import {selectUserid} from "../../Features/userSlice"
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
     container: {
@@ -74,6 +75,8 @@ export default function EditUser() {
     const allInputs = {imgUrl: ''}
     const [imageAsFile, setImageAsFile] = useState('')
     const [imageAsUrl, setImageAsUrl] = useState(allInputs)
+
+    const id = useSelector(selectUserid);
     //console.log(imageAsFile)
     const handleImageAsFile =  async(e) => {
          const image = e.target.files[0]
@@ -138,6 +141,16 @@ export default function EditUser() {
           console.log(err)
         })
       }
+    useEffect(()=>{
+      GetUserByID(id.id)
+      .then((res)=> {
+        console.log(res)
+        setName(res[0].full_name)
+      })
+      .catch((err)=> {
+      console.log(err)
+      })
+    },[])
     return (
       <>
       <div className={style.container} >
@@ -147,6 +160,7 @@ export default function EditUser() {
                 <Grid item xs={3}>
                     <Avatar round="20px" size="200" facebook-id="invalidfacebookusername" src="http://www.gravatar.com/avatar/a16a38cdfe8b2cbd38e8a56ab93238d3" />
                     <Grid item style={{padding:20}} >
+                      <p>Profile Upload</p>
                     <form>
                       <input 
                       // allows you to reach into your file directory and upload image to the browser
@@ -202,11 +216,10 @@ export default function EditUser() {
               
                 </Grid>
             </Grid>
-            <div style={{margin:20,display:'flex',flexDirection:'row'}}>
+            <div style={{margin:20,display:'flex',flexDirection:'row',justifyContent:'flex-end'}}>
               <Button
               variant="contained"
               color="primary"
-              onClick={onAddData}
               >
               Save
               </Button>

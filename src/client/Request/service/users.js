@@ -17,3 +17,18 @@ export function AddUser (body) {
       body :body
     })
   }
+export function UpdateUser (body,id) {
+    return request({
+      url:  user.updateuser.replace(':id',id),
+      method: 'PUT',
+      body :body
+    })
+  }
+export function GetUserByID (id,body) {
+    return request({
+      url:  user.getbyid.replace(':id',id),
+      method: 'GET',
+      body :body
+    })
+  }
+

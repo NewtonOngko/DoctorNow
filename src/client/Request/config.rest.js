@@ -18,7 +18,8 @@ export default {
     user: {
       main: '/users',
       adduser :'/users',
-      updateuser:'/users/:id'
+      updateuser:'/users/:id',
+      getbyid:'/users/:id'
     },
     doctor: {
       main: '/doctors',
