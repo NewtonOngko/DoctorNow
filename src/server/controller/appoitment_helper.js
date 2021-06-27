@@ -1,55 +1,55 @@
-const Appoitment = require('../model/appoitment_model.js');
+const Appointment = require('../model/appoitment_model.js');
 
-exports.findAll = function getAppoitment(req, res) {
-  Appoitment.findAll((err, appoitment) => {
-    console.log('get all appoitment');
+exports.findAll = function getAppointment(req, res) {
+  Appointment.findAll((err, appointment) => {
+    console.log('get all Appointment');
     if (err) res.send(err);
-    console.log('res', appoitment);
-    res.send(appoitment);
+    console.log('res', appointment);
+    res.send(appointment);
   });
 };
 
-exports.create = function addAppoitment(req, res) {
-  const newAppoitment = new Appoitment(req.body);
+exports.create = function addAppointment(req, res) {
+  const newAppointment = new Appointment(req.body);
 
-  if (newAppoitment.user_id == null || newAppoitment.doctor_id == null || newAppoitment.hospital_id == null || newAppoitment.time == null || newAppoitment.price || null) {
+  if (newAppointment.user_id == null || newAppointment.doctor_id == null || newAppointment.hospital_id == null || newAppointment.time == null || newAppointment.price || null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
-  } else if (newAppoitment.user_id == '' || newAppoitment.doctor_id == '' || newAppoitment.hospital_id == '' || newAppoitment.time == '' || newAppoitment.price || '') {
+  } else if (newAppointment.user_id == '' || newAppointment.doctor_id == '' || newAppointment.hospital_id == '' || newAppointment.time == '' || newAppointment.price || '') {
     res.status(400).send({ error: true, message: 'required' });
   } else {
-    Appoitment.create(newAppoitment, (err, appoitment) => {
+    Appointment.create(newAppointment, (err, appointment) => {
       if (err) res.send(err);
-      res.json({ error: false, message: 'Appoitment added', data: appoitment });
+      res.json({ error: false, message: 'Appointment added', data: appointment });
     });
   }
 };
 
 
-exports.findById = function getAppoitmentById(req, res) {
-  Appoitment.findById(req.params.id, (err, appoitment) => {
+exports.findById = function getAppointmentById(req, res) {
+  Appointment.findById(req.params.id, (err, appointment) => {
     if (err) res.send(err);
-    res.json(appoitment);
+    res.json(appointment);
   });
 };
 
 
-exports.update = function updateAppoitment(req, res) {
-  if (newAppoitment.user_id == null || newAppoitment.doctor_id == null || newAppoitment.hospital_id == null || newAppoitment.time == null || newAppoitment.price || null) {
+exports.update = function updateAppointment(req, res) {
+  if (newAppointment.user_id == null || newAppointment.doctor_id == null || newAppointment.hospital_id == null || newAppointment.time == null || newAppointment.price || null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
-  } else if (newAppoitment.user_id == '' || newAppoitment.doctor_id == '' || newAppoitment.hospital_id == '' || newAppoitment.time == '' || newAppoitment.price || '') {
+  } else if (newAppointment.user_id == '' || newAppointment.doctor_id == '' || newAppointment.hospital_id == '' || newAppointment.time == '' || newAppointment.price || '') {
     res.status(400).send({ error: true, message: 'required' });
   } else {
-    Appoitment.update(req.params.id, new Appoitment(req.body), (err) => {
+    Appointment.update(req.params.id, new Appointment(req.body), (err) => {
       if (err) res.send(err);
-      res.json({ error: false, message: 'Appoitment updated' });
+      res.json({ error: false, message: 'Appointment updated' });
     });
   }
 };
 
 
-exports.delete = function deleteAppoitment(req, res) {
-  Appoitment.delete(req.params.id, (err) => {
+exports.delete = function deleteAppointment(req, res) {
+  Appointment.delete(req.params.id, (err) => {
     if (err) res.send(err);
-    res.json({ error: false, message: 'Appoitment deleted' });
+    res.json({ error: false, message: 'Appointment deleted' });
   });
 };

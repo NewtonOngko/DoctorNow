@@ -1,21 +1,21 @@
 const express = require('express');
 
 const router = express.Router();
-const appoitmentController = require('../controller/appoitment_helper.js');
+const appointmentController = require('../controller/appoitment_helper.js');
 
-// Retrieve all appoitment
-router.get('/', appoitmentController.findAll);
+// Retrieve all Appointment
+router.get('/', appointmentController.findAll);
 
-// Create a new appoitment
-router.post('/', appoitmentController.create);
+// Create a new Appointment
+router.post('/', appointmentController.create);
 
-// Retrieve a single appoitment with id
-router.get('/:id', appoitmentController.findById);
+// Retrieve a single Appointment with id
+router.get('/:id', appointmentController.findById);
 
-// Update a appoitment with id
-router.put('/:id', appoitmentController.update);
+// Update a Appointment with id
+router.put('/:id', appointmentController.update);
 
-// Delete a appoitment with id
-router.delete('/:id', appoitmentController.delete);
+// Delete a Appointment with id
+router.delete('/:id', appointmentController.delete);
 
 module.exports = router;

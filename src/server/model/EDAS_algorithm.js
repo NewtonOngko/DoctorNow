@@ -1,58 +1,154 @@
+const dbConn = require('../config/config.js')
 
-//initalize value
-var location = [5,1,3,2,4];
-var rating = [1,2,3,4,5];
-var weight = [0.200, 0.057, 0.086, 0.071, 0.100];
+let edaAlternativesQuery = 'SELECT * FROM eda_alternatives'
+let edaCriteriasQuery = 'SELECT * FROM eda_criterias'
+let matriksKeputusanQuery = 'SELECT * from eda_evaluations'
+var alternativeData = []
+var weightData = []
+var attributeData = []
+var criteriaData = []
+let matriksKeputusanData = []
 
-for (i = 0; i < location.length; i++) {
- getLocation = location[i];
- console.log(getLocation);
-}
+dbConn.query(edaAlternativesQuery, (error, results, fields) => {
+  //get eda_alternative data
+  if (error) {
+    return console.error(error.message)
+  }
+  alternativeData.push(results.map((e) => e.name))
 
-for (i = 0; i < rating.length; i++) {
- getRating = rating[i];
- console.log(getRating);
-}
+  //get eda_criterias data
+  dbConn.query(edaCriteriasQuery, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message)
+    }
+    weightData.push(results.map((e) => e.weight))
+    attributeData.push(results.map((e) => e.attribute))
 
-for (i = 0; i < weight.length; i++) {
- getWeight = weight[i];
- console.log(getWeight);
-}
+    //create matriksKeputusan
+    dbConn.query(matriksKeputusanQuery, (error, results, fields) => {
+      if (error) {
+        return console.error(error.message)
+      }
 
-//set index
-locationSum = location[0];
-ratingSum = rating[0];
+      for (var i = 0; i < results.length; i++) {
+        var arr = []
+        arr.push(results[i].id_alternative)
+        arr.push(results[i].id_criteria)
+        matriksKeputusanData.push(arr)
+      }
+      // console.log('matriksKeputusan', matriksKeputusanData)
 
-//average solution calculation
-var getAverageSolution = (locationSum + ratingSum) / location.length;
-console.log('average Solution: ', getAverageSolution);
+      //hitung solusi rata - rata
+      var AV = []
+      var i = 0
+      for (i in matriksKeputusanData) {
+        var j = 0
+        for (j in matriksKeputusanData[i]) {
+          matriksKeputusanDataJIndex = matriksKeputusanData[i][j]
+          // console.log(',', matriksKeputusanDataJIndex)
+          if (AV[j] == null) {
+            AV[j] = 0
+          }
+          var alternativeLength = results.length
+          AV[j] = matriksKeputusanDataJIndex / alternativeLength
+        }
+        AV.push(AV[j])
+      }
 
-//positive distance average calculation
-var getPositiveDistanceAverage = Math.max(0, ((locationSum - getAverageSolution) / getAverageSolution));
-console.log('positve distance average: ', getPositiveDistanceAverage);
+      // Menghitung Jarak Positif/Negatif dari Rata-rata (PDA/NDA)
+      var PDA = []
+      var NDA = []
+      var i = 0
+      for (i in matriksKeputusanData) {
+        PDA[i] = []
+        NDA[i] = []
+        for (j in matriksKeputusanData[i]) {
+          arr = []
+          arr1 = []
 
-//negative distance average calculation
-var getNegativeDistanceAverage = Math.max(0, ((getAverageSolution - locationSum) / getAverageSolution));
-console.log('negative distance average: ',getNegativeDistanceAverage);
+          if (attributeData[0][j] == 'benefit') {
+            arr.push(
+              (PDA[i][j] = Math.max(
+                0,
+                (matriksKeputusanData[i][j] - AV[j]) / AV[j],
+              )),
+            )
+            arr1.push(
+              (NDA[i][j] = Math.max(
+                0,
+                (AV[j] - matriksKeputusanData[i][j]) / AV[j],
+              )),
+            )
+          } else {
+            arr.push(
+              (PDA[i][j] = Math.max(
+                0,
+                (AV[j] - matriksKeputusanData[i][j]) / AV[j],
+              )),
+            )
+            arr1.push(
+              (NDA[i][j] = Math.max(
+                0,
+                (matriksKeputusanData[i][j] - AV[j]) / AV[j],
+              )),
+            )
+          }
 
-//jumlah terbobot pda calculation
-var getJumlahTerbobotPDA = weight[0] * getPositiveDistanceAverage;
-console.log('Jumlah Terbobot PDA : ', getJumlahTerbobotPDA);
+          PDA.push(...arr)
+          NDA.push(...arr1)
+        }
+      }
+      // console.log('PDA : ', PDA[0])
+      // console.log('NDA : ', NDA[0])
 
-//jumlah terbobot nda calculation
-var getJumlahTerbobotNDA = weight[0] * getNegativeDistanceAverage;
-console.log('Jumlah Terbobot NDA : ',getJumlahTerbobotNDA);
+      //-- inisialisasi array SP/SN
+      var SP = []
+      var SN = []
+      for (i in matriksKeputusanData) {
+        SP[i] = 0
+        SN[i] = 0
+        for (j in matriksKeputusanData[i]) {
+          var arr = []
+          var arr1 = []
+          var xij = matriksKeputusanData[i][j]
+          var weightValue = weightData.map((e) => e[0])
 
-//normalisasi SP calculation
-var getNSP = getJumlahTerbobotPDA / Math.max(locationSum);
-console.log('NSP : ',getNSP);
+          // console.log(weightValue);
+          // console.log(weightValue);
+          arr.push((SP[j] = weightValue * PDA[i][j]))
+          arr1.push((SN[j] = weightValue * NDA[i][j]))
+          SP.push(...arr)
+          SN.push(...arr1)
+        }
+        
+      }
 
-//normalisasi SN calculation
-var getNSN =  1 - (getJumlahTerbobotNDA / Math.max(locationSum));
-console.log('NSN : ',getNSN);
+      
+      //normalisasi SP / SN
+      var NSP = []
+      var NSN = []
+      var getSP = SP[j];
+      var getSN = SN[j];
+      for (i in alternativeData) {
+        var maxSP = SP.reduce(function (a, b) {
+          return Math.max(a, b)
+        })
+        var maxSN = SN.reduce(function (a, b) {
+          return Math.max(a, b)
+        })
 
-//nilai skor penilaian (apraisal score) calculation
-var getApraisalScore =  0.5 * (getNSP + getNSN);
-console.log('Jumlah apraisal score : ',getApraisalScore);
+        NSP.push((NSP[i] = getSP / maxSP))
+        NSN.push((NSN[i] = 1 - getSN / maxSN))
+      }
 
-module.exports = {getLocation, getRating, getWeight, getAverageSolution, getPositiveDistanceAverage, getNegativeDistanceAverage, getJumlahTerbobotPDA, getJumlahTerbobotNDA, getNSP, getNSN, getApraisalScore};
+      // apraisal score
+      var AS = []
+      var getNSP = NSP[j]
+      var getNSN = NSN[j]
+      for (i in alternativeData) {
+        AS[i] = (getNSP + getNSN) / 2
+        console.log(`${alternativeData[i]}`, AS[i]);
+      }
+    })
+  })
+})
