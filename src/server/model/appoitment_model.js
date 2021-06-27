@@ -3,19 +3,19 @@
 const dbConn = require('../config/config.js');
 
 // doctor object create
-const Appoitment = function appoitmentData(appoitment) {
-  this.user_id = appoitment.user_id;
-  this.doctor_id = appoitment.doctor_id;
-  this.hospital_id = appoitment.hospital_id;
-  this.time = appoitment.time;
-  this.price = appoitment.price;
+const Appointment = function appointmentData(appointment) {
+  this.user_id = appointment.user_id;
+  this.doctor_id = appointment.doctor_id;
+  this.hospital_id = appointment.hospital_id;
+  this.time = appointment.time;
+  this.price = appointment.price;
 
   this.created_at = new Date();
   this.updated_at = new Date();
 };
 
-Appoitment.create = function createAppoitment(newAppoitment, result) {
-  dbConn.query('INSERT INTO appoitments set ? ', newAppoitment, (err, res) => {
+Appointment.create = function createAppointment(newAppointment, result) {
+  dbConn.query('INSERT INTO appointments set ? ', newAppointment, (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(err, null);
@@ -27,8 +27,8 @@ Appoitment.create = function createAppoitment(newAppoitment, result) {
 };
 
 
-Appoitment.findById = function getAppoitmentById(id, result) {
-  dbConn.query('Select * from appoitments where appoitment_id = ? ', id, (err, res) => {
+Appointment.findById = function getAppointmentById(id, result) {
+  dbConn.query('Select * from appointments where appointment_id = ? ', id, (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(err, null);
@@ -38,21 +38,21 @@ Appoitment.findById = function getAppoitmentById(id, result) {
   });
 };
 
-Appoitment.findAll = function getAllAppoitment(result) {
-  dbConn.query('Select * from appoitments', (err, res) => {
+Appointment.findAll = function getAllAppointment(result) {
+  dbConn.query('Select * from appointments', (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(null, err);
     } else {
-      console.log('doctors : ', res);
+      console.log('appointments : ', res);
       result(null, res);
     }
   });
 };
 
-Appoitment.update = function updateAppoitment(id, appoitment, result) {
-  dbConn.query('UPDATE appoitments SET time=? WHERE id = ?', [
-    appoitment.time,
+Appointment.update = function updateAppointment(id, appointment, result) {
+  dbConn.query('UPDATE appointments SET time=? WHERE id = ?', [
+    appointment.time,
     id], (err, res) => {
     if (err) {
       console.log('error: ', err);
@@ -63,8 +63,8 @@ Appoitment.update = function updateAppoitment(id, appoitment, result) {
   });
 };
 
-Appoitment.delete = function deleteAppoitment(id, result) {
-  dbConn.query('DELETE FROM appoitments WHERE id = ?', [id], (err, res) => {
+Appointment.delete = function deleteAppointment(id, result) {
+  dbConn.query('DELETE FROM appointments WHERE id = ?', [id], (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(null, err);
@@ -74,4 +74,4 @@ Appoitment.delete = function deleteAppoitment(id, result) {
   });
 };
 
-module.exports = Appoitment;
+module.exports = Appointment;
