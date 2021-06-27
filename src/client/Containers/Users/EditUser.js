@@ -17,6 +17,7 @@ import {storage} from "../../Components/Firebase"
 import Avatar from 'react-avatar';
 import {selectUserid} from "../../Features/userSlice"
 import { useSelector } from 'react-redux';
+import PublishIcon from '@material-ui/icons/Publish';
 
 const useStyles = makeStyles({
     container: {
@@ -50,11 +51,11 @@ const useStyles = makeStyles({
 
   const Genderoption = [
     {
-      value: 'Male',
+      value: 'male',
       label: 'Male',
     },
     {
-      value: 'Female',
+      value: 'female',
       label: 'Female',
     }
   ];
@@ -90,7 +91,7 @@ export default function EditUser() {
         if(image === '') {
           console.error(`not an image, the image file is a ${typeof(image)}`)
         }
-        const uploadTask = storage.ref(`/images/${image.name}`).put(image)
+        const uploadTask = storage.ref(`/images/${id.id}/${image.name}`).put(image)
         //initiates the firebase side uploading 
         uploadTask.on('state_changed', 
         (snapShot) => {
@@ -102,7 +103,7 @@ export default function EditUser() {
         }, () => {
           // gets the functions from storage refences the image storage in firebase by the children
           // gets the download url then sets the image from firebase as the value for the imgUrl key:
-          storage.ref('images').child(image.name).getDownloadURL()
+          storage.ref(`images/${id.id}`).child(image.name).getDownloadURL()
           .then(fireBaseUrl => {
             setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
           })
@@ -122,11 +123,12 @@ export default function EditUser() {
           setEmail(e.target.value)
       }
       console.log(imageAsUrl)
-      const onAddData=()=>{
-        AddUser({
+      const onSaveData=()=>{
+        console.log('imageurl',imageAsUrl)
+        UpdateUser(id.id,{
           full_name: name,
+          password: 'anjeng',
           email :Email,
-          password :password,
           address :address,
           gender:gender,
           phone_number:phonenumber,
@@ -146,6 +148,13 @@ export default function EditUser() {
       .then((res)=> {
         console.log(res)
         setName(res[0].full_name)
+        setaddress(res[0].address)
+        setPhonenumber(res[0].phone_number)
+        setGender(res[0].gender)
+        setBirthdate(res[0].birthdate)
+        setBirthplace(res[0].birthplace)
+        setEmail(res[0].email)
+        setProfile(res[0].profile_picture)
       })
       .catch((err)=> {
       console.log(err)
@@ -158,15 +167,21 @@ export default function EditUser() {
         <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Users Information</p>
             <Grid container direction="row" spacing={2} style={{padding:20}}>
                 <Grid item xs={3}>
-                    <Avatar round="20px" size="200" facebook-id="invalidfacebookusername" src="http://www.gravatar.com/avatar/a16a38cdfe8b2cbd38e8a56ab93238d3" />
-                    <Grid item style={{padding:20}} >
-                      <p>Profile Upload</p>
+                    <Avatar round="20px" size="200" facebook-id="invalidfacebookusername" src={profile} />
+                    <Grid item >
+                    <p style={{fontSize:16,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Profile Upload</p>
                     <form>
-                      <input 
-                      // allows you to reach into your file directory and upload image to the browser
-                        type="file"
-                        onChange={handleImageAsFile}
-                      />
+                      <div style={{padding:20,backgroundColor:'#C2D3D8',borderRadius:20,display:'flex',flexDirection:'row',width:'auto'}}>
+                        <PublishIcon/>
+                        <label>
+                        <p style={{margin:0,fontSize:18,fontWeight:'bold',fontFamily: 'Noto Sans JP'}}>Browse...</p>
+                        <input style={{display:'none'}}
+                        // allows you to reach into your file directory and upload image to the browser
+                          type="file"
+                          onChange={handleImageAsFile}
+                        />
+                        </label>
+                      </div>
                     </form>
                   </Grid>
                 </Grid>
@@ -175,7 +190,7 @@ export default function EditUser() {
                 <TextField fullWidth variant="filled" id="filled-basic" label="Full Name" value={name} onChange={e => setName(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth variant="filled" id="filled-basic" label="Password" value={password} onChange={e => setPassword(e.target.value)}/>
+                <TextField disabled fullWidth variant="filled" id="filled-basic" label="Password" value={password} onChange={e => setPassword(e.target.value)}/>
               </Grid>
               <Grid item xs ={6}>
                 <TextField fullWidth variant="filled"id="filled-basic" label="Address" value={address} onChange={e => setaddress(e.target.value)}/>
@@ -220,6 +235,7 @@ export default function EditUser() {
               <Button
               variant="contained"
               color="primary"
+              onClick={onSaveData}
               >
               Save
               </Button>

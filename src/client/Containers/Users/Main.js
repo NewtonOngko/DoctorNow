@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../Components/Header'
@@ -20,6 +20,7 @@ import {
 import MainAdd from './MainAdd'
 import { useDispatch } from 'react-redux';
 import {user} from '../../Features/userSlice'
+import{GetUserAll}from '../../Request/service/users'
 
 
 const useStyles = makeStyles({
@@ -90,26 +91,38 @@ const useStyles = makeStyles({
 
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'firstName', headerName: 'First name', width: 150 },
-    { field: 'lastName', headerName: 'Last name', width: 150 },
+    { field: 'user_id', headerName: 'ID', width: 100 },
+    { field: 'full_name', headerName: 'Full Name', width: 150 },
+    { field: 'email', headerName: 'Email', width: 200 },
     {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
+      field: 'gender',
+      headerName: 'Gender',
+      type: 'Gender',
       width: 110,
     },
     {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (params) =>
-        `${params.getValue(params.id, 'firstName') || ''} ${
-          params.getValue(params.id, 'lastName') || ''
-        }`,
+      field: 'phone_number',
+      headerName: 'Phone Number',
+      type: 'Phone Number',
+      width: 130,
     },
+    {
+      field: 'address',
+      headerName: 'Address',
+      type: 'Address',
+      width: 200,
+    },
+    // {
+    //   field: 'fullName',
+    //   headerName: 'Full name',
+    //   description: 'This column has a value getter and is not sortable.',
+    //   sortable: false,
+    //   width: 160,
+    //   valueGetter: (params) =>
+    //     `${params.getValue(params.id, 'firstName') || ''} ${
+    //       params.getValue(params.id, 'lastName') || ''
+    //     }`,
+    // },
     {
       field: "actions",
       headerName: "Actions",
@@ -122,7 +135,7 @@ const useStyles = makeStyles({
             className="d-flex justify-content-between align-items-center"
             style={{ cursor: "pointer" }}
           >
-            <RowEdit index={params.row} />
+            <RowEdit index={params.row.id} />
           </div>
         );
       }
@@ -149,6 +162,15 @@ export default function Main() {
     const style = useStyles()
     let { url } = useRouteMatch();
     // console.log('url', url)
+    const [data,setdata]=useState([])
+    useEffect(()=>{
+      GetUserAll()
+      .then((res)=> {
+        setdata(res);
+       },
+        )
+        .catch((err)=> console.log(err))
+    },[])
     return (
       <>
       <div className={style.container} >
@@ -165,7 +187,7 @@ export default function Main() {
               Add Data
               </Button>
             </div>
-            <DataGrid className={style.data} rows={rows} columns={columns} pageSize={5} checkboxSelection />
+            <DataGrid getRowId={(r) => r.user_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
           </div>
           </div>
         </div>

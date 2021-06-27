@@ -80,7 +80,7 @@ export default function Login() {
         localStorage.setItem('token',res.accessToken);
         setcode(res.status)
         setmessage(res.message)
-        history.push('/dashboard')
+        setTimeout(function(){ history.push('/dashboard'); }, 1000);
       }
       else if (res.status == "401"){
         setOpen(true)
@@ -115,12 +115,12 @@ export default function Login() {
 const handleClose = () => {
   setOpen(false)
 };
-  //  useEffect(()=>{
-  //     const token = localStorage.getItem('token')
-  //     if( token && token !== "undefined"){
-  //       history.push('/dashboard')
-  //     }
-  //   },[])
+   useEffect(()=>{
+      const token = localStorage.getItem('token')
+      if( token && token !== "undefined"){
+        history.push('/dashboard')
+      }
+    },[])
   return (
     <Grid container component="main" className={classes.root}>
         <Snackbar open={open} autoHideDuration={3000}  onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
@@ -159,7 +159,7 @@ const handleClose = () => {
               value={email}
               onChange={e=>setemail(e.target.value)}
               autoFocus
-              style={{backgroundColor:'white',borderRadius:10}}
+              style={{backgroundColor:'white',borderRadius:10,padding:5}}
             />
              <Typography component="h1" variant="h6" style={{color:'white',fontWeight:400}}>
           Password :
@@ -176,7 +176,7 @@ const handleClose = () => {
               value={password}
               onChange={e=>setpassword(e.target.value)}
               autoComplete="current-password"
-              style={{backgroundColor:'white',borderRadius:10}}
+              style={{backgroundColor:'white',borderRadius:10,padding:5}}
             />
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

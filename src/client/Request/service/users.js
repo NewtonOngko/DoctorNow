@@ -17,7 +17,7 @@ export function AddUser (body) {
       body :body
     })
   }
-export function UpdateUser (body,id) {
+export function UpdateUser (id,body) {
     return request({
       url:  user.updateuser.replace(':id',id),
       method: 'PUT',

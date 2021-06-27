@@ -9,6 +9,7 @@ import Appointment from '../Containers/Appointment/Appointment';
 import ProfileAvatar from '../../client/Components/ProfileAvatar'
 import {selectUser} from "../Features/userSlice"
 import { useSelector } from 'react-redux';
+import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles({
@@ -122,6 +123,13 @@ export default function Sidebar() {
         })}
       </ul>
           </nav>
+          <div>
+          <Button
+              variant="contained"
+              style={{backgroundColor:'#FF4948',color:'white',marginTop:20, width:'14vw'}}>
+              Logout
+              </Button>
+          </div>
           </> : <></>}
       </div>
         </>
