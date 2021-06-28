@@ -47,6 +47,9 @@ exports.create = function addUser(req, res) {
 
 exports.findById = function getUserById(req, res) {
   User.findById(req.params.id, (err, user) => {
+    for(var i = 0 ; i < user.length; i++ ) {
+      user[i].birthdate= moment(user[i].birthdate).format("YYYY-MM-DD");
+    }
     if (err) res.send(err);
     res.json(user);
   });
