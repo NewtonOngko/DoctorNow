@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-globals */
 const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
+const moment = require("moment");
 const jwt = require('jsonwebtoken');
 const dbConn = require('../config/config.js');
 const { generateHash, checkPassword} = require('../config/encrypt_password.js');
@@ -17,7 +18,7 @@ const User = function userData(user) {
   this.address = user.address;
   this.gender = user.gender;
   this.phone_number = user.phone_number;
-  this.birthdate = user.birthdate;
+  this.birthdate = moment(user.birthdate).format("YYYY-MM-DD")
   this.birthplace = user.birthplace;
   this.profile_picture = user.profile_picture;
 

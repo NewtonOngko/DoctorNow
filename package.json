@@ -38,6 +38,7 @@
     "express": "^4.17.1",
     "firebase": "^8.6.8",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "prop-types": "^15.7.2",
     "react": "^16.5.2",
