@@ -28,14 +28,12 @@ const User = function userData(user) {
 }
 
 User.create = function createUser(newUser, result) {
+  newUser.password = generateHash(newUser.password);
   dbConn.query('INSERT INTO users set ? ', newUser, (err, res) => {
     if (err) {
       console.log('error: ', err)
       result(err, null)
     } else {
-      for (var i = 0; i < newUser.length; i++) {
-        newUser.password = generateHash(newUser.password)
-      }
       console.log(res.insertId)
       result(null, res.insertId)
     }
