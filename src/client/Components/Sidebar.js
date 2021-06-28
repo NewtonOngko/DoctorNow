@@ -98,6 +98,10 @@ export default function Sidebar() {
     const classes = useStyles();
     const [active, setactive] = useState(true)
     const user = useSelector(selectUser);
+    const onLogout=()=>{
+      history.push('/')
+      localStorage.setItem('token','')
+    }
     return (
         <>
         <div className={active ? classes.sidebar : classes.sidebarnone}>
@@ -126,7 +130,9 @@ export default function Sidebar() {
           <div>
           <Button
               variant="contained"
-              style={{backgroundColor:'#FF4948',color:'white',marginTop:20, width:'14vw'}}>
+              style={{backgroundColor:'#FF4948',color:'white',marginTop:20, width:'14vw'}}
+              onClick={onLogout}
+              >
               Logout
               </Button>
           </div>

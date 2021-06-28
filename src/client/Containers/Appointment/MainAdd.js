@@ -63,14 +63,11 @@ const useStyles = makeStyles({
 
 export default function MainAdd() {
     const style = useStyles()
-    const [name, setName] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [address, setaddress] = React.useState('');
-    const [phonenumber, setPhonenumber] = React.useState('');
-    const [gender, setGender] = React.useState('');
-    const [birthdate, setBirthdate] = React.useState('');
-    const [birthplace, setBirthplace] = React.useState('');
-    const [profile,setProfile]= React.useState('');
+    const [user, setUser] = React.useState('');
+    const [doctor, setDoctor] = React.useState('');
+    const [hospital, setHospital] = React.useState('');
+    const [time, setTime] = React.useState('');
+    const [price, setPrice] = React.useState('');
 
     const [loading,setloading]= useState(false)
     const [code,setcode]= useState('')
@@ -177,7 +174,7 @@ export default function MainAdd() {
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Add Users</p>
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Add Appointment</p>
           <div className={style.tablestyle}>
           <p style={{fontSize:30,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>BASIC INFORMATION</p>
           <Grid container direction="row" spacing ={2} style={{padding:20}}>
@@ -185,45 +182,19 @@ export default function MainAdd() {
             {PushAlert(code,message)}
           </Snackbar>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Full Name" value={name} onChange={e => setName(e.target.value)}  />
+                <TextField fullWidth id="standard-required" label="User Id" value={user} onChange={e => setUser(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Password" value={password} onChange={e => setPassword(e.target.value)}/>
+                <TextField fullWidth id="standard-required" label="Doctor" value={doctor} onChange={e => setDoctor(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Address" value={address} onChange={e => setaddress(e.target.value)}/>
+                <TextField fullWidth id="standard-required" label="Hospital" value={hospital} onChange={e => setHospital(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField select fullWidth id="standard-select-currency" label="Gender" value={gender} onChange={e => setGender(e.target.value)} >
-                    {Genderoption.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                <TextField type="datetime-local" fullWidth id="standard-required" label="time" value={time} onChange={e => setTime(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-              <TextField
-                fullWidth
-                id="date"
-                label="Date Of Birth"
-                type="date"
-                value={birthdate} 
-                onChange={e => setBirthdate(e.target.value)}
-                defaultValue="2017-05-24"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              </Grid>
-              <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="BirthPlace" value={birthplace} onChange={e => setBirthplace(e.target.value)} />
-              </Grid>
-              <Grid item xs ={6}>
-                 <TextField fullWidth id="standard-error-helper-text" label="Email" name="email" value={Email} onChange={onChangeEmail} helperText={Errortext} />
-              </Grid>
-              <Grid item xs ={6} >
-                <TextField fullWidth id="standard-required" label="Phone" value={phonenumber} onChange={e => setPhonenumber(e.target.value)}/>
+                <TextField fullWidth id="standard-required" label="Price" value={price} onChange={e => setPrice(e.target.value)}  />
               </Grid>
               {/* <Grid item xs={6}>
                 <form>

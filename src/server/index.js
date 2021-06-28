@@ -48,7 +48,7 @@ app.use('/users', userRoutes);
 app.use('/doctors', doctorRoutes);
 app.use('/hospitals', hospitalRoutes);
 app.use('/news', newsRoutes);
-app.use('/appoitments', appointmentRoutes);
+app.use('/appointments', appointmentRoutes);
 app.use('/consultations', consultationRoutes);
 app.use('/transactions', transactionController);
 app.use('/ratings', ratingController);

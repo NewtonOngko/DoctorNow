@@ -33,9 +33,9 @@ export default {
       main: '/consultations',
       addConsultation :'/consultations'
     },
-    appoitment: {
-      main: '/appoitments',
-      adduser :'/appoitments'
+    appointment: {
+      main: '/appointments',
+      adduser :'/appointments'
     },
     transactions: {
       main: '/transactions',

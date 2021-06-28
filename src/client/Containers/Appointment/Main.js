@@ -9,6 +9,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
 import {GetAppointmentAll} from '../../Request/service/appointment'
+import history from '../../Route/history';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch
+} from "react-router-dom";
 
 
 const useStyles = makeStyles({
@@ -69,13 +78,13 @@ const useStyles = makeStyles({
   };
 
   const columns = [
-    { field: 'appoitment_id', headerName: 'ID', width: 100 },
+    { field: 'appoitment_id', headerName: 'Appointment Id', width: 150 },
     { field: 'user_id', headerName: 'User', width: 120 },
     { field: 'doctor_id', headerName: 'Doctor', width: 120 },
     {
       field: 'hospital_id',
       headerName: 'Hospital',
-      width: 120,
+      width: 150,
     },
     {
       field: 'time',
@@ -120,6 +129,7 @@ const useStyles = makeStyles({
 export default function Main() {
     const style = useStyles()
     const [data,setdata]=useState([])
+    let{url}=useRouteMatch();
     useEffect(()=>{
       GetAppointmentAll()
       .then((res)=> setdata(res),
@@ -137,7 +147,9 @@ export default function Main() {
             <Button
               variant="contained"
               color="primary"
-              startIcon={<AddIcon />}>
+              startIcon={<AddIcon />}
+              onClick={() => history.push(`${url}/add`)}
+              >
               Add Data
               </Button>
             </div>

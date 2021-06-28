@@ -1,11 +1,11 @@
 import configRest from '../config.rest'
 import { request } from '../request'
 
-const {appoitment} = configRest.REST
+const {appointment} = configRest.REST
 
 export function GetAppointmentAll (body) {
     return request({
-      url:  appoitment.main,
+      url:  appointment.main,
       method: 'GET',
       data :body
     })

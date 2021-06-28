@@ -117,8 +117,13 @@ const handleClose = () => {
 };
    useEffect(()=>{
       const token = localStorage.getItem('token')
-      if( token && token !== "undefined"){
+      if(token===null || token ===''){
+        history.push('/')
+        //console.log('login',token)
+      }
+      else{
         history.push('/dashboard')
+        //console.log('login',token)
       }
     },[])
   return (

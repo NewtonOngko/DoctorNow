@@ -55,10 +55,11 @@ const useStyles = makeStyles({
   const RowEdit = ({ index }) => {
     const dispatch = useDispatch()
     const handleEditClick = () => {
+      console.log(index.user_id)
       history.push('/users/edit')
       dispatch(
         user({
-          id : index.id,
+          id : index.user_id,
         })
       );
     };
@@ -135,7 +136,7 @@ const useStyles = makeStyles({
             className="d-flex justify-content-between align-items-center"
             style={{ cursor: "pointer" }}
           >
-            <RowEdit index={params.row.id} />
+            <RowEdit index={params.row} />
           </div>
         );
       }

@@ -9,6 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
 import{GetUserAll}from '../../Request/service/users'
+import history from '../../Route/history'
 
 
 const useStyles = makeStyles({
@@ -127,14 +128,21 @@ export default function Main() {
     const [totalconst,setTotalconst] = useState("")
     const [totaldoc,setTotaldoctors] = useState("")
     useEffect(()=>{
-      GetUserAll()
-      .then((res)=> {
-        setdata(res);
-        console.log(res.length)
-        setTotalus(res.length);
-       },
-        )
-        .catch((err)=> console.log(err))
+      const token = localStorage.getItem('token')
+      if(token===null || token ===''){
+        history.push('/')
+        console.log('login',token)
+      }
+      else{
+        GetUserAll()
+        .then((res)=> {
+          setdata(res);
+          console.log(res.length)
+          setTotalus(res.length);
+         },
+          )
+          .catch((err)=> console.log(err))
+      } 
     },[])
     return (
       <>
