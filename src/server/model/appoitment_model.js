@@ -39,7 +39,14 @@ Appointment.findById = function getAppointmentById(id, result) {
 };
 
 Appointment.findAll = function getAllAppointment(result) {
-  dbConn.query('Select * from appointments', (err, res) => {
+  dbConn.query(`SELECT appointments.appoitment_id ,users.full_name as user ,doctors.full_name as doctor ,hospitals.hospital_name as hospital,appointments.time ,appointments.price ,appointments.created_at ,appointments.updated_at 
+  FROM appointments
+  JOIN users
+  ON appointments.user_id =users.user_id 
+  JOIN doctors
+  on appointments .doctor_id =doctors .doctor_id 
+  JOIN hospitals
+  on appointments .hospital_id = hospitals .hospital_id`, (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(null, err);

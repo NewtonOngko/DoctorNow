@@ -79,10 +79,10 @@ const useStyles = makeStyles({
 
   const columns = [
     { field: 'appoitment_id', headerName: 'Appointment Id', width: 150 },
-    { field: 'user_id', headerName: 'User', width: 120 },
-    { field: 'doctor_id', headerName: 'Doctor', width: 120 },
+    { field: 'user', headerName: 'User', width: 120 },
+    { field: 'doctor', headerName: 'Doctor', width: 120 },
     {
-      field: 'hospital_id',
+      field: 'hospital',
       headerName: 'Hospital',
       width: 150,
     },
