@@ -12,13 +12,12 @@ import { blue, red } from '@material-ui/core/colors';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Gap from '../../Components/Gap'
-import {AddUser} from '../../Request/service/users'
+import {UpdateUser,GetUserByID} from '../../Request/service/users'
 import {storage} from "../../Components/Firebase"
-import Alert from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar';
-import history from '../../Route/history';
-import Loading from "../../Components/Loading"
-
+import Avatar from 'react-avatar';
+import {selectUserid} from "../../Features/userSlice"
+import { useSelector } from 'react-redux';
+import PublishIcon from '@material-ui/icons/Publish';
 
 const useStyles = makeStyles({
     container: {
@@ -52,16 +51,16 @@ const useStyles = makeStyles({
 
   const Genderoption = [
     {
-      value: 'Male',
+      value: 'male',
       label: 'Male',
     },
     {
-      value: 'Female',
+      value: 'female',
       label: 'Female',
     }
   ];
 
-export default function MainAdd() {
+export default function EditUser() {
     const style = useStyles()
     const [name, setName] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -72,15 +71,13 @@ export default function MainAdd() {
     const [birthplace, setBirthplace] = React.useState('');
     const [profile,setProfile]= React.useState('');
 
-    const [loading,setloading]= useState(false)
-    const [code,setcode]= useState('')
-    const [message,setmessage]= useState('')
-    const [open, setOpen] = React.useState(false);
     const [Errortext, setErrortext] = React.useState('');
     const [Email, setEmail] = React.useState('');
     const allInputs = {imgUrl: ''}
     const [imageAsFile, setImageAsFile] = useState('')
     const [imageAsUrl, setImageAsUrl] = useState(allInputs)
+
+    const id = useSelector(selectUserid);
     //console.log(imageAsFile)
     const handleImageAsFile =  async(e) => {
          const image = e.target.files[0]
@@ -94,7 +91,7 @@ export default function MainAdd() {
         if(image === '') {
           console.error(`not an image, the image file is a ${typeof(image)}`)
         }
-        const uploadTask = storage.ref(`/images/${image.name}`).put(image)
+        const uploadTask = storage.ref(`/images/${id.id}/${image.name}`).put(image)
         //initiates the firebase side uploading 
         uploadTask.on('state_changed', 
         (snapShot) => {
@@ -106,7 +103,7 @@ export default function MainAdd() {
         }, () => {
           // gets the functions from storage refences the image storage in firebase by the children
           // gets the download url then sets the image from firebase as the value for the imgUrl key:
-          storage.ref('images').child(image.name).getDownloadURL()
+          storage.ref(`images/${id.id}`).child(image.name).getDownloadURL()
           .then(fireBaseUrl => {
             setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
           })
@@ -125,76 +122,81 @@ export default function MainAdd() {
   
           setEmail(e.target.value)
       }
-      //console.log(imageAsUrl)
-      const onAddData=()=>{
-        setloading(true);
-        AddUser({
+      //console.log(JSON.stringify(imageAsUrl.imgUrl))
+      const onSaveData=()=>{
+        console.log('imageurl',JSON.stringify(imageAsUrl.imgUrl))
+        UpdateUser(id.id,{
           full_name: name,
           email :Email,
-          password :password,
           address :address,
           gender:gender,
           phone_number:phonenumber,
           birthdate:birthdate,
           birthplace:birthplace,
-          //profilepicture:imageAsUrl,
+          profile_picture:imageAsUrl.imgUrl,
         }).then(
           res =>{
             console.log(res)
-            if(res.error==false){
-              setOpen(true)
-              setcode(false)
-              setmessage(res.message)
-              setTimeout(function(){ history.push('/users'); }, 1000);
-            }
-            else if (res.error==true){
-              setOpen(true)
-              setcode(true)
-              setmessage(res.message)
-            }
-            setloading(false);
           })
           .catch(err=>{
           console.log(err)
-          setOpen(true)
-          setcode(true)
-          setmessage(res.message)
-          setloading(false);
         })
       }
-      const PushAlert =(code,message)=>{
-        if(code==false){
-         return <Alert severity="success">{message}</Alert>
-        }
-        else if(code==true){
-         return <Alert severity="error">{message}</Alert>
-        }
-     }
-    const handleClose = () => {
-      setOpen(false)
-    };
+    useEffect(()=>{
+      console.log(id.id)
+      GetUserByID(id.id)
+      .then((res)=> {
+        console.log(res)
+        setName(res[0].full_name)
+        setaddress(res[0].address)
+        setPhonenumber(res[0].phone_number)
+        setGender(res[0].gender)
+        setBirthdate(res[0].birthdate)
+        setBirthplace(res[0].birthplace)
+        setEmail(res[0].email)
+        setProfile(res[0].profile_picture)
+      })
+      .catch((err)=> {
+      console.log(err)
+      })
+    },[])
     return (
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Add Users</p>
-          <div className={style.tablestyle}>
-          <p style={{fontSize:30,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>BASIC INFORMATION</p>
-          <Grid container direction="row" spacing ={2} style={{padding:20}}>
-          <Snackbar open={open} autoHideDuration={3000}  onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-            {PushAlert(code,message)}
-          </Snackbar>
-              <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Full Name" value={name} onChange={e => setName(e.target.value)}  />
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Users Information</p>
+            <Grid container direction="row" spacing={2} style={{padding:20}}>
+                <Grid item xs={3}>
+                    <Avatar round="20px" size="200" facebook-id="invalidfacebookusername" src={imageAsUrl.imgUrl || profile} />
+                    <Grid item >
+                    <p style={{fontSize:16,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Profile Upload</p>
+                    <form>
+                      <div style={{padding:20,backgroundColor:'#C2D3D8',borderRadius:20,display:'flex',flexDirection:'row',width:'auto'}}>
+                        <PublishIcon/>
+                        <label>
+                        <p style={{margin:0,fontSize:18,fontWeight:'bold',fontFamily: 'Noto Sans JP'}}>Browse...</p>
+                        <input style={{display:'none'}}
+                        // allows you to reach into your file directory and upload image to the browser
+                          type="file"
+                          onChange={handleImageAsFile}
+                        />
+                        </label>
+                      </div>
+                    </form>
+                  </Grid>
+                </Grid>
+                <Grid container xs={9} direction="row" spacing={2} >
+                <Grid item xs ={6}>
+                <TextField fullWidth variant="filled" id="filled-basic" label="Full Name" value={name} onChange={e => setName(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Password" value={password} onChange={e => setPassword(e.target.value)}/>
+                <TextField disabled fullWidth variant="filled" id="filled-basic" label="Password" value={password} onChange={e => setPassword(e.target.value)}/>
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Address" value={address} onChange={e => setaddress(e.target.value)}/>
+                <TextField fullWidth variant="filled"id="filled-basic" label="Address" value={address} onChange={e => setaddress(e.target.value)}/>
               </Grid>
               <Grid item xs ={6}>
-                <TextField select fullWidth id="standard-select-currency" label="Gender" value={gender} onChange={e => setGender(e.target.value)} >
+                <TextField select fullWidth variant="filled" id="filled-select-currency" label="Gender" value={gender} onChange={e => setGender(e.target.value)} >
                     {Genderoption.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
                       {option.label}
@@ -206,6 +208,7 @@ export default function MainAdd() {
               <TextField
                 fullWidth
                 id="date"
+                variant="filled"
                 label="Date Of Birth"
                 type="date"
                 value={birthdate} 
@@ -217,29 +220,22 @@ export default function MainAdd() {
               />
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="BirthPlace" value={birthplace} onChange={e => setBirthplace(e.target.value)} />
+                <TextField fullWidth variant="filled" id="filled-required" label="BirthPlace" value={birthplace} onChange={e => setBirthplace(e.target.value)} />
               </Grid>
               <Grid item xs ={6}>
-                 <TextField fullWidth id="standard-error-helper-text" label="Email" name="email" value={Email} onChange={onChangeEmail} helperText={Errortext} />
+                <TextField fullWidth variant="filled" id="filled-error-helper-text" label="Email" name="email" value={Email} onChange={onChangeEmail} helperText={Errortext} />
               </Grid>
               <Grid item xs ={6} >
-                <TextField fullWidth id="standard-required" label="Phone" value={phonenumber} onChange={e => setPhonenumber(e.target.value)}/>
+                <TextField fullWidth variant="filled" id="filled-required" label="Phone" value={phonenumber} onChange={e => setPhonenumber(e.target.value)}/>
               </Grid>
-              {/* <Grid item xs={6}>
-                <form>
-                  <input 
-                  // allows you to reach into your file directory and upload image to the browser
-                    type="file"
-                    onChange={handleImageAsFile}
-                  />
-                </form>
-              </Grid> */}
-          </Grid>
-              <div style={{margin:20,display:'flex',flexDirection:'row'}}>
+              
+                </Grid>
+            </Grid>
+            <div style={{margin:20,display:'flex',flexDirection:'row',justifyContent:'flex-end'}}>
               <Button
               variant="contained"
               color="primary"
-              onClick={onAddData}
+              onClick={onSaveData}
               >
               Save
               </Button>
@@ -250,8 +246,6 @@ export default function MainAdd() {
               Cancel
               </Button>
               </div>
-          </div>
-          {loading && <Loading/>}
         </div>  
       </>
     )

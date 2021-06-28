@@ -65,8 +65,8 @@ User.findAll = function getAllUser(result) {
 
 User.update = function updateUser(id, user, result) {
   dbConn.query(
-    'UPDATE users SET full_name=?, email=?,phone_number=? WHERE user_id = ?',
-    [user.full_name, user.email, user.phone_number, id],
+    'UPDATE users SET full_name=?, email=?,phone_number=?,address=?,gender=?,birthplace=?,birthdate=?,profile_picture=? WHERE user_id = ?',
+    [user.full_name, user.email, user.phone_number,user.address,user.gender,user.birthplace,user.birthdate,user.profile_picture ,id],
     (err, res) => {
       if (err) {
         console.log('error: ', err)

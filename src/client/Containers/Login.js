@@ -15,19 +15,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import LoginIMG from '../../client/Assets/Login_IMG.jpg';
 import history from '../../client/Route/history';
 import { UserLogin } from "../Request/service/login";
-
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="textSecondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://material-ui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+import Loading from "../Components/Loading"
+import { useDispatch } from 'react-redux';
+import {login} from '../../client/Features/userSlice'
+import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
+import { Pause } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,19 +57,80 @@ export default function Login() {
   const classes = useStyles();
   const [email,setemail]= useState('')
   const [password,setpassword]= useState('')
-  useEffect(()=>{
-    
-  },[])
-
+  const [code,setcode]= useState('')
+  const [message,setmessage]= useState('')
+  const [loading,setloading]= useState(false)
+  const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch()
   const onLogin = () =>{
-    UserLogin({"email" : email, "password" : password})
-    .then((res) => 
-      console.log('loginres',res),history.push('/dashboard'))
-    .catch(err=>console.log('loginerr',err))
+    setloading(true);
+    
+    UserLogin({"admin_username" :email, "admin_password" : password})
+    .then((res) => {
+      console.log('loginres',res);
+      if(res.status == "200"){
+        dispatch(
+          login({
+            id : res.id,
+            email : res.email,
+            name : res.name,
+          })
+        );
+        setOpen(true) 
+        localStorage.setItem('token',res.accessToken);
+        setcode(res.status)
+        setmessage(res.message)
+        setTimeout(function(){ history.push('/dashboard'); }, 1000);
+      }
+      else if (res.status == "401"){
+        setOpen(true)
+        setcode(res.status)
+        setmessage(res.message)
+      }
+      else if (res.status == "404"){
+        setOpen(true)
+        setcode(res.status)
+        setmessage(res.message)
+      }
+      setloading(false);
+    })
+    .catch(err=>{
+      console.log('loginres',err);
+      setloading(false);
+    })
+    
   }
-  
+  const PushAlert =(code,message)=>{
+    if(code==200){
+     return <Alert severity="success">{message}</Alert>
+    }
+    else if(code==404){
+     return <Alert severity="error">{message}</Alert>
+    }
+    else if(code==401){
+     return <Alert severity="error">{message}</Alert>
+    }
+ }
+
+const handleClose = () => {
+  setOpen(false)
+};
+   useEffect(()=>{
+      const token = localStorage.getItem('token')
+      if(token===null || token ===''){
+        history.push('/')
+        //console.log('login',token)
+      }
+      else{
+        history.push('/dashboard')
+        //console.log('login',token)
+      }
+    },[])
   return (
     <Grid container component="main" className={classes.root}>
+        <Snackbar open={open} autoHideDuration={3000}  onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+          {PushAlert(code,message)}
+          </Snackbar>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={9} className={classes.image}>
         <Typography component="h1" variant="h1" style={{color:'white',fontWeight:700,justifyContent:'center',alignItems:'center',display:'flex',flexDirection:'column',height:'25vw'}}>
@@ -94,7 +148,7 @@ export default function Login() {
           <Typography component="h1" variant="h5" style={{color:'white'}}>
             Welcome Back,
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={onLogin}>
           <Typography component="h1" variant="h6"  style={{color:'white',fontWeight:400}}>
           Username :
           </Typography>
@@ -110,7 +164,7 @@ export default function Login() {
               value={email}
               onChange={e=>setemail(e.target.value)}
               autoFocus
-              style={{backgroundColor:'white',borderRadius:10}}
+              style={{backgroundColor:'white',borderRadius:10,padding:5}}
             />
              <Typography component="h1" variant="h6" style={{color:'white',fontWeight:400}}>
           Password :
@@ -127,7 +181,7 @@ export default function Login() {
               value={password}
               onChange={e=>setpassword(e.target.value)}
               autoComplete="current-password"
-              style={{backgroundColor:'white',borderRadius:10}}
+              style={{backgroundColor:'white',borderRadius:10,padding:5}}
             />
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -143,7 +197,7 @@ export default function Login() {
             >
               Sign In
             </Button>
-            <Grid container>
+            {/* <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
@@ -154,13 +208,14 @@ export default function Login() {
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
-            </Grid>
+            </Grid> */}
             <Box mt={5}>
               {/* <Copyright /> */}
             </Box>
           </form>
         </div>
       </Grid>
+      {loading && <Loading/>}
     </Grid>
   );
 }

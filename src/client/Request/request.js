@@ -29,14 +29,15 @@ export async function request (pack) {
       }
     }
   }
-//   const Token = await storages.getItem('token')
-//   console.log('testTOken', Token);
+   const Token = localStorage.getItem('token')
+   console.log('testToken', Token);
   return await axios.request({
         url: `${API_URL}${url}`,
         headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json',
+          //'Content-Type': 'application/x-www-form-urlencoded',
           'Access-Control-Allow-Origin': '*',
-         // 'Authorization': `${API_BERIER} ${Token}`
+          'Authorization': `${API_BERIER} ${Token}`
         },
         method,
         data: JSON.stringify(body)

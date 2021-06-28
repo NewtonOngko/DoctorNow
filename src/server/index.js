@@ -39,19 +39,23 @@ const consultationRoutes = require('./routes/consultation_routes.js');
 const transactionController = require('./routes/transaction_routes.js');
 const ratingController = require('./routes/rating_routes.js');
 const recommendationController = require('./routes/recommendation_routes.js');
-const loginController = require('./routes/login_routes.js');
+const loginRoutes = require('./routes/login_routes.js');
+const adminRoutes = require('./routes/admin_routes.js');
+const adminLoginRoutes = require('./routes/admin_login_routes.js');
 
 // using as middleware
 app.use('/users', userRoutes);
 app.use('/doctors', doctorRoutes);
 app.use('/hospitals', hospitalRoutes);
 app.use('/news', newsRoutes);
-app.use('/appoitments', appointmentRoutes);
+app.use('/appointments', appointmentRoutes);
 app.use('/consultations', consultationRoutes);
 app.use('/transactions', transactionController);
 app.use('/ratings', ratingController);
 app.use('/recommendations', recommendationController);
-app.use('/login', loginController);
+app.use('/login', loginRoutes);
+app.use('/admin', adminRoutes);
+app.use('/admin/login', adminLoginRoutes);
 
 // listen for requests
 app.listen(port, () => {

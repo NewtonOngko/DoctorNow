@@ -9,12 +9,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
 import{GetUserAll}from '../../Request/service/users'
+import history from '../../Route/history'
 
 
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1060px',
+      height:'1040px',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
@@ -70,13 +71,25 @@ const useStyles = makeStyles({
 
   const columns = [
     { field: 'user_id', headerName: 'ID', width: 100 },
-    { field: 'full_name', headerName: 'First name', width: 150 },
-    { field: 'Gender', headerName: 'Last name', width: 150 },
+    { field: 'full_name', headerName: 'Full Name', width: 150 },
+    { field: 'email', headerName: 'Email', width: 200 },
     {
-      field: 'email',
-      headerName: 'Age',
-      type: 'number',
+      field: 'gender',
+      headerName: 'Gender',
+      type: 'Gender',
       width: 110,
+    },
+    {
+      field: 'phone_number',
+      headerName: 'Phone Number',
+      type: 'Phone Number',
+      width: 130,
+    },
+    {
+      field: 'address',
+      headerName: 'Address',
+      type: 'Address',
+      width: 200,
     },
     // {
     //   field: 'fullName',
@@ -108,30 +121,28 @@ const useStyles = makeStyles({
     }
   ];
   
-  const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 10, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    { id: 11, lastName: 'Wijaya', firstName: 'Gil', age: 65 },
-    { id: 12, lastName: 'Saputra', firstName: 'Nico', age: 65 },
-    { id: 13, lastName: 'Wong', firstName: 'SOI', age: 65 },
-    { id: 14, lastName: 'Gohza', firstName: 'HER', age: 65 },
-  ];
-
 export default function Main() {
     const style = useStyles()
     const [data,setdata]=useState([])
+    const [totalus,setTotalus] = useState("")
+    const [totalconst,setTotalconst] = useState("")
+    const [totaldoc,setTotaldoctors] = useState("")
     useEffect(()=>{
-      GetUserAll()
-      .then((res)=> setdata(res),
-        )
-        .catch((err)=> console.log(err))
+      const token = localStorage.getItem('token')
+      if(token===null || token ===''){
+        history.push('/')
+        console.log('login',token)
+      }
+      else{
+        GetUserAll()
+        .then((res)=> {
+          setdata(res);
+          console.log(res.length)
+          setTotalus(res.length);
+         },
+          )
+          .catch((err)=> console.log(err))
+      } 
     },[])
     return (
       <>
@@ -141,7 +152,7 @@ export default function Main() {
          <div style={{display:'flex',flexDirection:'row'}}>
          <div className={style.listitem}>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >Total Users</p>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
+            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >{totalus}</p>
          </div>
          <div className={style.listitem}>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Total Consultations</p>

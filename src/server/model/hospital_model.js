@@ -39,7 +39,7 @@ Hospital.findById = function getHospitalById(id, result) {
 };
 
 Hospital.findAll = function getAllHospital(result) {
-  dbConn.query('Select * from hospital', (err, res) => {
+  dbConn.query('Select * from hospitals', (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(null, err);

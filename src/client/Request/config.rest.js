@@ -13,10 +13,37 @@ export default {
   API_URL: `${host}:${port01}`,
   REST: {
     auth: {
-      login: '/login',
+      login: '/admin/login',
     },
     user: {
       main: '/users',
+      adduser :'/users',
+      updateuser:'/users/:id',
+      getbyid:'/users/:id'
+    },
+    doctor: {
+      main: '/doctors',
+      addDoctor :'/doctors'
+    },
+    hospital: {
+      main: '/hospitals',
+      addDoctor :'/hospitals'
+    },
+    consultation: {
+      main: '/consultations',
+      addConsultation :'/consultations'
+    },
+    appointment: {
+      main: '/appointments',
+      adduser :'/appointments'
+    },
+    transactions: {
+      main: '/transactions',
+      adduser :'/transactions'
+    },
+    news: {
+      main: '/news',
+      adduser :'/news'
     }
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../Components/Header'
@@ -18,12 +18,15 @@ import {
   useRouteMatch
 } from "react-router-dom";
 import MainAdd from './MainAdd'
+import { useDispatch } from 'react-redux';
+import {user} from '../../Features/userSlice'
+import{GetUserAll}from '../../Request/service/users'
 
 
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1060px',
+      height:'1040px',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
@@ -50,7 +53,17 @@ const useStyles = makeStyles({
     }
   });
   const RowEdit = ({ index }) => {
+    const dispatch = useDispatch()
     const handleEditClick = () => {
+      console.log(index.user_id)
+      history.push('/users/edit')
+      dispatch(
+        user({
+          id : index.user_id,
+        })
+      );
+    };
+    const handleDeleteClick = () => {
       // some action
     };
     return (
@@ -67,7 +80,7 @@ const useStyles = makeStyles({
           <IconButton
             color="secondary"
             aria-label="add an alarm"
-            onClick={handleEditClick}
+            onClick={handleDeleteClick}
           >
             <DeleteIcon style={{ color: red[500] }} />
           </IconButton>
@@ -77,27 +90,40 @@ const useStyles = makeStyles({
     );
   };
 
+
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'firstName', headerName: 'First name', width: 150 },
-    { field: 'lastName', headerName: 'Last name', width: 150 },
+    { field: 'user_id', headerName: 'ID', width: 100 },
+    { field: 'full_name', headerName: 'Full Name', width: 150 },
+    { field: 'email', headerName: 'Email', width: 200 },
     {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
+      field: 'gender',
+      headerName: 'Gender',
+      type: 'Gender',
       width: 110,
     },
     {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (params) =>
-        `${params.getValue(params.id, 'firstName') || ''} ${
-          params.getValue(params.id, 'lastName') || ''
-        }`,
+      field: 'phone_number',
+      headerName: 'Phone Number',
+      type: 'Phone Number',
+      width: 130,
     },
+    {
+      field: 'address',
+      headerName: 'Address',
+      type: 'Address',
+      width: 200,
+    },
+    // {
+    //   field: 'fullName',
+    //   headerName: 'Full name',
+    //   description: 'This column has a value getter and is not sortable.',
+    //   sortable: false,
+    //   width: 160,
+    //   valueGetter: (params) =>
+    //     `${params.getValue(params.id, 'firstName') || ''} ${
+    //       params.getValue(params.id, 'lastName') || ''
+    //     }`,
+    // },
     {
       field: "actions",
       headerName: "Actions",
@@ -110,7 +136,7 @@ const useStyles = makeStyles({
             className="d-flex justify-content-between align-items-center"
             style={{ cursor: "pointer" }}
           >
-            <RowEdit index={params.row.id} />
+            <RowEdit index={params.row} />
           </div>
         );
       }
@@ -137,25 +163,20 @@ export default function Main() {
     const style = useStyles()
     let { url } = useRouteMatch();
     // console.log('url', url)
+    const [data,setdata]=useState([])
+    useEffect(()=>{
+      GetUserAll()
+      .then((res)=> {
+        setdata(res);
+       },
+        )
+        .catch((err)=> console.log(err))
+    },[])
     return (
       <>
       <div className={style.container} >
         <Header/>
         <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Users</p>
-         {/* <div style={{display:'flex',flexDirection:'row'}}>
-         <div className={style.listitem}>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >Total Users</p>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
-         </div>
-         <div className={style.listitem}>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Total Consultations</p>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
-         </div>
-         <div className={style.listitem}>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Total Doctors</p>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
-         </div>
-         </div> */}
           <div>
           <div className={style.tablestyle}>
             <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
@@ -167,16 +188,9 @@ export default function Main() {
               Add Data
               </Button>
             </div>
-            <DataGrid className={style.data} rows={rows} columns={columns} pageSize={5} checkboxSelection />
+            <DataGrid getRowId={(r) => r.user_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
           </div>
           </div>
-            {/* <Switch>
-              <Route exact path={path}>
-              </Route>
-              <Route path={`${path}/:topicId`}>
-                <MainAdd />
-              </Route>
-            </Switch> */}
         </div>
       </>
     )

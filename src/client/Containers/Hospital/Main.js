@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../Components/Header'
@@ -8,12 +8,13 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
+import {GetHospitalAll} from '../../Request/service/hospital'
 
 
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1060px',
+      height:'1040px',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
@@ -68,25 +69,14 @@ const useStyles = makeStyles({
   };
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'firstName', headerName: 'First name', width: 150 },
-    { field: 'lastName', headerName: 'Last name', width: 150 },
+    { field: 'hospital_id', headerName: 'ID', width: 100 },
+    { field: 'hospital_name', headerName: 'First name', width: 150 },
+    { field: 'email', headerName: 'Last name', width: 150 },
     {
-      field: 'age',
+      field: 'phone_number',
       headerName: 'Age',
       type: 'number',
       width: 110,
-    },
-    {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (params) =>
-        `${params.getValue(params.id, 'firstName') || ''} ${
-          params.getValue(params.id, 'lastName') || ''
-        }`,
     },
     {
       field: "actions",
@@ -125,6 +115,13 @@ const useStyles = makeStyles({
 
 export default function Main() {
     const style = useStyles()
+    const [data,setdata] = useState([])
+    useEffect(()=>{
+      GetHospitalAll()
+      .then((res)=> setdata(res),
+        )
+        .catch((err)=> console.log(err))
+    },[])
     return (
       <>
       <div className={style.container} >
@@ -154,7 +151,7 @@ export default function Main() {
               Add Data
               </Button>
             </div>
-            <DataGrid className={style.data} rows={rows} columns={columns} pageSize={5} checkboxSelection />
+            <DataGrid getRowId={(r) => r.hospital_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
           </div>
           </div>
         </div>

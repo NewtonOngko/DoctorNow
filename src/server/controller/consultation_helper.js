@@ -1,4 +1,4 @@
-const Consultation = require('../model/appoitment_model.js');
+const Consultation = require('../model/consultation_model.js');
 
 exports.findAll = function getConsultation(req, res) {
   Consultation.findAll((err, consultation) => {

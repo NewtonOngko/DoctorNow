@@ -7,7 +7,7 @@ export function UserLogin (body) {
     return request({
       url:  auth.login,
       method: 'POST',
-      data :body
+      body :body
     })
   }
   
