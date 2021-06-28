@@ -74,9 +74,8 @@ const useStyles = makeStyles({
     { field: 'email', headerName: 'Last name', width: 150 },
     {
       field: 'phone_number',
-      headerName: 'Age',
-      type: 'number',
-      width: 110,
+      headerName: 'Phone Number',
+      width: 150,
     },
     {
       field: "actions",

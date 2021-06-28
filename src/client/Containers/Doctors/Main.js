@@ -9,6 +9,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
 import {GetDoctorAll} from '../../Request/service/doctor'
+import history from '../../Route/history';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch
+} from "react-router-dom";
 
 
 const useStyles = makeStyles({
@@ -109,6 +118,7 @@ const useStyles = makeStyles({
 export default function Main() {
     const style = useStyles()
     const [data,setdata] = useState([])
+    let { url } = useRouteMatch();
     useEffect(()=>{
       GetDoctorAll()
       .then((res)=> setdata(res),
@@ -140,7 +150,9 @@ export default function Main() {
             <Button
               variant="contained"
               color="primary"
-              startIcon={<AddIcon />}>
+              startIcon={<AddIcon />}
+              onClick={() => history.push(`${url}/add`)}
+              >
               Add Data
               </Button>
             </div>

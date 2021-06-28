@@ -92,22 +92,27 @@ const useStyles = makeStyles({
       width: 150,
     },
     {
-      field: "actions",
-      headerName: "Actions",
-      sortable: false,
-      width: 140,
-      disableClickEventBubbling: true,
-      renderCell: (params) => {
-        return (
-          <div
-            className="d-flex justify-content-between align-items-center"
-            style={{ cursor: "pointer" }}
-          >
-            <RowEdit index={params.row.id} />
-          </div>
-        );
-      }
-    }
+      field: 'price',
+      headerName: 'Price',
+      width: 150,
+    },
+    // {
+    //   field: "actions",
+    //   headerName: "Actions",
+    //   sortable: false,
+    //   width: 140,
+    //   disableClickEventBubbling: true,
+    //   renderCell: (params) => {
+    //     return (
+    //       <div
+    //         className="d-flex justify-content-between align-items-center"
+    //         style={{ cursor: "pointer" }}
+    //       >
+    //         <RowEdit index={params.row.id} />
+    //       </div>
+    //     );
+    //   }
+    // }
   ];
   
   // const rows = [
@@ -144,14 +149,14 @@ export default function Main() {
           <div>
           <div className={style.tablestyle}>
             <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
-            <Button
+            {/* <Button
               variant="contained"
               color="primary"
               startIcon={<AddIcon />}
               onClick={() => history.push(`${url}/add`)}
               >
               Add Data
-              </Button>
+              </Button> */}
             </div>
             <DataGrid getRowId={(r) => r.appoitment_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
           </div>
