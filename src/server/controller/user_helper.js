@@ -56,28 +56,32 @@ exports.findById = function getUserById(req, res) {
 exports.update = function updateUser(req, res) {
   const newUser = new User(req.body);
 
-  if ( newUser.full_name == null || newUser.email == null || newUser.address == null || newUser.gender == null || newUser.phone_number == null || newUser.birthdate == null || newUser.birthplace == null || newUser.profile_picture == null) {  
-    res.status(400).send({ error: true, message: 'Please provide all required field' });
-  } else if (newUser.email == '' && newUser.email != Regex('/^\S+@\S+\.\S+$/')) {
-    res.status(400).send({ error: true, message: 'Please input your email' });
-  } else if (newUser.full_name == '') {
-    res.status(400).send({ error: true, message: 'Please input your full name' });
-  } else if (newUser.address == '') {
-    res.status(400).send({ error: true, message: 'Please input your address' });
-  } else if (newUser.gender == '') {
-    res.status(400).send({ error: true, message: 'Please input your gender' });
-  } else if (newUser.phone_number == '' && newUser.phone_number != Number) {
-    res.status(400).send({ error: true, message: 'Please input your phone number' });
-  } else if (newUser.birthdate == '' && newUser.birthdate == Date)  {
-    res.status(400).send({ error: true, message: 'Please input your birthdate' });
-  } else if (newUser.birthplace == '') {
-    res.status(400).send({ error: true, message: 'Please input your birthplace' });
-  } else {
-    User.update(req.params.id, new User(req.body), (err) => {
-      if (err) res.send(err);
-      res.json({ error: false, message: 'User updated' });
-    });
-  }
+  // if ( newUser.full_name == null || newUser.email == null || newUser.address == null || newUser.gender == null || newUser.phone_number == null || newUser.birthdate == null || newUser.birthplace == null || newUser.profile_picture == null) {  
+  //   res.status(400).send({ error: true, message: 'Please provide all required field' });
+  // } else if (newUser.email == '' && newUser.email != Regex('/^\S+@\S+\.\S+$/')) {
+  //   res.status(400).send({ error: true, message: 'Please input your email' });
+  // } else if (newUser.full_name == '') {
+  //   res.status(400).send({ error: true, message: 'Please input your full name' });
+  // } else if (newUser.address == '') {
+  //   res.status(400).send({ error: true, message: 'Please input your address' });
+  // } else if (newUser.gender == '') {
+  //   res.status(400).send({ error: true, message: 'Please input your gender' });
+  // } else if (newUser.phone_number == '' && newUser.phone_number != Number) {
+  //   res.status(400).send({ error: true, message: 'Please input your phone number' });
+  // } else if (newUser.birthdate == '' && newUser.birthdate == Date)  {
+  //   res.status(400).send({ error: true, message: 'Please input your birthdate' });
+  // } else if (newUser.birthplace == '') {
+  //   res.status(400).send({ error: true, message: 'Please input your birthplace' });
+  // } else {
+  //   User.update(req.params.id, new User(req.body), (err) => {
+  //     if (err) res.send(err);
+  //     res.json({ error: false, message: 'User updated' });
+  //   });
+  // }
+  User.update(req.params.id, new User(req.body), (err) => {
+    if (err) res.send(err);
+    res.json({ error: false, message: 'User updated' });
+  });
 };
 
 
