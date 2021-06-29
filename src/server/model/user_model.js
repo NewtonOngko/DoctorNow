@@ -28,7 +28,7 @@ const User = function userData(user) {
 }
 
 User.create = function createUser(newUser, result) {
-  newUser.password = generateHash(newUser.password);
+  newUser.password = generateHash(newUser.password)
   dbConn.query('INSERT INTO users set ? ', newUser, (err, res) => {
     if (err) {
       console.log('error: ', err)
@@ -64,18 +64,28 @@ User.findAll = function getAllUser(result) {
 }
 
 User.update = function updateUser(id, user, result) {
-  dbConn.query(
-    'UPDATE users SET full_name=?, email=?,phone_number=?,address=?,gender=?,birthplace=?,birthdate=?,profile_picture=? WHERE user_id = ?',
-    [user.full_name, user.email, user.phone_number,user.address,user.gender,user.birthplace,user.birthdate,user.profile_picture ,id],
-    (err, res) => {
-      if (err) {
-        console.log('error: ', err)
-        result(null, err)
-      } else {
-        result(null, res)
-      }
-    },
-  )
+  const arrUser = []
+  const arrUser1 = Object.keys(user)
+  var query = 'UPDATE users SET '
+
+  for (var i = 0; i < arrUser1.length; i++) {
+    query += arrUser1[i] + '= ?'
+
+    if (i < arrUser1.length - 1) {
+      query += ','
+    }
+    arrUser.push(user[arrUser1[i]]);
+  }
+  query += 'WHERE user_id=?'
+  arrUser.push(id)
+  dbConn.query(query, arrUser, (err, res) => {
+    if (err) {
+      console.log('error: ', err)
+      result(null, err)
+    } else {
+      result(null, res)
+    }
+  })
 }
 
 User.delete = function deleteUser(id, result) {

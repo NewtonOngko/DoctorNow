@@ -12,7 +12,7 @@ import { blue, red } from '@material-ui/core/colors';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Gap from '../../Components/Gap'
-import {AddUser} from '../../Request/service/users'
+import {AddDoctor} from '../../Request/service/doctor'
 import {storage} from "../../Components/Firebase"
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -60,6 +60,16 @@ const useStyles = makeStyles({
       label: 'Female',
     }
   ];
+  const Statusoption = [
+    {
+      value: '1',
+      label: 'Active',
+    },
+    {
+      value: '0',
+      label: 'Inactive',
+    }
+  ];
 
 export default function MainAdd() {
     const style = useStyles()
@@ -68,16 +78,18 @@ export default function MainAdd() {
     const [address, setaddress] = React.useState('');
     const [phonenumber, setPhonenumber] = React.useState('');
     const [gender, setGender] = React.useState('');
-    const [birthdate, setBirthdate] = React.useState('');
-    const [birthplace, setBirthplace] = React.useState('');
+    const [hospital, setHospital] = React.useState('');
+    const [str, setStr] = React.useState('');
     const [profile,setProfile]= React.useState('');
+    const [Email, setEmail] = React.useState('');
+    const [experience, setExperience] = React.useState('');
+    const [active, setActive] = React.useState(''); 
 
     const [loading,setloading]= useState(false)
     const [code,setcode]= useState('')
     const [message,setmessage]= useState('')
     const [open, setOpen] = React.useState(false);
     const [Errortext, setErrortext] = React.useState('');
-    const [Email, setEmail] = React.useState('');
     const allInputs = {imgUrl: ''}
     const [imageAsFile, setImageAsFile] = useState('')
     const [imageAsUrl, setImageAsUrl] = useState(allInputs)
@@ -128,15 +140,17 @@ export default function MainAdd() {
       //console.log(imageAsUrl)
       const onAddData=()=>{
         setloading(true);
-        AddUser({
+        AddDoctor({
           full_name: name,
           email :Email,
           password :password,
           address :address,
           gender:gender,
           phone_number:phonenumber,
-          birthdate:birthdate,
-          birthplace:birthplace,
+          hospital:hospital,
+          str_no:str,
+          work_experience:experience,
+          is_active:active
           //profilepicture:imageAsUrl,
         }).then(
           res =>{
@@ -145,7 +159,7 @@ export default function MainAdd() {
               setOpen(true)
               setcode(false)
               setmessage(res.message)
-              setTimeout(function(){ history.push('/users'); }, 1000);
+              setTimeout(function(){ history.push('/doctors'); }, 1000);
             }
             else if (res.error==true){
               setOpen(true)
@@ -177,7 +191,7 @@ export default function MainAdd() {
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Add Users</p>
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Add Doctors</p>
           <div className={style.tablestyle}>
           <p style={{fontSize:30,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>BASIC INFORMATION</p>
           <Grid container direction="row" spacing ={2} style={{padding:20}}>
@@ -185,13 +199,28 @@ export default function MainAdd() {
             {PushAlert(code,message)}
           </Snackbar>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Full Name" value={name} onChange={e => setName(e.target.value)}  />
+                <TextField fullWidth id="standard-required" label="Doctor Name" value={name} onChange={e => setName(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField type="password" fullWidth id="standard-required" label="Password" value={password} onChange={e => setPassword(e.target.value)}/>
+                <TextField fullWidth type="password" id="standard-required" label="Password" value={password} onChange={e => setPassword(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Address" value={address} onChange={e => setaddress(e.target.value)}/>
+                <TextField fullWidth id="standard-required" label="Hospital Id" value={hospital} onChange={e => setHospital(e.target.value)}  />
+              </Grid>
+              <Grid item xs ={6}>
+                <TextField fullWidth id="standard-required" label="STR NO" value={str} onChange={e => setStr(e.target.value)}  />
+              </Grid>
+              <Grid item xs ={6}>
+                 <TextField fullWidth id="standard-error-helper-text" label="Email" name="email" value={Email} onChange={onChangeEmail} helperText={Errortext} />
+              </Grid>
+              <Grid item xs ={6}>
+                <TextField fullWidth type="number" id="standard-required" label="Phone Number" value={phonenumber} onChange={e => setPhonenumber(e.target.value)}  />
+              </Grid>
+              <Grid item xs ={6}>
+                <TextField fullWidth id="standard-required" label="Work Experience" value={experience} onChange={e => setExperience(e.target.value)}  />
+              </Grid>
+              <Grid item xs ={6}>
+                <TextField fullWidth id="standard-required" label="Address" value={address} onChange={e => setaddress(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
                 <TextField select fullWidth id="standard-select-currency" label="Gender" value={gender} onChange={e => setGender(e.target.value)} >
@@ -203,37 +232,14 @@ export default function MainAdd() {
                 </TextField>
               </Grid>
               <Grid item xs ={6}>
-              <TextField
-                fullWidth
-                id="date"
-                label="Date Of Birth"
-                type="date"
-                value={birthdate} 
-                onChange={e => setBirthdate(e.target.value)}
-                defaultValue="2017-05-24"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
+                <TextField select fullWidth id="standard-select-currency" label="Active" value={active} onChange={e => setActive(e.target.value)} >
+                    {Statusoption.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
-              <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="BirthPlace" value={birthplace} onChange={e => setBirthplace(e.target.value)} />
-              </Grid>
-              <Grid item xs ={6}>
-                 <TextField fullWidth id="standard-error-helper-text" label="Email" name="email" value={Email} onChange={onChangeEmail} helperText={Errortext} />
-              </Grid>
-              <Grid item xs ={6} >
-                <TextField fullWidth type="number" id="standard-required" label="Phone" value={phonenumber} onChange={e => setPhonenumber(e.target.value)}/>
-              </Grid>
-              {/* <Grid item xs={6}>
-                <form>
-                  <input 
-                  // allows you to reach into your file directory and upload image to the browser
-                    type="file"
-                    onChange={handleImageAsFile}
-                  />
-                </form>
-              </Grid> */}
           </Grid>
               <div style={{margin:20,display:'flex',flexDirection:'row'}}>
               <Button

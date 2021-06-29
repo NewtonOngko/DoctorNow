@@ -51,19 +51,28 @@ Hospital.findAll = function getAllHospital(result) {
 };
 
 Hospital.update = function updatHospital(id, hospital, result) {
-  dbConn.query('UPDATE users SET hospital_name=?,email=?,phone_number=?,location=?,description=? WHERE id = ?', [hospital.hospital_name,
-    hospital.email,
-    hospital.phone_number,
-    hospital.location,
-    hospital.description,
-    id], (err, res) => {
-    if (err) {
-      console.log('error: ', err);
-      result(null, err);
-    } else {
-      result(null, res);
+  const arrHospital = []
+  const arrHospital1 = Object.keys(hospital)
+  var query = 'UPDATE hospitals SET '
+
+  for (var i = 0; i < arrHospital1.length; i++) {
+    query += arrHospital1[i] + '= ?'
+
+    if (i < arrHospital1.length - 1) {
+      query += ','
     }
-  });
+    arrHospital.push(hospital[arrHospital1[i]]);
+  }
+  query += 'WHERE hospital_id=?'
+  arrHospital.push(id)
+  dbConn.query(query, arrHospital, (err, res) => {
+    if (err) {
+      console.log('error: ', err)
+      result(null, err)
+    } else {
+      result(null, res)
+    }
+  })
 };
 
 Hospital.delete = function deleteHospital(id, result) {

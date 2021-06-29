@@ -17,7 +17,6 @@ import {
   useParams,
   useRouteMatch
 } from "react-router-dom";
-import MainAdd from './MainAdd'
 import { useDispatch } from 'react-redux';
 import {user} from '../../Features/userSlice'
 import{GetUserAll}from '../../Request/service/users'
@@ -26,7 +25,7 @@ import{GetUserAll}from '../../Request/service/users'
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1040px',
+      height:'100%',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
