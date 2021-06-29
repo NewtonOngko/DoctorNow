@@ -9,12 +9,23 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
 import {GetDoctorAll} from '../../Request/service/doctor'
+import history from '../../Route/history';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch
+} from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import {doctor} from '../../Features/viewSlice'
 
 
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1040px',
+      height:'100%',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
@@ -41,8 +52,15 @@ const useStyles = makeStyles({
     }
   });
   const RowEdit = ({ index }) => {
+    const dispatch = useDispatch()
     const handleEditClick = () => {
-      // some action
+      console.log(index.doctor_id)
+      history.push('/doctors/edit')
+      dispatch(
+        doctor({
+          id : index.doctor_id,
+        })
+      )
     };
     return (
       <FormControlLabel
@@ -99,7 +117,7 @@ const useStyles = makeStyles({
             className="d-flex justify-content-between align-items-center"
             style={{ cursor: "pointer" }}
           >
-            <RowEdit index={params.row.id} />
+            <RowEdit index={params.row} />
           </div>
         );
       }
@@ -109,6 +127,7 @@ const useStyles = makeStyles({
 export default function Main() {
     const style = useStyles()
     const [data,setdata] = useState([])
+    let { url } = useRouteMatch();
     useEffect(()=>{
       GetDoctorAll()
       .then((res)=> setdata(res),
@@ -140,7 +159,9 @@ export default function Main() {
             <Button
               variant="contained"
               color="primary"
-              startIcon={<AddIcon />}>
+              startIcon={<AddIcon />}
+              onClick={() => history.push(`${url}/add`)}
+              >
               Add Data
               </Button>
             </div>

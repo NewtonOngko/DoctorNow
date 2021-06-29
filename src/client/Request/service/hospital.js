@@ -10,25 +10,25 @@ export function GetHospitalAll (body) {
       data :body
     })
   }
-// export function AddUser (body) {
-//     return request({
-//       url:  user.adduser,
-//       method: 'POST',
-//       body :body
-//     })
-//   }
-// export function UpdateUser (id,body) {
-//     return request({
-//       url:  user.updateuser.replace(':id',id),
-//       method: 'PUT',
-//       body :body
-//     })
-//   }
-// export function GetUserByID (id,body) {
-//     return request({
-//       url:  user.getbyid.replace(':id',id),
-//       method: 'GET',
-//       body :body
-//     })
-//   }
+export function AddHospital (body) {
+    return request({
+      url:  hospital.addHospital,
+      method: 'POST',
+      body :body
+    })
+  }
+export function UpdateHospital (id,body) {
+    return request({
+      url:  hospital.updateHospital.replace(':id',id),
+      method: 'PUT',
+      body :body
+    })
+  }
+export function GetHospitalByID (id,body) {
+    return request({
+      url:  hospital.gethospitalbyid.replace(':id',id),
+      method: 'GET',
+      body :body
+    })
+  }
 

@@ -13,7 +13,7 @@ import {GetConsultationAll} from '../../Request/service/consultation'
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1040px',
+      height:'100%',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
@@ -82,22 +82,27 @@ const useStyles = makeStyles({
       width: 150,
     },
     {
-      field: "actions",
-      headerName: "Actions",
-      sortable: false,
-      width: 140,
-      disableClickEventBubbling: true,
-      renderCell: (params) => {
-        return (
-          <div
-            className="d-flex justify-content-between align-items-center"
-            style={{ cursor: "pointer" }}
-          >
-            <RowEdit index={params.row.id} />
-          </div>
-        );
-      }
-    }
+      field: 'price',
+      headerName: 'Price',
+      width: 150,
+    },
+    // {
+    //   field: "actions",
+    //   headerName: "Actions",
+    //   sortable: false,
+    //   width: 140,
+    //   disableClickEventBubbling: true,
+    //   renderCell: (params) => {
+    //     return (
+    //       <div
+    //         className="d-flex justify-content-between align-items-center"
+    //         style={{ cursor: "pointer" }}
+    //       >
+    //         <RowEdit index={params.row.id} />
+    //       </div>
+    //     );
+    //   }
+    // }
   ];
 
   // const rows = [
@@ -147,12 +152,12 @@ export default function Main() {
           <div>
           <div className={style.tablestyle}>
             <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
-            <Button
+            {/* <Button
               variant="contained"
               color="primary"
               startIcon={<AddIcon />}>
               Add Data
-              </Button>
+              </Button> */}
             </div>
             <DataGrid getRowId={(r) => r.consultation_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
           </div>

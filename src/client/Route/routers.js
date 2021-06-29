@@ -9,16 +9,24 @@ import EditUsers from '../Containers/Users/EditUser';
 
 import Appointment from '../Containers/Appointment/Appointment';
 import AppointmentMain from '../Containers/Appointment/Main';
-import AddAppointment from '../Containers/Appointment/MainAdd';
 import EditAppointment from '../Containers/Appointment/EditAppointment';
+
+import Doctors from '../Containers/Doctors/Doctors';
+import DoctorsMain from '../Containers/Doctors/Main';
+import AddDoctors from '../Containers/Doctors/MainAdd';
+import EditDoctors from '../Containers/Doctors/EditDoctor';
+
+import Hospital from '../Containers/Hospital/Hospital';
+import HospitalMain from '../Containers/Hospital/Main';
+import AddHospital from '../Containers/Hospital/MainAdd';
+import EditHospital from '../Containers/Hospital/EditHospital';
 
 import history from '../../client/Route/history';
 import Login from '../../client/Containers/Login';
 import Dashboard from '../Containers/DashBoard/Dashboard';
-import Doctors from '../Containers/Doctors/Doctors';
 
 
-import Hospital from '../Containers/Hospital/Hospital';
+
 import Consultation from '../Containers/Consultation/Consultation';
 import Reports from '../Containers/Reports/Reports';
 import Sidebar from '../../client/Components/Sidebar';
@@ -42,7 +50,6 @@ export default class Routers extends Component {
                               path={path + "/"}
                               component={AppointmentMain}
                             />
-                            <Route path={`${path}/add`} component={AddAppointment} />
                             <Route path={`${path}/edit`} component={EditAppointment} />
                             <Redirect exact from={path + "/"} to={path} />
                           </Switch>
@@ -66,8 +73,40 @@ export default class Routers extends Component {
                         </Users>
                       )}
                     />
-                    <Route path="/doctors" component={Doctors}/>
-                    <Route path="/hospital" component={Hospital}/>
+                    <Route
+                      path={"/doctors"}
+                      render={({ match: { path } }) => (
+                        <Doctors>
+                          <Switch>
+                            <Route
+                              exact
+                              path={path + "/"}
+                              component={DoctorsMain}
+                            />
+                            <Route path={`${path}/add`} component={AddDoctors} />
+                            <Route path={`${path}/edit`} component={EditDoctors} />
+                            <Redirect exact from={path + "/"} to={path} />
+                          </Switch>
+                        </Doctors>
+                      )}
+                    />
+                    <Route
+                      path={"/hospital"}
+                      render={({ match: { path } }) => (
+                        <Hospital>
+                          <Switch>
+                            <Route
+                              exact
+                              path={path + "/"}
+                              component={HospitalMain}
+                            />
+                            <Route path={`${path}/add`} component={AddHospital} />
+                            <Route path={`${path}/edit`} component={EditHospital} />
+                            <Redirect exact from={path + "/"} to={path} />
+                          </Switch>
+                        </Hospital>
+                      )}
+                    />
                     <Route path="/consultation" component={Consultation}/>
                     <Route path="/report" component={Reports}/>
                 </Switch>

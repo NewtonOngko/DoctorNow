@@ -12,7 +12,7 @@ import { blue, red } from '@material-ui/core/colors';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Gap from '../../Components/Gap'
-import {AddUser} from '../../Request/service/users'
+import {AddHospital} from '../../Request/service/hospital'
 import {storage} from "../../Components/Firebase"
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -23,7 +23,7 @@ import Loading from "../../Components/Loading"
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1040px',
+      height:'100%',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
@@ -49,66 +49,20 @@ const useStyles = makeStyles({
       height:'400px'
     },
   });
-
-  const Genderoption = [
-    {
-      value: 'Male',
-      label: 'Male',
-    },
-    {
-      value: 'Female',
-      label: 'Female',
-    }
-  ];
-
 export default function MainAdd() {
     const style = useStyles()
-    const [user, setUser] = React.useState('');
-    const [doctor, setDoctor] = React.useState('');
-    const [hospital, setHospital] = React.useState('');
-    const [time, setTime] = React.useState('');
-    const [price, setPrice] = React.useState('');
+    const [name, setName] = React.useState('');
+    const [phonenumber, setPhonenumber] = React.useState('');
+    const [Email, setEmail] = React.useState('');
+    const [location, setLocation] = React.useState('');
+    const [description, setDescription] = React.useState(''); 
 
     const [loading,setloading]= useState(false)
     const [code,setcode]= useState('')
     const [message,setmessage]= useState('')
     const [open, setOpen] = React.useState(false);
     const [Errortext, setErrortext] = React.useState('');
-    const [Email, setEmail] = React.useState('');
-    const allInputs = {imgUrl: ''}
-    const [imageAsFile, setImageAsFile] = useState('')
-    const [imageAsUrl, setImageAsUrl] = useState(allInputs)
-    //console.log(imageAsFile)
-    const handleImageAsFile =  async(e) => {
-         const image = e.target.files[0]
-         setImageAsFile(image)
-         handleFireBaseUpload(image)
-     }
-     const handleFireBaseUpload = (image) => {
-          // e.preventDefault()
-        console.log('start of upload')
-        // async magic goes here...
-        if(image === '') {
-          console.error(`not an image, the image file is a ${typeof(image)}`)
-        }
-        const uploadTask = storage.ref(`/images/${image.name}`).put(image)
-        //initiates the firebase side uploading 
-        uploadTask.on('state_changed', 
-        (snapShot) => {
-          //takes a snap shot of the process as it is happening
-          console.log(snapShot)
-        }, (err) => {
-          //catches the errors
-          console.log(err)
-        }, () => {
-          // gets the functions from storage refences the image storage in firebase by the children
-          // gets the download url then sets the image from firebase as the value for the imgUrl key:
-          storage.ref('images').child(image.name).getDownloadURL()
-          .then(fireBaseUrl => {
-            setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
-          })
-        })
-      }
+
       const validateEmail = (email)=> {
         const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
@@ -125,16 +79,12 @@ export default function MainAdd() {
       //console.log(imageAsUrl)
       const onAddData=()=>{
         setloading(true);
-        AddUser({
-          full_name: name,
+        AddHospital({
+          hospital_name: name,
           email :Email,
-          password :password,
-          address :address,
-          gender:gender,
           phone_number:phonenumber,
-          birthdate:birthdate,
-          birthplace:birthplace,
-          //profilepicture:imageAsUrl,
+          location :location,
+          description :description,
         }).then(
           res =>{
             console.log(res)
@@ -142,7 +92,7 @@ export default function MainAdd() {
               setOpen(true)
               setcode(false)
               setmessage(res.message)
-              setTimeout(function(){ history.push('/users'); }, 1000);
+              setTimeout(function(){ history.push('/hospital'); }, 1000);
             }
             else if (res.error==true){
               setOpen(true)
@@ -174,7 +124,7 @@ export default function MainAdd() {
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Add Appointment</p>
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Add Hospital</p>
           <div className={style.tablestyle}>
           <p style={{fontSize:30,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>BASIC INFORMATION</p>
           <Grid container direction="row" spacing ={2} style={{padding:20}}>
@@ -182,29 +132,20 @@ export default function MainAdd() {
             {PushAlert(code,message)}
           </Snackbar>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="User Id" value={user} onChange={e => setUser(e.target.value)}  />
+                <TextField fullWidth id="standard-required" label="Hospital Name" value={name} onChange={e => setName(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Doctor" value={doctor} onChange={e => setDoctor(e.target.value)}  />
+                 <TextField fullWidth id="standard-error-helper-text" label="Email" name="email" value={Email} onChange={onChangeEmail} helperText={Errortext} />
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Hospital" value={hospital} onChange={e => setHospital(e.target.value)}  />
+                <TextField fullWidth type="number" id="standard-required" label="Phone Number" value={phonenumber} onChange={e => setPhonenumber(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField type="datetime-local" fullWidth id="standard-required" label="time" value={time} onChange={e => setTime(e.target.value)}  />
+                <TextField fullWidth id="standard-required" label="location" value={location} onChange={e => setLocation(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Price" value={price} onChange={e => setPrice(e.target.value)}  />
+                <TextField fullWidth id="standard-required" label="description" value={description} onChange={e => setDescription(e.target.value)}  />
               </Grid>
-              {/* <Grid item xs={6}>
-                <form>
-                  <input 
-                  // allows you to reach into your file directory and upload image to the browser
-                    type="file"
-                    onChange={handleImageAsFile}
-                  />
-                </form>
-              </Grid> */}
           </Grid>
               <div style={{margin:20,display:'flex',flexDirection:'row'}}>
               <Button
@@ -217,7 +158,9 @@ export default function MainAdd() {
               <Gap width={20}/>
               <Button
               variant="contained"
-              color="primary">
+              color="primary"
+              onClick={()=> history.push('/users')}
+              >
               Cancel
               </Button>
               </div>

@@ -10,25 +10,25 @@ export function GetDoctorAll (body) {
       data :body
     })
   }
-// export function AddUser (body) {
-//     return request({
-//       url:  user.adduser,
-//       method: 'POST',
-//       body :body
-//     })
-//   }
-// export function UpdateUser (id,body) {
-//     return request({
-//       url:  user.updateuser.replace(':id',id),
-//       method: 'PUT',
-//       body :body
-//     })
-//   }
-// export function GetUserByID (id,body) {
-//     return request({
-//       url:  user.getbyid.replace(':id',id),
-//       method: 'GET',
-//       body :body
-//     })
-//   }
+export function AddDoctor (body) {
+    return request({
+      url:  doctor.addDoctor,
+      method: 'POST',
+      body :body
+    })
+  }
+export function UpdateDoctor (id,body) {
+    return request({
+      url:  doctor.updatedoctor.replace(':id',id),
+      method: 'PUT',
+      body :body
+    })
+  }
+export function GetDoctorByID (id,body) {
+    return request({
+      url:  doctor.getdoctorbyid.replace(':id',id),
+      method: 'GET',
+      body :body
+    })
+  }
 

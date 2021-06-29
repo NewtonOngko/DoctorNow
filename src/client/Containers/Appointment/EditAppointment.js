@@ -22,7 +22,7 @@ import PublishIcon from '@material-ui/icons/Publish';
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1040px',
+      height:'auto',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',

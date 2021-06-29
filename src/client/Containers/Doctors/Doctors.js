@@ -28,7 +28,7 @@ const useStyles = makeStyles({
       }
   });
 
-export default function Doctors() {
+export default function Doctors({children}) {
     //terserah mw inline atau import css nanti replace aja
     const classes = useStyles();
     const [active, setactive] = useState(true)
@@ -48,13 +48,13 @@ export default function Doctors() {
               <Sidebar />
             </Grid>
             <Grid item xs={10}>
-              <Main />
+             {children}
             </Grid>
           </>
         ) : (
           <>
             <Grid item xs={12}>
-              <Main />
+            {children}
             </Grid>
           </>
         )}
