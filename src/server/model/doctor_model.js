@@ -77,11 +77,7 @@ Doctor.update = function updateDoctor(id, doctor, result) {
     if (i < arrDoctor1.length - 1) {
       query += ','
     }
-<<<<<<< HEAD
-    arrDoctor.push(doctor[arrDoctor1[i]]);
-=======
     arrDoctor.push(doctor[arrDoctor1[i]])
->>>>>>> main
   }
   query += 'WHERE doctor_id=?'
   arrDoctor.push(id)
@@ -105,8 +101,6 @@ Doctor.delete = function deleteDoctor(id, result) {
     }
   })
 }
-<<<<<<< HEAD
-=======
 
 Doctor.login = function loginDoctor(req, res) {
   console.log(req.body)
@@ -152,6 +146,5 @@ Doctor.login = function loginDoctor(req, res) {
     )
   }
 }
->>>>>>> main
 
 module.exports = Doctor

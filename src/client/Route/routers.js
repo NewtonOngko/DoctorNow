@@ -25,6 +25,10 @@ import history from '../../client/Route/history';
 import Login from '../../client/Containers/Login';
 import Dashboard from '../Containers/DashBoard/Dashboard';
 
+import Transactions from '../Containers/Transactions/Transactions';
+import TransactionsMain from '../Containers/Transactions/Main';
+import EditTransactions from '../Containers/Transactions/EditTransactions';
+
 
 
 import Consultation from '../Containers/Consultation/Consultation';
@@ -105,6 +109,23 @@ export default class Routers extends Component {
                             <Redirect exact from={path + "/"} to={path} />
                           </Switch>
                         </Hospital>
+                      )}
+                    />
+                    <Route path="/transactions"/>
+                    <Route
+                      path={"/hospital"}
+                      render={({ match: { path } }) => (
+                        <Transactions>
+                          <Switch>
+                            <Route
+                              exact
+                              path={path + "/"}
+                              component={TransactionsMain}
+                            />
+                            <Route path={`${path}/edit`} component={EditTransactions} />
+                            <Redirect exact from={path + "/"} to={path} />
+                          </Switch>
+                        </Transactions>
                       )}
                     />
                     <Route path="/consultation" component={Consultation}/>
