@@ -1,7 +1,17 @@
 /* eslint-disable no-restricted-globals */
 
+/* eslint-disable no-restricted-globals */
+const dotenv = require('dotenv')
+const bcrypt = require('bcrypt')
+const moment = require('moment')
+const jwt = require('jsonwebtoken')
 const dbConn = require('../config/config.js')
-const { generateHash } = require('../config/encrypt_password.js')
+const { generateHash, checkPassword } = require('../config/encrypt_password.js')
+const { json } = require('body-parser')
+const { useScrollTrigger } = require('@material-ui/core')
+
+// get config vars
+dotenv.config()
 
 // doctor object create
 const Doctor = function doctorData(doctor) {
@@ -67,7 +77,11 @@ Doctor.update = function updateDoctor(id, doctor, result) {
     if (i < arrDoctor1.length - 1) {
       query += ','
     }
+<<<<<<< HEAD
     arrDoctor.push(doctor[arrDoctor1[i]]);
+=======
+    arrDoctor.push(doctor[arrDoctor1[i]])
+>>>>>>> main
   }
   query += 'WHERE doctor_id=?'
   arrDoctor.push(id)
@@ -91,5 +105,53 @@ Doctor.delete = function deleteDoctor(id, result) {
     }
   })
 }
+<<<<<<< HEAD
+=======
+
+Doctor.login = function loginDoctor(req, res) {
+  console.log(req.body)
+  if (req.method === 'POST') {
+    const email = req.body.email
+    const password = req.body.password
+
+    dbConn.query(
+      'SELECT password,email,full_name,doctor_id FROM doctors WHERE email = ? ',
+      [email],
+      (err, result) => {
+        console.log('amazing', result)
+        if (result == '') {
+          return res
+            .status(404)
+            .send({ message: 'User Not found.', status: '404' })
+        } else if (result) {
+          var passwordIsValid = checkPassword(password, result[0].password)
+          if (!passwordIsValid) {
+            return res.status(401).send({
+              accessToken: null,
+              message: 'Invalid Password!',
+              status: '401',
+            })
+          }
+          var token = jwt.sign(
+            { email: result[0].email, doctorId: result[0].id },
+            process.env.ACCESS_TOKEN_SECRET,
+            {
+              expiresIn: 86400, // 24 hours
+            },
+          )
+          res.status(200).send({
+            id: result[0].doctor_id,
+            email: result[0].email,
+            name: result[0].full_name,
+            accessToken: token,
+            message: 'success',
+            status: '200',
+          })
+        }
+      },
+    )
+  }
+}
+>>>>>>> main
 
 module.exports = Doctor
