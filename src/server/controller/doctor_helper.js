@@ -13,9 +13,9 @@ exports.findAll = function getDoctors(req, res) {
 exports.create = function addDoctor(req, res) {
   const newDoctor = new Doctor(req.body);
 
-  if (newDoctor.full_name == null || newDoctor.str_no == null || newDoctor.email == null || newDoctor.phone_number == null || newDoctor.password == null || newDoctor.work_experience == null || newDoctor.address == null || newDoctor.gender == null || newDoctor.profile_picture == null || newDoctor.is_active == null) {
+  if (newDoctor.full_name == null || newDoctor.str_no == null || newDoctor.email == null || newDoctor.phone_number == null || newDoctor.password == null || newDoctor.work_experience == null || newDoctor.address == null || newDoctor.gender == null  || newDoctor.is_active == null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
-  }  else if (newDoctor.full_name == '' || newDoctor.str_no == '' || newDoctor.email == '' || newDoctor.phone_number == '' || newDoctor.password == '' || newDoctor.work_experience == '' || newDoctor.address == '' || newDoctor.gender == '' || newDoctor.profile_picture == '' || newDoctor.is_active == '') {
+  }  else if (newDoctor.full_name == '' || newDoctor.str_no == '' || newDoctor.email == '' || newDoctor.phone_number == '' || newDoctor.password == '' || newDoctor.work_experience == '' || newDoctor.address == '' || newDoctor.gender == ''  || newDoctor.is_active == '') {
     res.status(400).send({ error: true, message: 'required' });
   }
   else {

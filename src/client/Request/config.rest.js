@@ -23,11 +23,15 @@ export default {
     },
     doctor: {
       main: '/doctors',
-      addDoctor :'/doctors'
+      addDoctor :'/doctors',
+      updatedoctor:'/doctors/:id',
+      getdoctorbyid:'/doctors/:id'
     },
     hospital: {
       main: '/hospitals',
-      addDoctor :'/hospitals'
+      addHospital :'/hospitals',
+      updateHospital:'/hospitals/:id',
+      gethospitalbyid:'/hospitals/:id'
     },
     consultation: {
       main: '/consultations',

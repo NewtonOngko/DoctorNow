@@ -9,12 +9,23 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
 import {GetHospitalAll} from '../../Request/service/hospital'
+import history from '../../Route/history';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch
+} from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import {hospital} from '../../Features/viewSlice'
 
 
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1040px',
+      height:'100%',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
@@ -41,8 +52,15 @@ const useStyles = makeStyles({
     }
   });
   const RowEdit = ({ index }) => {
+    const dispatch = useDispatch()
     const handleEditClick = () => {
-      // some action
+      history.push('/hospital/edit')
+      console.log(index.hospital_id)
+      dispatch(
+        hospital({
+          id : index.hospital_id,
+        })
+      )
     };
     return (
       <FormControlLabel
@@ -89,7 +107,7 @@ const useStyles = makeStyles({
             className="d-flex justify-content-between align-items-center"
             style={{ cursor: "pointer" }}
           >
-            <RowEdit index={params.row.id} />
+            <RowEdit index={params.row} />
           </div>
         );
       }
@@ -115,6 +133,7 @@ const useStyles = makeStyles({
 export default function Main() {
     const style = useStyles()
     const [data,setdata] = useState([])
+    let { url } = useRouteMatch();
     useEffect(()=>{
       GetHospitalAll()
       .then((res)=> setdata(res),
@@ -146,7 +165,9 @@ export default function Main() {
             <Button
               variant="contained"
               color="primary"
-              startIcon={<AddIcon />}>
+              startIcon={<AddIcon />}
+              onClick={() => history.push(`${url}/add`)}
+              >
               Add Data
               </Button>
             </div>

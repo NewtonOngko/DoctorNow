@@ -75,7 +75,7 @@ const useStyles = makeStyles({
     }
   ];
 
-export default function EditDoctor() {
+export default function EditHospital() {
     const style = useStyles()
     const [name, setName] = React.useState('');
     const [password, setPassword] = React.useState('');

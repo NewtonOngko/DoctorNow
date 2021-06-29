@@ -18,12 +18,14 @@ import {
   useParams,
   useRouteMatch
 } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import {doctor} from '../../Features/viewSlice'
 
 
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1040px',
+      height:'100%',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
@@ -50,8 +52,15 @@ const useStyles = makeStyles({
     }
   });
   const RowEdit = ({ index }) => {
+    const dispatch = useDispatch()
     const handleEditClick = () => {
-      // some action
+      console.log(index.doctor_id)
+      history.push('/doctors/edit')
+      dispatch(
+        doctor({
+          id : index.doctor_id,
+        })
+      )
     };
     return (
       <FormControlLabel
@@ -108,7 +117,7 @@ const useStyles = makeStyles({
             className="d-flex justify-content-between align-items-center"
             style={{ cursor: "pointer" }}
           >
-            <RowEdit index={params.row.id} />
+            <RowEdit index={params.row} />
           </div>
         );
       }

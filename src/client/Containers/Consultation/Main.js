@@ -13,7 +13,7 @@ import {GetConsultationAll} from '../../Request/service/consultation'
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'1040px',
+      height:'100%',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',

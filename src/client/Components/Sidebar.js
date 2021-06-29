@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     sidebar: {
       width:'auto',
       backgroundColor: '#2F4050',
-      height: '1000px',
+      height: 'auto',
       padding: '20px',
     },
     SidebarList:{

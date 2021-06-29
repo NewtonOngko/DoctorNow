@@ -16,12 +16,17 @@ import DoctorsMain from '../Containers/Doctors/Main';
 import AddDoctors from '../Containers/Doctors/MainAdd';
 import EditDoctors from '../Containers/Doctors/EditDoctor';
 
+import Hospital from '../Containers/Hospital/Hospital';
+import HospitalMain from '../Containers/Hospital/Main';
+import AddHospital from '../Containers/Hospital/MainAdd';
+import EditHospital from '../Containers/Hospital/EditHospital';
+
 import history from '../../client/Route/history';
 import Login from '../../client/Containers/Login';
 import Dashboard from '../Containers/DashBoard/Dashboard';
 
 
-import Hospital from '../Containers/Hospital/Hospital';
+
 import Consultation from '../Containers/Consultation/Consultation';
 import Reports from '../Containers/Reports/Reports';
 import Sidebar from '../../client/Components/Sidebar';
@@ -85,7 +90,23 @@ export default class Routers extends Component {
                         </Doctors>
                       )}
                     />
-                    <Route path="/hospital" component={Hospital}/>
+                    <Route
+                      path={"/hospital"}
+                      render={({ match: { path } }) => (
+                        <Hospital>
+                          <Switch>
+                            <Route
+                              exact
+                              path={path + "/"}
+                              component={HospitalMain}
+                            />
+                            <Route path={`${path}/add`} component={AddHospital} />
+                            <Route path={`${path}/edit`} component={EditHospital} />
+                            <Redirect exact from={path + "/"} to={path} />
+                          </Switch>
+                        </Hospital>
+                      )}
+                    />
                     <Route path="/consultation" component={Consultation}/>
                     <Route path="/report" component={Reports}/>
                 </Switch>
