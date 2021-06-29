@@ -1,7 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const appointmentController = require('../controller/appoitment_helper.js');
+const appointmentController = require('../controller/appointment_helper.js');
 
 // Retrieve all Appointment
 router.get('/', appointmentController.findAll);
