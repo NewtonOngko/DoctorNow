@@ -17,7 +17,7 @@ exports.create = function addDoctor(req, res) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
   }  else if (newDoctor.full_name == '' || newDoctor.str_no == '' || newDoctor.email == '' || newDoctor.phone_number == '' || newDoctor.password == '' || newDoctor.work_experience == '' || newDoctor.address == '' || newDoctor.gender == '' || newDoctor.profile_picture == '' || newDoctor.is_active == '') {
     res.status(400).send({ error: true, message: 'required' });
-  }
+  } 
   else {
     Doctor.create(newDoctor, (err, doctor) => {
       if (err) res.send(err);
@@ -36,16 +36,10 @@ exports.findById = function getDoctorById(req, res) {
 
 
 exports.update = function updateDoctor(req, res) {
-  if (newDoctor.full_name == null || newDoctor.str_no == null || newDoctor.email == null || newDoctor.phone_number == null || newDoctor.password == null || newDoctor.work_experience == null || newDoctor.address == null || newDoctor.gender == null || newDoctor.profile_picture == null || newDoctor.is_active == null) {
-    res.status(400).send({ error: true, message: 'Please provide all required field' });
-  } else if (newDoctor.full_name == '' || newDoctor.str_no == '' || newDoctor.email == '' || newDoctor.phone_number == '' || newDoctor.password == '' || newDoctor.work_experience == '' || newDoctor.address == '' || newDoctor.gender == '' || newDoctor.profile_picture == '' || newDoctor.is_active == '') {
-    res.status(400).send({ error: true, message: 'required' });
-  } else {
-    Doctor.update(req.params.id, new Doctor(req.body), (err) => {
+  Doctor.update(req.params.id, req.body, (err) => {
       if (err) res.send(err);
       res.json({ error: false, message: 'Doctor updated' });
     });
-  }
 };
 
 

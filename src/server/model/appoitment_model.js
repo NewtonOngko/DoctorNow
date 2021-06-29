@@ -28,7 +28,14 @@ Appointment.create = function createAppointment(newAppointment, result) {
 
 
 Appointment.findById = function getAppointmentById(id, result) {
-  dbConn.query('Select * from appointments where appointment_id = ? ', id, (err, res) => {
+  dbConn.query(`SELECT appointments.appoitment_id ,users.full_name as user ,doctors.full_name as doctor ,hospitals.hospital_name as hospital,appointments.time ,appointments.price ,appointments.created_at ,appointments.updated_at 
+  FROM appointments 
+  JOIN users
+  ON appointments.user_id =users.user_id 
+  JOIN doctors
+  on appointments .doctor_id =doctors .doctor_id 
+  JOIN hospitals
+  on appointments .hospital_id = hospitals .hospital_id where appointments.appoitment_id = ?`, id, (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(err, null);
@@ -58,6 +65,8 @@ Appointment.findAll = function getAllAppointment(result) {
 };
 
 Appointment.update = function updateAppointment(id, appointment, result) {
+  // 'UPDATE users SET full_name=?, email=?,phone_number=?,address=?,gender=?,birthplace=?,birthdate=?,profile_picture=? WHERE user_id = ?',
+  //   [user.full_name, user.email, user.phone_number,user.address,user.gender,user.birthplace,user.birthdate,user.profile_picture ,id],
   dbConn.query('UPDATE appointments SET time=? WHERE id = ?', [
     appointment.time,
     id], (err, res) => {
