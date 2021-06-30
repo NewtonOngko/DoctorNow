@@ -70,3 +70,4 @@ exports.delete = function deleteUser(req, res) {
     res.json({ error: false, message: 'User deleted' });
   });
 };
+
