@@ -147,4 +147,26 @@ Doctor.login = function loginDoctor(req, res) {
   }
 }
 
+Doctor.changePassword = function changePasswordDoctor(req, res) {
+  const password = req.body.password
+  console.log(password)
+
+  dbConn.query(
+    'UPDATE doctors SET password = ? WHERE doctor_id = ? ',
+    [generateHash(password), req.params.id],
+    (err, result) => {
+      console.log('amazing', result)
+      if (result == '') {
+        return res
+          .status(404)
+          .send({ message: 'Doctor Not found.', status: '404' })
+      } else if (result) {
+        return res
+          .status(200)
+          .send({ message: 'Password Changed.', status: '200' })
+      }
+    },
+  )
+}
+
 module.exports = Doctor
