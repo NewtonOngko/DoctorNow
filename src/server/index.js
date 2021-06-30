@@ -60,7 +60,7 @@ app.use('/login', loginRoutes)
 app.use('/admin', adminRoutes)
 app.use('/admin/login', adminLoginRoutes)
 app.use('/doctor/login', doctorLoginRoutes)
-app.use('/user/change', changePasswordUserRoutes)
+app.use('/change', changePasswordUserRoutes)
 
 // listen for requests
 app.listen(port, () => {
