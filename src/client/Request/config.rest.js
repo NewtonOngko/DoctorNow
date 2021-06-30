@@ -39,15 +39,15 @@ export default {
     },
     appointment: {
       main: '/appointments',
-      adduser :'/appointments'
     },
     transactions: {
       main: '/transactions',
-      adduser :'/transactions'
+      updatetrans :'/transactions/:id',
+      getbyid :'/transactions/:id'
     },
     news: {
       main: '/news',
-      adduser :'/news'
+      addnews :'/news'
     }
   }
 }

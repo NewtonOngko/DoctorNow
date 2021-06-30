@@ -174,7 +174,7 @@ export default function EditHospital() {
       }
     useEffect(()=>{
       console.log(Hospitalid.id)
-      GetDoctorByID(Doctorid.id)
+      GetHospitalByID(Hospitalid.id)
       .then((res)=> {
         console.log(res)
         setName(res[0].hospital_name)
@@ -202,14 +202,14 @@ export default function EditHospital() {
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Doctors Information</p>
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Hospital Information</p>
             <Grid container direction="row" spacing={2} style={{padding:20}}>
             <Snackbar open={open} autoHideDuration={3000}  onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
               {PushAlert(code,message)}
             </Snackbar>
-                <Grid item xs={3}>
-                    <Avatar round="20px" size="200" facebook-id="invalidfacebookusername" src={imageAsUrl.imgUrl || profile} />
-                    <Grid item >
+                {/* <Grid item xs={12}> */}
+                    {/* <Avatar round="20px" size="200" facebook-id="invalidfacebookusername" src={imageAsUrl.imgUrl || profile} /> */}
+                    {/* <Grid item >
                     <p style={{fontSize:16,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Profile Upload</p>
                     <form>
                       <div style={{padding:20,backgroundColor:'#C2D3D8',borderRadius:20,display:'flex',flexDirection:'row',width:'auto'}}>
@@ -224,52 +224,23 @@ export default function EditHospital() {
                         </label>
                       </div>
                     </form>
-                  </Grid>
-                </Grid>
-                <Grid container xs={9} direction="row" spacing={2} >
-                <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Doctor Name" value={name} onChange={e => setName(e.target.value)}  />
-              </Grid>
-              <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth type="password" id="standard-required" label="Password" value={password} onChange={e => setPassword(e.target.value)}  />
-              </Grid>
-              <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Hospital Id" value={hospital} onChange={e => setHospital(e.target.value)}  />
-              </Grid>
-              <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="STR NO" value={str} onChange={e => setStr(e.target.value)}  />
-              </Grid>
-              <Grid item xs ={6}>
-                 <TextField variant="filled" fullWidth id="standard-error-helper-text" label="Email" name="email" value={Email} onChange={onChangeEmail} helperText={Errortext} />
+                  </Grid> */}
+                     <Grid item xs ={6 }>
+                <TextField variant="filled" fullWidth id="standard-required" label="Hospital Name" value={name} onChange={e => setName(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
                 <TextField variant="filled" fullWidth type="number" id="standard-required" label="Phone Number" value={phonenumber} onChange={e => setPhonenumber(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Work Experience" value={experience} onChange={e => setExperience(e.target.value)}  />
+                <TextField variant="filled" fullWidth id="standard-required" label="Location" value={location} onChange={e => setLocation(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Address" value={address} onChange={e => setaddress(e.target.value)}  />
+                <TextField variant="filled" fullWidth id="standard-required" label="Description" value={description} onChange={e => setDescription(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField variant="filled" select fullWidth id="standard-select-currency" label="Gender" value={gender} onChange={e => setGender(e.target.value)} >
-                    {Genderoption.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                 <TextField variant="filled" fullWidth id="standard-error-helper-text" label="Email" name="email" value={Email} onChange={onChangeEmail} helperText={Errortext} />
               </Grid>
-              <Grid item xs ={6}>
-                <TextField variant="filled" select fullWidth id="standard-select-currency" label="Active" value={active} onChange={e => setActive(e.target.value)} >
-                    {Statusoption.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-                </Grid>
+                {/* </Grid> */}
             </Grid>
             <div style={{margin:20,display:'flex',flexDirection:'row',justifyContent:'flex-end'}}>
               <Button

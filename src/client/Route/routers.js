@@ -111,9 +111,8 @@ export default class Routers extends Component {
                         </Hospital>
                       )}
                     />
-                    <Route path="/transactions"/>
                     <Route
-                      path={"/hospital"}
+                      path={"/transactions"}
                       render={({ match: { path } }) => (
                         <Transactions>
                           <Switch>

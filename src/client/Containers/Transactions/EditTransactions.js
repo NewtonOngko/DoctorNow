@@ -12,10 +12,10 @@ import { blue, red } from '@material-ui/core/colors';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Gap from '../../Components/Gap'
-import {UpdateHospital,GetHospitalByID} from '../../Request/service/hospital'
+import {UpdateTransactions,GetTransByID} from '../../Request/service/transactions'
 import {storage} from "../../Components/Firebase"
 import Avatar from 'react-avatar';
-import {doctor, selectDoctorId, selectHospitalId} from "../../Features/viewSlice"
+import {selectTransactionId} from "../../Features/viewSlice"
 import { useSelector } from 'react-redux';
 import PublishIcon from '@material-ui/icons/Publish';
 import Alert from '@material-ui/lab/Alert';
@@ -75,13 +75,13 @@ const useStyles = makeStyles({
     }
   ];
 
-export default function EditHospital() {
+export default function EditTransactions() {
     const style = useStyles()
-    const [name, setName] = React.useState('');
-    const [phonenumber, setPhonenumber] = React.useState('');
-    const [Email, setEmail] = React.useState('');
-    const [location, setLocation] = React.useState('');
-    const [description, setDescription] = React.useState(''); 
+    const [user, setUser] = React.useState('');
+    const [purchase, setPurchase] = React.useState('');
+    const [payment, setPayment] = React.useState('');
+    const [price, setPrice] = React.useState('');
+    const [paid, setpaid] = React.useState(''); 
 
 
     const [loading,setloading]= useState(false)
@@ -93,7 +93,7 @@ export default function EditHospital() {
     const [imageAsFile, setImageAsFile] = useState('')
     const [imageAsUrl, setImageAsUrl] = useState(allInputs)
 
-    const Hospitalid = useSelector(selectHospitalId);
+    const TransactionId = useSelector(selectTransactionId);
     //console.log(imageAsFile)
     const handleImageAsFile =  async(e) => {
          const image = e.target.files[0]
@@ -142,12 +142,12 @@ export default function EditHospital() {
       const onSaveData=()=>{
         setloading(true);
         console.log('imageurl',JSON.stringify(imageAsUrl.imgUrl))
-        UpdateHospital(Hospitalid.id,{
-          hospital_name: name,
-          email :Email,
-          phone_number:phonenumber,
-          location :location,
-          description :description,
+        UpdateTransactions(TransactionId.id,{
+          user_id: user,
+          purchase_type :purchase,
+          payment_type:payment,
+          price :price,
+          is_paid :paid,
         }).then(
           res =>{
             console.log(res)
@@ -173,15 +173,15 @@ export default function EditHospital() {
         })
       }
     useEffect(()=>{
-      console.log(Hospitalid.id)
-      GetDoctorByID(Doctorid.id)
+      console.log(TransactionId.id)
+      GetTransByID(TransactionId.id)
       .then((res)=> {
         console.log(res)
-        setName(res[0].hospital_name)
-        setPhonenumber(res[0].phone_number)
-        setEmail(res[0].email)
-        setLocation(res[0].location)
-        setDescription(res[0].description)
+        setUser(res[0].user_id)
+        setPayment(res[0].payment_type)
+        setPurchase(res[0].purchase_type)
+        setpaid(res[0].is_paid)
+        setPrice(res[0].price)
       })
       .catch((err)=> {
       console.log(err)
@@ -207,69 +207,21 @@ export default function EditHospital() {
             <Snackbar open={open} autoHideDuration={3000}  onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
               {PushAlert(code,message)}
             </Snackbar>
-                <Grid item xs={3}>
-                    <Avatar round="20px" size="200" facebook-id="invalidfacebookusername" src={imageAsUrl.imgUrl || profile} />
-                    <Grid item >
-                    <p style={{fontSize:16,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Profile Upload</p>
-                    <form>
-                      <div style={{padding:20,backgroundColor:'#C2D3D8',borderRadius:20,display:'flex',flexDirection:'row',width:'auto'}}>
-                        <PublishIcon/>
-                        <label>
-                        <p style={{margin:0,fontSize:18,fontWeight:'bold',fontFamily: 'Noto Sans JP'}}>Browse...</p>
-                        <input style={{display:'none'}}
-                        // allows you to reach into your file directory and upload image to the browser
-                          type="file"
-                          onChange={handleImageAsFile}
-                        />
-                        </label>
-                      </div>
-                    </form>
-                  </Grid>
-                </Grid>
-                <Grid container xs={9} direction="row" spacing={2} >
-                <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Doctor Name" value={name} onChange={e => setName(e.target.value)}  />
+            <Grid item xs ={6 }>
+                <TextField variant="filled" fullWidth id="standard-required" label="User Id" value={user} onChange={e => setUser(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth type="password" id="standard-required" label="Password" value={password} onChange={e => setPassword(e.target.value)}  />
+                <TextField variant="filled" fullWidth id="standard-required" label="Purchase" value={purchase} onChange={e => setPurchase(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Hospital Id" value={hospital} onChange={e => setHospital(e.target.value)}  />
+                <TextField variant="filled" fullWidth id="standard-required" label="Payment" value={payment} onChange={e => setPayment(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="STR NO" value={str} onChange={e => setStr(e.target.value)}  />
+                <TextField variant="filled" fullWidth id="standard-required" label="Paid Status" value={paid} onChange={e => setpaid(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                 <TextField variant="filled" fullWidth id="standard-error-helper-text" label="Email" name="email" value={Email} onChange={onChangeEmail} helperText={Errortext} />
+                 <TextField variant="filled" fullWidth id="standard-error-helper-text" label="Price" name="email" value={price} onChange={e => setPrice(e.target.value)} helperText={Errortext} />
               </Grid>
-              <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth type="number" id="standard-required" label="Phone Number" value={phonenumber} onChange={e => setPhonenumber(e.target.value)}  />
-              </Grid>
-              <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Work Experience" value={experience} onChange={e => setExperience(e.target.value)}  />
-              </Grid>
-              <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Address" value={address} onChange={e => setaddress(e.target.value)}  />
-              </Grid>
-              <Grid item xs ={6}>
-                <TextField variant="filled" select fullWidth id="standard-select-currency" label="Gender" value={gender} onChange={e => setGender(e.target.value)} >
-                    {Genderoption.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-              <Grid item xs ={6}>
-                <TextField variant="filled" select fullWidth id="standard-select-currency" label="Active" value={active} onChange={e => setActive(e.target.value)} >
-                    {Statusoption.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-                </Grid>
             </Grid>
             <div style={{margin:20,display:'flex',flexDirection:'row',justifyContent:'flex-end'}}>
               <Button

@@ -8,7 +8,10 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
-import {GetConsultationAll} from '../../Request/service/consultation'
+import {GetTransactionsAll} from '../../Request/service/transactions'
+import {transaction} from '../../Features/viewSlice'
+import { useDispatch } from 'react-redux';
+import history from '../../Route/history'
 
 const useStyles = makeStyles({
     container: {
@@ -40,7 +43,17 @@ const useStyles = makeStyles({
     }
   });
   const RowEdit = ({ index }) => {
+    const dispatch = useDispatch()
     const handleEditClick = () => {
+      console.log(index.transaction_id)
+      history.push('/transactions/edit')
+      dispatch(
+        transaction({
+          id : index.transaction_id,
+        })
+      );
+    };
+    const handleDeleteClick = () => {
       // some action
     };
     return (
@@ -57,7 +70,7 @@ const useStyles = makeStyles({
           <IconButton
             color="secondary"
             aria-label="add an alarm"
-            onClick={handleEditClick}
+            onClick={handleDeleteClick}
           >
             <DeleteIcon style={{ color: red[500] }} />
           </IconButton>
@@ -68,17 +81,17 @@ const useStyles = makeStyles({
   };
 
   const columns = [
-    { field: 'consultation_id', headerName: 'ID', width: 100 },
+    { field: 'transaction_id', headerName: 'ID', width: 100 },
     { field: 'user_id', headerName: 'User', width: 120 },
-    { field: 'doctor_id', headerName: 'Doctor', width: 120 },
+    { field: 'purchase_type', headerName: 'Purchase', width: 120 },
     {
-      field: 'hospital_id',
-      headerName: 'Hospital',
+      field: 'payment_type',
+      headerName: 'Payment',
       width: 150,
     },
     {
-      field: 'time',
-      headerName: 'Time',
+      field: 'is_paid',
+      headerName: 'Status',
       width: 150,
     },
     {
@@ -86,23 +99,23 @@ const useStyles = makeStyles({
       headerName: 'Price',
       width: 150,
     },
-    // {
-    //   field: "actions",
-    //   headerName: "Actions",
-    //   sortable: false,
-    //   width: 140,
-    //   disableClickEventBubbling: true,
-    //   renderCell: (params) => {
-    //     return (
-    //       <div
-    //         className="d-flex justify-content-between align-items-center"
-    //         style={{ cursor: "pointer" }}
-    //       >
-    //         <RowEdit index={params.row.id} />
-    //       </div>
-    //     );
-    //   }
-    // }
+    {
+      field: "actions",
+      headerName: "Actions",
+      sortable: false,
+      width: 140,
+      disableClickEventBubbling: true,
+      renderCell: (params) => {
+        return (
+          <div
+            className="d-flex justify-content-between align-items-center"
+            style={{ cursor: "pointer" }}
+          >
+            <RowEdit index={params.row} />
+          </div>
+        );
+      }
+    }
   ];
 
   // const rows = [
@@ -125,7 +138,7 @@ export default function Main() {
     const style = useStyles()
     const [data,setdata] = useState([])
     useEffect(()=>{
-      GetConsultationAll()
+      GetTransactionsAll()
       .then((res)=> setdata(res),
         )
         .catch((err)=> console.log(err))
@@ -134,7 +147,7 @@ export default function Main() {
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Consultation</p>
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Transactions</p>
          {/* <div style={{display:'flex',flexDirection:'row'}}>
          <div className={style.listitem}>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >Total Users</p>
@@ -159,7 +172,7 @@ export default function Main() {
               Add Data
               </Button> */}
             </div>
-            <DataGrid getRowId={(r) => r.consultation_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
+            <DataGrid getRowId={(r) => r.transaction_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
           </div>
           </div>
         </div>

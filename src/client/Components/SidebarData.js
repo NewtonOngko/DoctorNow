@@ -7,6 +7,7 @@ import DoctorIcon from '../../client/Assets/Doctor.png';
 import HealthIcon from '../../client/Assets/Health.png';
 import ReportsIcon from '../../client/Assets/Reports.png';
 import UsersIcon from '../../client/Assets/Users.png';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 
 export const SidebarData = [
     {
@@ -18,6 +19,11 @@ export const SidebarData = [
         title:"Appointment",
         icon: <img src={AppointmentIcon}/>,
         link:"/appointment"
+    },
+    {
+        title:"Transactions",
+        icon: <ReceiptIcon/>,
+        link:"/transactions"
     },
     {
         title:"Doctors",
