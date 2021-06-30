@@ -74,7 +74,7 @@ User.update = function updateUser(id, user, result) {
     if (i < arrUser1.length - 1) {
       query += ','
     }
-    arrUser.push(user[arrUser1[i]]);
+    arrUser.push(user[arrUser1[i]])
   }
   query += 'WHERE user_id=?'
   arrUser.push(id)
@@ -114,11 +114,7 @@ User.login = function loginUser(req, res) {
           return res
             .status(404)
             .send({ message: 'User Not found.', status: '404' })
-        }
-        // else if(result){
-        //   return res.status(200).send({ message: "User found." });
-        // }
-        else if (result) {
+        } else if (result) {
           var passwordIsValid = checkPassword(password, result[0].password)
           if (!passwordIsValid) {
             return res.status(401).send({
@@ -148,4 +144,56 @@ User.login = function loginUser(req, res) {
   }
 }
 
+User.changePassword = function changePasswordUser(req,res) {
+  // const arrUserPassword = []
+  // const arrUserPassword1 = Object.keys(user)
+  // console.log(arrUserPassword1);
+  // var query = 'UPDATE users SET '
+
+  // for (var i = 0; i < arrUserPassword1.length; i++) {
+  //   query += arrUserPassword1[i] + '= ?'
+
+  //   if (i < arrUserPassword1.length - 1) {
+  //     query += ','
+  //   }
+  //   arrUserPassword.push(user[arrUserPassword1[i]])
+  // }
+  // query += 'WHERE user_id=?'
+  // arrUserPassword.push(id)
+  // dbConn.query(query, arrUserPassword, (err, res) => {
+  //   if (err) {
+  //     console.log('error: ', err)
+  //     result(null, err)
+  //   } else {
+  //     result(null, res)
+  //   }
+  // })
+  //const userId = req.body.id;
+  const password = req.body.password;
+  console.log(password);
+
+  dbConn.query(
+    'UPDATE users SET password = ? WHERE user_id = ? ',
+    [generateHash(password),req.params.id],
+    (err, result) => {
+      console.log('amazing', result)
+      if (result == '') {
+        return res
+          .status(404)
+          .send({ message: 'User Not found.', status: '404' })
+      } else if (result) {
+        return res
+          .status(200)
+          .send({ message: 'Password Changed.', status: '200' })
+        //newUser.password = generateHash(password)
+        res.status(200).send({
+          message: 'success',
+          status: '200',
+        })
+      }
+    },
+  )
+}
+
 module.exports = User
+
