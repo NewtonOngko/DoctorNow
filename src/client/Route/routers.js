@@ -21,6 +21,11 @@ import HospitalMain from '../Containers/Hospital/Main';
 import AddHospital from '../Containers/Hospital/MainAdd';
 import EditHospital from '../Containers/Hospital/EditHospital';
 
+import News from '../Containers/News/News';
+import NewsMain from '../Containers/News/Main';
+import AddNews from '../Containers/News/MainAdd';
+import EditNews from '../Containers/News/EditNews';
+
 import history from '../../client/Route/history';
 import Login from '../../client/Containers/Login';
 import Dashboard from '../Containers/DashBoard/Dashboard';
@@ -125,6 +130,23 @@ export default class Routers extends Component {
                             <Redirect exact from={path + "/"} to={path} />
                           </Switch>
                         </Transactions>
+                      )}
+                    />
+                    <Route
+                      path={"/news"}
+                      render={({ match: { path } }) => (
+                        <News>
+                          <Switch>
+                            <Route
+                              exact
+                              path={path + "/"}
+                              component={NewsMain}
+                            />
+                            <Route path={`${path}/add`} component={AddNews} />
+                            <Route path={`${path}/edit`} component={EditNews} />
+                            <Redirect exact from={path + "/"} to={path} />
+                          </Switch>
+                        </News>
                       )}
                     />
                     <Route path="/consultation" component={Consultation}/>

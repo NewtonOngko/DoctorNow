@@ -47,7 +47,9 @@ export default {
     },
     news: {
       main: '/news',
-      addnews :'/news'
+      addnews :'/news',
+      updatenews:'/news/:id',
+      getbyid:'/news/:id'
     }
   }
 }

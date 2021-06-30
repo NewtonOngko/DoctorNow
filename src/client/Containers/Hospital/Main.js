@@ -25,7 +25,7 @@ import {hospital} from '../../Features/viewSlice'
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'100%',
+      height:'1000px',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',

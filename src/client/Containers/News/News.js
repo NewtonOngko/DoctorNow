@@ -28,12 +28,21 @@ const useStyles = makeStyles({
       }
   });
 
-export default function Transaction({children}) {
+const News = ({children}) => {
     //terserah mw inline atau import css nanti replace aja
     const classes = useStyles();
     const [active, setactive] = useState(true)
-
     const showSidebar =()=>{setactive(!active)}
+    console.log('users',children)
+
+    // const Changeview =()=>{
+    //   if(window.location.pathname == "/users"){
+    //     return <Main/>
+    //   }
+    //   else if(window.location.pathname == "/users/add"){
+    //     return <Addusers/>
+    //   }
+    // }
     
     return (
       <Grid container component="main" className={classes.root}>
@@ -48,16 +57,17 @@ export default function Transaction({children}) {
               <Sidebar />
             </Grid>
             <Grid item xs={10}>
-            {children}
+              {children}
             </Grid>
           </>
         ) : (
           <>
             <Grid item xs={12}>
-            {children}
+              {children}
             </Grid>
           </>
         )}
       </Grid>
     );
 }
+export default News;

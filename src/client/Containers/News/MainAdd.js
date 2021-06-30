@@ -12,7 +12,7 @@ import { blue, red } from '@material-ui/core/colors';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Gap from '../../Components/Gap'
-import {AddHospital} from '../../Request/service/hospital'
+import {AddNews} from '../../Request/service/news'
 import {storage} from "../../Components/Firebase"
 import Alert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -49,42 +49,37 @@ const useStyles = makeStyles({
       height:'400px'
     },
   });
+
+  const Genderoption = [
+    {
+      value: 'Male',
+      label: 'Male',
+    },
+    {
+      value: 'Female',
+      label: 'Female',
+    }
+  ];
+
 export default function MainAdd() {
     const style = useStyles()
-    const [name, setName] = React.useState('');
-    const [phonenumber, setPhonenumber] = React.useState('');
-    const [Email, setEmail] = React.useState('');
-    const [location, setLocation] = React.useState('');
-    const [description, setDescription] = React.useState(''); 
+    const [title, setTitle] = React.useState('');
+    const [link, setLink] = React.useState('');
+    const [desc, setDesc] = React.useState('');
 
     const [loading,setloading]= useState(false)
     const [code,setcode]= useState('')
     const [message,setmessage]= useState('')
     const [open, setOpen] = React.useState(false);
     const [Errortext, setErrortext] = React.useState('');
-
-      const validateEmail = (email)=> {
-        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(String(email).toLowerCase());
-    }
-      const onChangeEmail=(e)=>{
-        if (validateEmail(e.target.value)) {
-            setErrortext("")
-        } else {
-          setErrortext("Email is Invalid")
-        }
-  
-          setEmail(e.target.value)
-      }
+    const [Email, setEmail] = React.useState('');
       //console.log(imageAsUrl)
       const onAddData=()=>{
         setloading(true);
-        AddHospital({
-          hospital_name: name,
-          email :Email,
-          phone_number:phonenumber,
-          location :location,
-          description :description,
+        AddNews({
+          title: title,
+          description :desc,
+          news_link :link
         }).then(
           res =>{
             console.log(res)
@@ -92,7 +87,7 @@ export default function MainAdd() {
               setOpen(true)
               setcode(false)
               setmessage(res.message)
-              setTimeout(function(){ history.push('/hospital'); }, 1000);
+              setTimeout(function(){ history.push('/users'); }, 1000);
             }
             else if (res.error==true){
               setOpen(true)
@@ -124,7 +119,7 @@ export default function MainAdd() {
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Add Hospital</p>
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Add Users</p>
           <div className={style.tablestyle}>
           <p style={{fontSize:30,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>BASIC INFORMATION</p>
           <Grid container direction="row" spacing ={2} style={{padding:20}}>
@@ -132,19 +127,13 @@ export default function MainAdd() {
             {PushAlert(code,message)}
           </Snackbar>
               <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="Hospital Name" value={name} onChange={e => setName(e.target.value)}  />
+                <TextField fullWidth id="standard-required" label="Title" value={title} onChange={e => setTitle(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                 <TextField fullWidth id="standard-error-helper-text" label="Email" name="email" value={Email} onChange={onChangeEmail} helperText={Errortext} />
+                <TextField type="password" fullWidth id="standard-required" label="Link" value={link} onChange={e => setLink(e.target.value)}/>
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth type="number" id="standard-required" label="Phone Number" value={phonenumber} onChange={e => setPhonenumber(e.target.value)}  />
-              </Grid>
-              <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="location" value={location} onChange={e => setLocation(e.target.value)}  />
-              </Grid>
-              <Grid item xs ={6}>
-                <TextField fullWidth id="standard-required" label="description" value={description} onChange={e => setDescription(e.target.value)}  />
+                <TextField type="password" multiline fullWidth id="standard-required" label="Description" value={desc} onChange={e => setDesc(e.target.value)}/>
               </Grid>
           </Grid>
               <div style={{margin:20,display:'flex',flexDirection:'row'}}>
@@ -159,7 +148,7 @@ export default function MainAdd() {
               <Button
               variant="contained"
               color="primary"
-              onClick={()=> history.push('/users')}
+              onClick={()=> history.goBack()}
               >
               Cancel
               </Button>
