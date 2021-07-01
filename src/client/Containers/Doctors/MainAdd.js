@@ -253,7 +253,7 @@ export default function MainAdd() {
               <Button
               variant="contained"
               color="primary"
-              onClick={()=> history.push('/users')}
+              onClick={()=> history.goBack()}
               >
               Cancel
               </Button>

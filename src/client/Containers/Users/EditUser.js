@@ -283,7 +283,7 @@ export default function EditUser() {
               <Button
               variant="contained"
               color="primary"
-              onClick={()=> history.push('/users')}
+              onClick={()=> history.goBack()}
               >
               Cancel
               </Button>

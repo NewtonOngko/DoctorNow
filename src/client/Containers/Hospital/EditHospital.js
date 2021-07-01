@@ -254,7 +254,7 @@ export default function EditHospital() {
               <Button
               variant="contained"
               color="primary"
-              onClick={()=> history.push('/users')}
+              onClick={()=> history.goBack()}
               >
               Cancel
               </Button>

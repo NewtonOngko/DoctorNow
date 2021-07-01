@@ -217,7 +217,9 @@ export default function MainAdd() {
               <Gap width={20}/>
               <Button
               variant="contained"
-              color="primary">
+              color="primary"
+              onClick={()=> history.goBack()}
+              >
               Cancel
               </Button>
               </div>

@@ -211,10 +211,10 @@ export default function EditTransactions() {
                 <TextField variant="filled" fullWidth id="standard-required" label="User Id" value={user} onChange={e => setUser(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Purchase" value={purchase} onChange={e => setPurchase(e.target.value)}  />
+                <TextField variant="filled" fullWidth id="standard-required" label="Purchase Type" value={purchase} onChange={e => setPurchase(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Payment" value={payment} onChange={e => setPayment(e.target.value)}  />
+                <TextField variant="filled" fullWidth id="standard-required" label="Payment Type" value={payment} onChange={e => setPayment(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
                 <TextField variant="filled" fullWidth id="standard-required" label="Paid Status" value={paid} onChange={e => setpaid(e.target.value)}  />
@@ -235,7 +235,7 @@ export default function EditTransactions() {
               <Button
               variant="contained"
               color="primary"
-              onClick={()=> history.push('/users')}
+              onClick={()=> history.goBack()}
               >
               Cancel
               </Button>

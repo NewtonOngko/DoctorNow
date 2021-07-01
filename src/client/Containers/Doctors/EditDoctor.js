@@ -298,7 +298,7 @@ export default function EditDoctor() {
               <Button
               variant="contained"
               color="primary"
-              onClick={()=> history.push('/users')}
+              onClick={()=> history.goBack()}
               >
               Cancel
               </Button>
