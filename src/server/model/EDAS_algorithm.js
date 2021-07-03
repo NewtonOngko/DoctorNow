@@ -6,7 +6,6 @@ let matriksKeputusanQuery = 'SELECT * from eda_evaluations'
 var alternativeData = []
 var weightData = []
 var attributeData = []
-var criteriaData = []
 let matriksKeputusanData = []
 
 dbConn.query(edaAlternativesQuery, (error, results, fields) => {
@@ -36,119 +35,111 @@ dbConn.query(edaAlternativesQuery, (error, results, fields) => {
         arr.push(results[i].id_criteria)
         matriksKeputusanData.push(arr)
       }
-      // console.log('matriksKeputusan', matriksKeputusanData)
 
       //hitung solusi rata - rata
-      var AV = []
+      // var AV = []
+      const N = results.length
+      let AV = new Array(2).fill(0)
+
       var i = 0
-      for (i in matriksKeputusanData) {
-        var j = 0
-        for (j in matriksKeputusanData[i]) {
-          matriksKeputusanDataJIndex = matriksKeputusanData[i][j]
-          // console.log(',', matriksKeputusanDataJIndex)
-          if (AV[j] == null) {
-            AV[j] = 0
-          }
-          var alternativeLength = results.length
-          AV[j] = matriksKeputusanDataJIndex / alternativeLength
-        }
-        AV.push(AV[j])
-      }
+      matriksKeputusanData.forEach((el) => {
+        el.forEach((c, i) => {
+          AV[i] += c
+        })
+      })
+
+      AV.forEach((el, i) => {
+        AV[i] = el / N
+      })
 
       // Menghitung Jarak Positif/Negatif dari Rata-rata (PDA/NDA)
-      var PDA = []
-      var NDA = []
-      var i = 0
-      for (i in matriksKeputusanData) {
-        PDA[i] = []
-        NDA[i] = []
-        for (j in matriksKeputusanData[i]) {
-          arr = []
-          arr1 = []
 
-          if (attributeData[0][j] == 'benefit') {
-            arr.push(
-              (PDA[i][j] = Math.max(
-                0,
-                (matriksKeputusanData[i][j] - AV[j]) / AV[j],
-              )),
-            )
-            arr1.push(
-              (NDA[i][j] = Math.max(
-                0,
-                (AV[j] - matriksKeputusanData[i][j]) / AV[j],
-              )),
-            )
-          } else {
-            arr.push(
-              (PDA[i][j] = Math.max(
-                0,
-                (AV[j] - matriksKeputusanData[i][j]) / AV[j],
-              )),
-            )
-            arr1.push(
-              (NDA[i][j] = Math.max(
-                0,
-                (matriksKeputusanData[i][j] - AV[j]) / AV[j],
-              )),
-            )
-          }
+      let PDA = []
+      matriksKeputusanData.forEach((el) => {
+        let temp = []
 
-          PDA.push(...arr)
-          NDA.push(...arr1)
-        }
-      }
-      // console.log('PDA : ', PDA[0])
-      // console.log('NDA : ', NDA[0])
+        el.forEach((c, i) => {
+          const val = attributeData[0][i] === 'benefit' ? AV[i] - c : c - AV[i]
+          const res = Math.max(0, val / AV[i])
 
-      //-- inisialisasi array SP/SN
-      var SP = []
-      var SN = []
-      for (i in matriksKeputusanData) {
-        SP[i] = 0
-        SN[i] = 0
-        for (j in matriksKeputusanData[i]) {
-          var arr = []
-          var arr1 = []
-          var xij = matriksKeputusanData[i][j]
-          var weightValue = weightData.map((e) => e[0])
-
-          // console.log(weightValue);
-          // console.log(weightValue);
-          arr.push((SP[j] = weightValue * PDA[i][j]))
-          arr1.push((SN[j] = weightValue * NDA[i][j]))
-          SP.push(...arr)
-          SN.push(...arr1)
-        }
-        
-      }
-
-      
-      //normalisasi SP / SN
-      var NSP = []
-      var NSN = []
-      var getSP = SP[j];
-      var getSN = SN[j];
-      for (i in alternativeData) {
-        var maxSP = SP.reduce(function (a, b) {
-          return Math.max(a, b)
+          temp.push(res)
         })
-        var maxSN = SN.reduce(function (a, b) {
-          return Math.max(a, b)
+        PDA.push(temp)
+      })
+
+      let NDA = []
+
+      matriksKeputusanData.forEach((el) => {
+        let temp = []
+
+        el.forEach((c, i) => {
+          const val = attributeData[0][i] === 'benefit' ? c - AV[i] : AV[i] - c
+          const res = Math.max(0, val / AV[i])
+
+          temp.push(res)
         })
 
-        NSP.push((NSP[i] = getSP / maxSP))
-        NSN.push((NSN[i] = 1 - getSN / maxSN))
-      }
+        NDA.push(temp)
+      })
 
-      // apraisal score
-      var AS = []
-      var getNSP = NSP[j]
-      var getNSN = NSN[j]
-      for (i in alternativeData) {
-        AS[i] = (getNSP + getNSN) / 2
-        console.log(`${alternativeData[i]}`, AS[i]);
-      }
+      //SP / SN
+      const W = 0.614
+
+      let SP = []
+
+      PDA.forEach((el) => {
+        let sum = 0
+
+        el.forEach((u) => {
+          sum += u
+        })
+
+        SP.push(W * sum)
+      })
+
+      let SN = []
+
+      NDA.forEach((el) => {
+        let sum = 0
+
+        el.forEach((u) => {
+          sum += u
+        })
+
+        SN.push(W * sum)
+      })
+
+      //NSP NSNS
+      let NSP = []
+      let NSN = []
+
+      let maxSP = -1
+      SP.forEach((el) => {
+        maxSP = Math.max(el, maxSP)
+      })
+      SP.forEach((el) => {
+        const val = el / maxSP
+
+        NSP.push(val)
+      })
+
+      //NSN
+      SN.forEach((el) => {
+        maxSN = Math.max(el, maxSP)
+      })
+      SN.forEach((el) => {
+        const val = el / maxSN
+        NSN.push(1 - val)
+      })
+
+      //apraisal score
+      let AS = []
+      alternativeData[0].forEach((el, i) => {
+        const res = (NSP[i] + NSN[i]) / 2
+        AS.push({ name: el, score: res })
+      })
+      AS.sort((a, b) => b.score - a.score)
+      console.log(AS);
     })
   })
 })
