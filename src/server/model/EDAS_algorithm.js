@@ -35,7 +35,7 @@ dbConn.query(edaAlternativesQuery, (error, results, fields) => {
         arr.push(results[i].id_criteria)
         matriksKeputusanData.push(arr)
       }
-
+      console.log(matriksKeputusanData)
       //hitung solusi rata - rata
       // var AV = []
       const N = results.length
@@ -139,7 +139,7 @@ dbConn.query(edaAlternativesQuery, (error, results, fields) => {
         AS.push({ name: el, score: res })
       })
       AS.sort((a, b) => b.score - a.score)
-      console.log(AS);
+      //console.log(AS);
     })
   })
 })

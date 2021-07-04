@@ -44,7 +44,7 @@ const useStyles = makeStyles({
     }
   });
 
-  const dataprint = (name) =>{
+  const dataprint = (name,onclick) =>{
     const style = useStyles()
     return <div style={{backgroundColor:'#FFF4F2',borderRadius:'20px',width:'380px',height:'70px',display:'flex',flexDirection:'row',flex:1,margin:'15px'}}>
     <div>
@@ -53,7 +53,9 @@ const useStyles = makeStyles({
     <div className={style.printbtn}>
     <Button
       style={{backgroundColor:'#0081F8',color:'white'}}
-    variant="contained">
+    variant="contained"
+      onClick={onclick}
+     >
       Print
     </Button>
     </div>
