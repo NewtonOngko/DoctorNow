@@ -12,10 +12,10 @@ import { blue, red } from '@material-ui/core/colors';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Gap from '../../Components/Gap'
-import {UpdateUser,GetUserByID} from '../../Request/service/users'
+import {UpdateTransactions,GetTransByID} from '../../Request/service/transactions'
 import {storage} from "../../Components/Firebase"
 import Avatar from 'react-avatar';
-import {selectUserid} from "../../Features/userSlice"
+import {selectTransactionId} from "../../Features/viewSlice"
 import { useSelector } from 'react-redux';
 import PublishIcon from '@material-ui/icons/Publish';
 import Alert from '@material-ui/lab/Alert';
@@ -56,37 +56,44 @@ const useStyles = makeStyles({
 
   const Genderoption = [
     {
-      value: 'male',
+      value: 'Male',
       label: 'Male',
     },
     {
-      value: 'female',
+      value: 'Female',
       label: 'Female',
     }
   ];
+  const Statusoption = [
+    {
+      value: '1',
+      label: 'Active',
+    },
+    {
+      value: '0',
+      label: 'Inactive',
+    }
+  ];
 
-export default function EditUser() {
+export default function EditTransactions() {
     const style = useStyles()
-    const [name, setName] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [address, setaddress] = React.useState('');
-    const [phonenumber, setPhonenumber] = React.useState('');
-    const [gender, setGender] = React.useState('');
-    const [birthdate, setBirthdate] = React.useState('');
-    const [birthplace, setBirthplace] = React.useState('');
-    const [profile,setProfile]= React.useState('');
+    const [user, setUser] = React.useState('');
+    const [purchase, setPurchase] = React.useState('');
+    const [payment, setPayment] = React.useState('');
+    const [price, setPrice] = React.useState('');
+    const [paid, setpaid] = React.useState(''); 
+
 
     const [loading,setloading]= useState(false)
     const [code,setcode]= useState('')
     const [message,setmessage]= useState('')
     const [open, setOpen] = React.useState(false);
     const [Errortext, setErrortext] = React.useState('');
-    const [Email, setEmail] = React.useState('');
     const allInputs = {imgUrl: ''}
     const [imageAsFile, setImageAsFile] = useState('')
     const [imageAsUrl, setImageAsUrl] = useState(allInputs)
 
-    const id = useSelector(selectUserid);
+    const TransactionId = useSelector(selectTransactionId);
     //console.log(imageAsFile)
     const handleImageAsFile =  async(e) => {
          const image = e.target.files[0]
@@ -100,7 +107,7 @@ export default function EditUser() {
         if(image === '') {
           console.error(`not an image, the image file is a ${typeof(image)}`)
         }
-        const uploadTask = storage.ref(`/users/${id.id}/${image.name}`).put(image)
+        const uploadTask = storage.ref(`/images/${Doctorid.id}/${image.name}`).put(image)
         //initiates the firebase side uploading 
         uploadTask.on('state_changed', 
         (snapShot) => {
@@ -112,7 +119,7 @@ export default function EditUser() {
         }, () => {
           // gets the functions from storage refences the image storage in firebase by the children
           // gets the download url then sets the image from firebase as the value for the imgUrl key:
-          storage.ref(`users/${id.id}`).child(image.name).getDownloadURL()
+          storage.ref(`images/${Doctorid.id}`).child(image.name).getDownloadURL()
           .then(fireBaseUrl => {
             setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
           })
@@ -135,15 +142,12 @@ export default function EditUser() {
       const onSaveData=()=>{
         setloading(true);
         console.log('imageurl',JSON.stringify(imageAsUrl.imgUrl))
-        UpdateUser(id.id,{
-          full_name: name,
-          email :Email,
-          address :address,
-          gender:gender,
-          phone_number:phonenumber,
-          birthdate:birthdate,
-          birthplace:birthplace,
-          profile_picture:imageAsUrl.imgUrl,
+        UpdateTransactions(TransactionId.id,{
+          user_id: user,
+          purchase_type :purchase,
+          payment_type:payment,
+          price :price,
+          is_paid :paid,
         }).then(
           res =>{
             console.log(res)
@@ -151,7 +155,7 @@ export default function EditUser() {
               setOpen(true)
               setcode(false)
               setmessage(res.message)
-              setTimeout(function(){ history.push('/users'); }, 1000);
+              setTimeout(function(){ history.push('/hospital'); }, 1000);
             }
             else if (res.error==true){
               setOpen(true)
@@ -169,18 +173,15 @@ export default function EditUser() {
         })
       }
     useEffect(()=>{
-      console.log(id.id)
-      GetUserByID(id.id)
+      console.log(TransactionId.id)
+      GetTransByID(TransactionId.id)
       .then((res)=> {
         console.log(res)
-        setName(res[0].full_name)
-        setaddress(res[0].address)
-        setPhonenumber(res[0].phone_number)
-        setGender(res[0].gender)
-        setBirthdate(res[0].birthdate)
-        setBirthplace(res[0].birthplace)
-        setEmail(res[0].email)
-        setProfile(res[0].profile_picture)
+        setUser(res[0].user_id)
+        setPayment(res[0].payment_type)
+        setPurchase(res[0].purchase_type)
+        setpaid(res[0].is_paid)
+        setPrice(res[0].price)
       })
       .catch((err)=> {
       console.log(err)
@@ -201,75 +202,26 @@ export default function EditUser() {
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Users Information</p>
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Doctors Information</p>
             <Grid container direction="row" spacing={2} style={{padding:20}}>
             <Snackbar open={open} autoHideDuration={3000}  onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
               {PushAlert(code,message)}
             </Snackbar>
-                <Grid item xs={3}>
-                    <Avatar round="20px" size="200" facebook-id="invalidfacebookusername" src={imageAsUrl.imgUrl || profile} />
-                    <Grid item >
-                    <p style={{fontSize:16,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Profile Upload</p>
-                    <form>
-                      <div style={{padding:20,backgroundColor:'#C2D3D8',borderRadius:20,display:'flex',flexDirection:'row',width:'auto'}}>
-                        <PublishIcon/>
-                        <label>
-                        <p style={{margin:0,fontSize:18,fontWeight:'bold',fontFamily: 'Noto Sans JP'}}>Browse...</p>
-                        <input style={{display:'none'}}
-                        // allows you to reach into your file directory and upload image to the browser
-                          type="file"
-                          onChange={handleImageAsFile}
-                        />
-                        </label>
-                      </div>
-                    </form>
-                  </Grid>
-                </Grid>
-                <Grid container xs={9} direction="row" spacing={2} >
-                <Grid item xs ={6}>
-                <TextField fullWidth variant="filled" id="filled-basic" label="Full Name" value={name} onChange={e => setName(e.target.value)}  />
+            <Grid item xs ={6 }>
+                <TextField variant="filled" fullWidth id="standard-required" label="User Id" value={user} onChange={e => setUser(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField disabled fullWidth variant="filled" id="filled-basic" label="Password" value={password} onChange={e => setPassword(e.target.value)}/>
+                <TextField variant="filled" fullWidth id="standard-required" label="Purchase Type" value={purchase} onChange={e => setPurchase(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField fullWidth variant="filled"id="filled-basic" label="Address" value={address} onChange={e => setaddress(e.target.value)}/>
+                <TextField variant="filled" fullWidth id="standard-required" label="Payment Type" value={payment} onChange={e => setPayment(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField select fullWidth variant="filled" id="filled-select-currency" label="Gender" value={gender} onChange={e => setGender(e.target.value)} >
-                    {Genderoption.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                <TextField variant="filled" fullWidth id="standard-required" label="Paid Status" value={paid} onChange={e => setpaid(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-              <TextField
-                fullWidth
-                id="date"
-                variant="filled"
-                label="Date Of Birth"
-                type="date"
-                value={birthdate} 
-                onChange={e => setBirthdate(e.target.value)}
-                defaultValue="2017-05-24"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
+                 <TextField variant="filled" fullWidth id="standard-error-helper-text" label="Price" name="email" value={price} onChange={e => setPrice(e.target.value)} helperText={Errortext} />
               </Grid>
-              <Grid item xs ={6}>
-                <TextField fullWidth variant="filled" id="filled-required" label="BirthPlace" value={birthplace} onChange={e => setBirthplace(e.target.value)} />
-              </Grid>
-              <Grid item xs ={6}>
-                <TextField fullWidth variant="filled" id="filled-error-helper-text" label="Email" name="email" value={Email} onChange={onChangeEmail} helperText={Errortext} />
-              </Grid>
-              <Grid item xs ={6} >
-                <TextField fullWidth variant="filled" id="filled-required" label="Phone" value={phonenumber} onChange={e => setPhonenumber(e.target.value)}/>
-              </Grid>
-              
-                </Grid>
             </Grid>
             <div style={{margin:20,display:'flex',flexDirection:'row',justifyContent:'flex-end'}}>
               <Button

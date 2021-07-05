@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../Components/Header'
@@ -8,7 +8,6 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
-import {GetDoctorAll} from '../../Request/service/doctor'
 import history from '../../Route/history';
 import {
   BrowserRouter as Router,
@@ -19,7 +18,8 @@ import {
   useRouteMatch
 } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import {doctor} from '../../Features/viewSlice'
+import {news} from '../../Features/viewSlice'
+import{GetNewsAll}from '../../Request/service/news'
 
 
 const useStyles = makeStyles({
@@ -54,13 +54,16 @@ const useStyles = makeStyles({
   const RowEdit = ({ index }) => {
     const dispatch = useDispatch()
     const handleEditClick = () => {
-      console.log(index.doctor_id)
-      history.push('/doctors/edit')
+      console.log(index.news_id)
+      history.push('/news/edit')
       dispatch(
-        doctor({
-          id : index.doctor_id,
+        news({
+          id : index.news_id,
         })
-      )
+      );
+    };
+    const handleDeleteClick = () => {
+      // some action
     };
     return (
       <FormControlLabel
@@ -76,7 +79,7 @@ const useStyles = makeStyles({
           <IconButton
             color="secondary"
             aria-label="add an alarm"
-            onClick={handleEditClick}
+            onClick={handleDeleteClick}
           >
             <DeleteIcon style={{ color: red[500] }} />
           </IconButton>
@@ -86,25 +89,22 @@ const useStyles = makeStyles({
     );
   };
 
+
   const columns = [
-    { field: 'doctor_id', headerName: 'ID', width: 100 },
-    { field: 'hospital_id', headerName: 'Hospital', width: 120 },
-    { field: 'full_name', headerName: 'Name', width: 120 },
-    {
-      field: 'str_no',
-      headerName: 'STR',
-      width: 110,
-    },
-    {
-      field: 'work_experience',
-      headerName: 'Experience',
-      width: 110,
-    },
-    {
-      field: 'phone_number',
-      headerName: 'Phone Number',
-      width: 110,
-    },
+    { field: 'news_id', headerName: 'ID', width: 100 },
+    { field: 'title', headerName: 'Title', width: 150 },
+    { field: 'description', headerName: 'Description', width: 200 },
+    // {
+    //   field: 'fullName',
+    //   headerName: 'Full name',
+    //   description: 'This column has a value getter and is not sortable.',
+    //   sortable: false,
+    //   width: 160,
+    //   valueGetter: (params) =>
+    //     `${params.getValue(params.id, 'firstName') || ''} ${
+    //       params.getValue(params.id, 'lastName') || ''
+    //     }`,
+    // },
     {
       field: "actions",
       headerName: "Actions",
@@ -126,11 +126,14 @@ const useStyles = makeStyles({
 
 export default function Main() {
     const style = useStyles()
-    const [data,setdata] = useState([])
     let { url } = useRouteMatch();
+    // console.log('url', url)
+    const [data,setdata]=useState([])
     useEffect(()=>{
-      GetDoctorAll()
-      .then((res)=> setdata(res),
+      GetNewsAll()
+      .then((res)=> {
+        setdata(res);
+       },
         )
         .catch((err)=> console.log(err))
     },[])
@@ -138,34 +141,19 @@ export default function Main() {
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Doctors</p>
-         {/* <div style={{display:'flex',flexDirection:'row'}}>
-         <div className={style.listitem}>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >Total Users</p>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
-         </div>
-         <div className={style.listitem}>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Total Consultations</p>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
-         </div>
-         <div className={style.listitem}>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Total Doctors</p>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
-         </div>
-         </div> */}
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>News</p>
           <div>
           <div className={style.tablestyle}>
             <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
             <Button
               variant="contained"
               color="primary"
-              startIcon={<AddIcon />}
               onClick={() => history.push(`${url}/add`)}
-              >
+              startIcon={<AddIcon />}>
               Add Data
               </Button>
             </div>
-            <DataGrid getRowId={(r) => r.doctor_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
+            <DataGrid getRowId={(r) => r.news_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
           </div>
           </div>
         </div>

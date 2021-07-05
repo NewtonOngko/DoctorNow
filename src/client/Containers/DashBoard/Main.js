@@ -9,13 +9,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
 import{GetUserAll}from '../../Request/service/users'
+import{GetConsultationAll}from '../../Request/service/consultation'
+import{GetDoctorAll}from '../../Request/service/doctor'
 import history from '../../Route/history'
 
 
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'100%',
+      height:'1000px',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
@@ -142,6 +144,18 @@ export default function Main() {
          },
           )
           .catch((err)=> console.log(err))
+          GetConsultationAll()
+          .then((res)=> {
+            setTotalconst(res.length);
+           },
+            )
+            .catch((err)=> console.log(err))
+            GetDoctorAll()
+            .then((res)=> {
+              setTotaldoctors(res.length);
+             },
+              )
+              .catch((err)=> console.log(err))
       } 
     },[])
     return (
@@ -156,11 +170,11 @@ export default function Main() {
          </div>
          <div className={style.listitem}>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Total Consultations</p>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
+            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >{totalconst}</p>
          </div>
          <div className={style.listitem}>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Total Doctors</p>
-            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >12</p>
+            <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >{totaldoc}</p>
          </div>
          </div>
           <div>

@@ -27,7 +27,7 @@ import Loading from "../../Components/Loading"
 const useStyles = makeStyles({
     container: {
       width:'auto',
-      height:'100%',
+      height:'1000px',
       backgroundColor: '#E5E5E5',
       display:'flex',
       flex:'1',
@@ -112,7 +112,7 @@ export default function EditDoctor() {
         if(image === '') {
           console.error(`not an image, the image file is a ${typeof(image)}`)
         }
-        const uploadTask = storage.ref(`/images/${Doctorid.id}/${image.name}`).put(image)
+        const uploadTask = storage.ref(`/Doctors/${Doctorid.id}/${image.name}`).put(image)
         //initiates the firebase side uploading 
         uploadTask.on('state_changed', 
         (snapShot) => {
@@ -124,7 +124,7 @@ export default function EditDoctor() {
         }, () => {
           // gets the functions from storage refences the image storage in firebase by the children
           // gets the download url then sets the image from firebase as the value for the imgUrl key:
-          storage.ref(`images/${Doctorid.id}`).child(image.name).getDownloadURL()
+          storage.ref(`Doctors/${Doctorid.id}`).child(image.name).getDownloadURL()
           .then(fireBaseUrl => {
             setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
           })
@@ -298,7 +298,7 @@ export default function EditDoctor() {
               <Button
               variant="contained"
               color="primary"
-              onClick={()=> history.push('/users')}
+              onClick={()=> history.goBack()}
               >
               Cancel
               </Button>

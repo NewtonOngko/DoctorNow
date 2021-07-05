@@ -1,32 +1,32 @@
 import configRest from '../config.rest'
 import { request } from '../request'
 
-const {user} = configRest.REST
+const {news} = configRest.REST
 
-export function GetUserAll (body) {
+export function GetNewsAll (body) {
     return request({
-      url:  user.main,
+      url:  news.main,
       method: 'GET',
       data :body
     })
   }
-export function AddUser (body) {
+export function AddNews (body) {
     return request({
-      url:  user.adduser,
+      url:  news.addnews,
       method: 'POST',
       body :body
     })
   }
-export function UpdateUser (id,body) {
+export function UpdateNews (id,body) {
     return request({
-      url:  user.updateuser.replace(':id',id),
+      url:  news.updatenews.replace(':id',id),
       method: 'PUT',
       body :body
     })
   }
-export function GetUserByID (id,body) {
+export function GetNewsByID (id,body) {
     return request({
-      url:  user.getbyid.replace(':id',id),
+      url:  news.getbyid.replace(':id',id),
       method: 'GET',
       body :body
     })

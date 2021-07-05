@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../Components/Header'
@@ -8,19 +8,10 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
-import {GetDoctorAll} from '../../Request/service/doctor'
-import history from '../../Route/history';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-  useRouteMatch
-} from "react-router-dom";
+import {GetTransactionsAll} from '../../Request/service/transactions'
+import {transaction} from '../../Features/viewSlice'
 import { useDispatch } from 'react-redux';
-import {doctor} from '../../Features/viewSlice'
-
+import history from '../../Route/history'
 
 const useStyles = makeStyles({
     container: {
@@ -54,13 +45,16 @@ const useStyles = makeStyles({
   const RowEdit = ({ index }) => {
     const dispatch = useDispatch()
     const handleEditClick = () => {
-      console.log(index.doctor_id)
-      history.push('/doctors/edit')
+      console.log(index.transaction_id)
+      history.push('/transactions/edit')
       dispatch(
-        doctor({
-          id : index.doctor_id,
+        transaction({
+          id : index.transaction_id,
         })
-      )
+      );
+    };
+    const handleDeleteClick = () => {
+      // some action
     };
     return (
       <FormControlLabel
@@ -76,7 +70,7 @@ const useStyles = makeStyles({
           <IconButton
             color="secondary"
             aria-label="add an alarm"
-            onClick={handleEditClick}
+            onClick={handleDeleteClick}
           >
             <DeleteIcon style={{ color: red[500] }} />
           </IconButton>
@@ -87,23 +81,23 @@ const useStyles = makeStyles({
   };
 
   const columns = [
-    { field: 'doctor_id', headerName: 'ID', width: 100 },
-    { field: 'hospital_id', headerName: 'Hospital', width: 120 },
-    { field: 'full_name', headerName: 'Name', width: 120 },
+    { field: 'transaction_id', headerName: 'ID', width: 100 },
+    { field: 'user_id', headerName: 'User', width: 120 },
+    { field: 'purchase_type', headerName: 'Purchase', width: 120 },
     {
-      field: 'str_no',
-      headerName: 'STR',
-      width: 110,
+      field: 'payment_type',
+      headerName: 'Payment',
+      width: 150,
     },
     {
-      field: 'work_experience',
-      headerName: 'Experience',
-      width: 110,
+      field: 'is_paid',
+      headerName: 'Status',
+      width: 150,
     },
     {
-      field: 'phone_number',
-      headerName: 'Phone Number',
-      width: 110,
+      field: 'price',
+      headerName: 'Price',
+      width: 150,
     },
     {
       field: "actions",
@@ -124,12 +118,27 @@ const useStyles = makeStyles({
     }
   ];
 
+  // const rows = [
+  //   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
+  //   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
+  //   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+  //   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
+  //   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
+  //   { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
+  //   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
+  //   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
+  //   { id: 10, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+  //   { id: 11, lastName: 'Wijaya', firstName: 'Gil', age: 65 },
+  //   { id: 12, lastName: 'Saputra', firstName: 'Nico', age: 65 },
+  //   { id: 13, lastName: 'Wong', firstName: 'SOI', age: 65 },
+  //   { id: 14, lastName: 'Gohza', firstName: 'HER', age: 65 },
+  // ];
+
 export default function Main() {
     const style = useStyles()
     const [data,setdata] = useState([])
-    let { url } = useRouteMatch();
     useEffect(()=>{
-      GetDoctorAll()
+      GetTransactionsAll()
       .then((res)=> setdata(res),
         )
         .catch((err)=> console.log(err))
@@ -138,7 +147,7 @@ export default function Main() {
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Doctors</p>
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Transactions</p>
          {/* <div style={{display:'flex',flexDirection:'row'}}>
          <div className={style.listitem}>
             <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}} >Total Users</p>
@@ -156,16 +165,14 @@ export default function Main() {
           <div>
           <div className={style.tablestyle}>
             <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
-            <Button
+            {/* <Button
               variant="contained"
               color="primary"
-              startIcon={<AddIcon />}
-              onClick={() => history.push(`${url}/add`)}
-              >
+              startIcon={<AddIcon />}>
               Add Data
-              </Button>
+              </Button> */}
             </div>
-            <DataGrid getRowId={(r) => r.doctor_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
+            <DataGrid getRowId={(r) => r.transaction_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
           </div>
           </div>
         </div>

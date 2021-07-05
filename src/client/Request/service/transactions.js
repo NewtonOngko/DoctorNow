@@ -1,32 +1,25 @@
 import configRest from '../config.rest'
 import { request } from '../request'
 
-const {user} = configRest.REST
+const {transactions} = configRest.REST
 
-export function GetUserAll (body) {
+export function GetTransactionsAll (body) {
     return request({
-      url:  user.main,
+      url:  transactions.main,
       method: 'GET',
       data :body
     })
   }
-export function AddUser (body) {
+export function UpdateTransactions (id,body) {
     return request({
-      url:  user.adduser,
-      method: 'POST',
-      body :body
-    })
-  }
-export function UpdateUser (id,body) {
-    return request({
-      url:  user.updateuser.replace(':id',id),
+      url:  transactions.updatetrans.replace(':id',id),
       method: 'PUT',
       body :body
     })
   }
-export function GetUserByID (id,body) {
+export function GetTransByID (id,body) {
     return request({
-      url:  user.getbyid.replace(':id',id),
+      url:  transactions.updatetrans.replace(':id',id),
       method: 'GET',
       body :body
     })
