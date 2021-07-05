@@ -60,7 +60,7 @@ export default function DoctorReport() {
         </TableHead>
         <TableBody>
           {data.map((row) => (
-            <StyledTableRow key={row.user_id}>
+            <StyledTableRow key={row.doctor_id}>
               <StyledTableCell component="th" scope="row">
                 {row.doctor_id}
               </StyledTableCell>

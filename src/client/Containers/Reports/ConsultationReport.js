@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {GetUserAll} from '../../Request/service/users'
+import {GetConsultationAll} from '../../Request/service/consultation'
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -37,7 +37,7 @@ export default function userReport() {
   const classes = useStyles();
   const [data,setdata]=useState([])
     useEffect(()=>{
-      GetUserAll()
+      GetConsultationAll()
       .then((res)=> {
         setdata(res);
        },
@@ -49,23 +49,25 @@ export default function userReport() {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>User_Id</StyledTableCell>
-            <StyledTableCell align="right">Name</StyledTableCell>
-            <StyledTableCell align="right">Email</StyledTableCell>
-            <StyledTableCell align="right">Address</StyledTableCell>
-            <StyledTableCell align="right">Phone&nbsp;Number</StyledTableCell>
+            <StyledTableCell>Appointment_Id</StyledTableCell>
+            <StyledTableCell align="right">User</StyledTableCell>
+            <StyledTableCell align="right">Doctor</StyledTableCell>
+            <StyledTableCell align="right">Time</StyledTableCell>
+            <StyledTableCell align="right">Price</StyledTableCell>
+            <StyledTableCell align="right">Hospital</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((row) => (
-            <StyledTableRow key={row.user_id}>
+            <StyledTableRow key={row.appointment_id}>
               <StyledTableCell component="th" scope="row">
-                {row.user_id}
+                {row.appointment_id}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.full_name}</StyledTableCell>
-              <StyledTableCell align="right">{row.email}</StyledTableCell>
-              <StyledTableCell align="right">{row.address}</StyledTableCell>
-              <StyledTableCell align="right">{row.phone_number}</StyledTableCell>
+              <StyledTableCell align="right">{row.user}</StyledTableCell>
+              <StyledTableCell align="right">{row.doctor}</StyledTableCell>
+              <StyledTableCell align="right">{row.time}</StyledTableCell>
+              <StyledTableCell align="right">{row.price}</StyledTableCell>
+              <StyledTableCell align="right">{row.hospital}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

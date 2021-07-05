@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import {GetUserAll} from '../../Request/service/users'
+import Loading from '../../Components/Loading'
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -33,19 +34,23 @@ const useStyles = makeStyles({
   },
 });
 
-export default function UserReport() {
+export default function UserReport(props) {
   const classes = useStyles();
   const [data,setdata]=useState([])
+  const [loading,setloading]= useState(false)
     useEffect(()=>{
+      setloading(true)
       GetUserAll()
       .then((res)=> {
         setdata(res);
+        setloading(false)
        },
         )
         .catch((err)=> console.log(err))
     },[])
   return (
     <TableContainer component={Paper}>
+      {loading && <Loading/>}
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>

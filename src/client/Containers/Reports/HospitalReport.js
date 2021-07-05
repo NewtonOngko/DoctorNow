@@ -7,7 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {GetUserAll} from '../../Request/service/users'
+import {GetHospitalAll} from '../../Request/service/hospital'
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -37,7 +37,7 @@ export default function userReport() {
   const classes = useStyles();
   const [data,setdata]=useState([])
     useEffect(()=>{
-      GetUserAll()
+      GetHospitalAll()
       .then((res)=> {
         setdata(res);
        },
@@ -49,22 +49,22 @@ export default function userReport() {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>User_Id</StyledTableCell>
+            <StyledTableCell>Hospital_Id</StyledTableCell>
             <StyledTableCell align="right">Name</StyledTableCell>
             <StyledTableCell align="right">Email</StyledTableCell>
-            <StyledTableCell align="right">Address</StyledTableCell>
+            <StyledTableCell align="right">Location</StyledTableCell>
             <StyledTableCell align="right">Phone&nbsp;Number</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((row) => (
-            <StyledTableRow key={row.user_id}>
+            <StyledTableRow key={row.hospital_id}>
               <StyledTableCell component="th" scope="row">
-                {row.user_id}
+                {row.hospital_id}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.full_name}</StyledTableCell>
+              <StyledTableCell align="right">{row.hospital_name}</StyledTableCell>
               <StyledTableCell align="right">{row.email}</StyledTableCell>
-              <StyledTableCell align="right">{row.address}</StyledTableCell>
+              <StyledTableCell align="right">{row.location}</StyledTableCell>
               <StyledTableCell align="right">{row.phone_number}</StyledTableCell>
             </StyledTableRow>
           ))}
