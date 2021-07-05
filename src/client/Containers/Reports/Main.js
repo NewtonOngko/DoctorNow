@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useRef, useState } from 'react';
+import ReactToPrint from 'react-to-print';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Header from '../../Components/Header'
@@ -8,6 +9,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import { blue, red } from '@material-ui/core/colors';
+import UserReport from './userReport'
+import DoctorReport from './doctorReport'
 
 
 const useStyles = makeStyles({
@@ -44,48 +47,82 @@ const useStyles = makeStyles({
     }
   });
 
-  const dataprint = (name,onclick) =>{
-    const style = useStyles()
-    return <div style={{backgroundColor:'#FFF4F2',borderRadius:'20px',width:'380px',height:'70px',display:'flex',flexDirection:'row',flex:1,margin:'15px'}}>
-    <div>
-      <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:0,padding:15}}>{name}</p>
-    </div>
-    <div className={style.printbtn}>
-    <Button
-      style={{backgroundColor:'#0081F8',color:'white'}}
-    variant="contained"
-      onClick={onclick}
-     >
-      Print
-    </Button>
-    </div>
-  </div>
+  // const dataprint = (name,onclick) =>{
+  //   const style = useStyles()
+  //   return <div style={{backgroundColor:'#FFF4F2',borderRadius:'20px',width:'380px',height:'70px',display:'flex',flexDirection:'row',flex:1,margin:'15px'}}>
+  //   <div>
+  //     <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:0,padding:15}}>{name}</p>
+  //   </div>
+  //   <div className={style.printbtn}>
+  //   <Button
+  //     style={{backgroundColor:'#0081F8',color:'white'}}
+  //   variant="contained"
+  //     onClick={onclick}
+  //    >
+  //     Print
+  //   </Button>
+  //   </div>
+  // </div>
+  // }
+  const printdata=(view)=>{
+    return <UserReport/>,<DoctorReport/>
   }
 
 export default function Main() {
     const style = useStyles()
+    const componentRef = useRef();
+    const[value,setValue]=useState('')
     return (
       <>
       <div className={style.container} >
         <Header/>
           <div>
-          <div className={style.tablestyle}>
-          <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Reports</p>
-         <div style={{position:'absolute'}}>
-         <div style={{display:'flex',flexDirection:'row'}}>
-            {dataprint('Reports Users')}
-            {dataprint('Reports Doctors')}
-          </div>
-          <div style={{display:'flex',flexDirection:'row'}}>
-            {dataprint('Reports Transaction')}
-            {dataprint('Reports Appointment')}
-          </div>
-          <div style={{display:'flex',flexDirection:'row'}}>
-            {dataprint('Reports Hospitals')}
-            {dataprint('Reports Consultations')}
-          </div>
-         </div>
-          </div>
+            <div className={style.tablestyle}>
+            <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>Reports</p>
+              {/* button */}
+              <div>
+                <div style={{backgroundColor:'#FFF4F2',borderRadius:'20px',width:'380px',height:'70px',display:'flex',flexDirection:'row',flex:1,margin:'15px'}}>
+                  <div>
+                    <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:0,padding:15}}>Report User</p>
+                  </div>
+                  <div className={style.printbtn}>
+                    <ReactToPrint
+                    onBeforePrint={()=>setValue('user')}
+                    trigger={() => 
+                      <Button
+                      style={{backgroundColor:'#0081F8',color:'white'}}
+                      variant="contained">
+                      Print </Button>}
+                    content={() => componentRef.current}
+                  />
+                  </div>
+                </div>
+              </div>
+              {/* button */}
+              <div>
+                <div style={{backgroundColor:'#FFF4F2',borderRadius:'20px',width:'380px',height:'70px',display:'flex',flexDirection:'row',flex:1,margin:'15px'}}>
+                  <div>
+                    <p style={{fontSize:20,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:0,padding:15}}>Report Doctors</p>
+                  </div>
+                  <div className={style.printbtn}>
+                    <ReactToPrint
+                    onBeforePrint={()=>setValue('doctor')}
+                    trigger={() => 
+                      <Button
+                      style={{backgroundColor:'#0081F8',color:'white'}}
+                      variant="contained">
+                      Print </Button>}
+                    content={() => componentRef.current}
+                  />
+                  </div>
+                </div>
+              </div>
+              <div style={{display:'none'}}>
+                <div ref={componentRef}>
+                  {printdata()}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </>
