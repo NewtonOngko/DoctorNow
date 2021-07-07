@@ -26,16 +26,10 @@ exports.create = function addUser(req, res) {
     res.status(400).send({ error: true, message: 'Please input your full name' });
   } else if (newUser.password == '') {
     res.status(400).send({ error: true, message: 'Please input your password' });
-  } else if (newUser.address == '') {
-    res.status(400).send({ error: true, message: 'Please input your address' });
-  } else if (newUser.gender == '') {
-    res.status(400).send({ error: true, message: 'Please input your gender' });
   } else if (newUser.phone_number == '' && newUser.phone_number != Number) {
     res.status(400).send({ error: true, message: 'Please input your phone number' });
   } else if (newUser.birthdate == '' && newUser.birthdate == Date)  {
     res.status(400).send({ error: true, message: 'Please input your birthdate' });
-  } else if (newUser.birthplace == '') {
-    res.status(400).send({ error: true, message: 'Please input your birthplace' });
   } else {
     User.create(newUser, (err, user) => {
       if (err) res.send(err);
