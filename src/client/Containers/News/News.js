@@ -1,10 +1,10 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Sidebar from '../../Components/Sidebar'
 import {Grid} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import Main from './Main';
 import MenuIcon from '@material-ui/icons/Menu';
-
+import history from '../../Route/history'
 const useStyles = makeStyles({
     root: {
       width:'auto',
@@ -34,7 +34,13 @@ const News = ({children}) => {
     const [active, setactive] = useState(true)
     const showSidebar =()=>{setactive(!active)}
     console.log('users',children)
-
+    useEffect(()=>{
+      const token = localStorage.getItem('token')
+      if(token===null || token ===''){
+        history.push('/')
+        console.log('login',token)
+      }
+    },[])
     // const Changeview =()=>{
     //   if(window.location.pathname == "/users"){
     //     return <Main/>
