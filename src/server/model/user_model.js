@@ -51,6 +51,17 @@ User.findById = function getUserById(id, result) {
   })
 }
 
+User.getEmail = function getEmail(email, result) {
+  dbConn.query('Select email from users ', email, (err, res) => {
+    if (err) {
+      console.log('error: ', err)
+      result(err, null)
+    } else {
+      result(null, res)
+    }
+  })
+}
+
 User.findAll = function getAllUser(result) {
   dbConn.query('Select * from users', (err, res) => {
     if (err) {
