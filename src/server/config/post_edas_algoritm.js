@@ -47,15 +47,19 @@ Recommendation.getMatriksKeputusan()
 		NDA.push(temp)
 	})
 	
-	//SP / SN
-	const W = 0.614
+	// Menghitung Jumlah Terbobot PDA/NDA (SP / SN)
+	const W = await Recommendation.getCriteria()
+	getWeight = W.map((item) => {
+		return item.weight
+	})
+
 	let SP = []
-	PDA.forEach((el) => {
+	PDA.forEach((el,i) => {
 		let sum = 0
 		el.forEach((u) => {
 		sum += u
 		})
-		SP.push(W * sum)
+		SP.push(getWeight[0] * sum)
 	})
 	
 	let SN = []
@@ -64,10 +68,10 @@ Recommendation.getMatriksKeputusan()
 		el.forEach((u) => {
 		sum += u
 		})
-		SN.push(W * sum)
+		SN.push(getWeight[1] * sum)
 	})
 	
-	//NSP NSNS
+	//Menghitung Nilai Normalisasi SP/SN
 	let NSP = []
 	let NSN = []
 	
@@ -96,8 +100,6 @@ Recommendation.getMatriksKeputusan()
 	filteredAlternativeData = alternativeData.map(({ doctor_id, hospital_id }) => ({
 		doctor_id, hospital_id
 	}))
-
-	console.log('filteredAlternativeData', filteredAlternativeData)
 
 	const mappedScore = new Map()
 
