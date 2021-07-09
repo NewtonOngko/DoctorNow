@@ -1,4 +1,3 @@
-const { Assessment } = require('@material-ui/icons')
 const dbConn = require('../config/config.js')
 
 const Recommendation = {
