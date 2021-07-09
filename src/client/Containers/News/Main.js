@@ -19,8 +19,9 @@ import {
 } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import {news} from '../../Features/viewSlice'
-import{GetNewsAll}from '../../Request/service/news'
-
+import{GetNewsAll,DeleteByID}from '../../Request/service/news'
+import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const useStyles = makeStyles({
     container: {
@@ -63,7 +64,13 @@ const useStyles = makeStyles({
       );
     };
     const handleDeleteClick = () => {
-      // some action
+      console.log(index.news_id)
+      DeleteByID(index.news_id).then((res)=>{
+        console.log(res)
+        window.location.reload();
+      }).catch(err=>{
+        console.log(err)
+      })
     };
     return (
       <FormControlLabel
@@ -129,6 +136,7 @@ export default function Main() {
     let { url } = useRouteMatch();
     // console.log('url', url)
     const [data,setdata]=useState([])
+    const [open, setOpen] = React.useState(false);
     useEffect(()=>{
       GetNewsAll()
       .then((res)=> {
@@ -137,10 +145,17 @@ export default function Main() {
         )
         .catch((err)=> console.log(err))
     },[])
+    const handleClose = () => {
+      setOpen(false)
+      history.push('/news')
+    };
     return (
       <>
       <div className={style.container} >
         <Header/>
+        <Snackbar open={open} autoHideDuration={3000}  onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+            <Alert severity="success">Berhasil Dihapus</Alert>
+        </Snackbar>
         <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>News</p>
           <div>
           <div className={style.tablestyle}>
