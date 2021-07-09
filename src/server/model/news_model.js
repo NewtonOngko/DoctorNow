@@ -73,7 +73,7 @@ News.update = function updateNews(id, news, result) {
 }
 
 News.delete = function deleteNews(id, result) {
-  dbConn.query('DELETE FROM news WHERE id = ?', [id], (err, res) => {
+  dbConn.query('DELETE FROM news WHERE news_id = ?', [id], (err, res) => {
     if (err) {
       console.log('error: ', err)
       result(null, err)

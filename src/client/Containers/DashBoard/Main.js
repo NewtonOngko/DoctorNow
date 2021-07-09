@@ -32,7 +32,7 @@ const useStyles = makeStyles({
     },
     tablestyle:{
       backgroundColor:'white',
-      height: '400px',
+      height: 'auto',
       width: 'auto',
       margin:'20px',
       borderRadius:'20px',
@@ -104,23 +104,23 @@ const useStyles = makeStyles({
     //       params.getValue(params.id, 'lastName') || ''
     //     }`,
     // },
-    {
-      field: "actions",
-      headerName: "Actions",
-      sortable: false,
-      width: 140,
-      disableClickEventBubbling: true,
-      renderCell: (params) => {
-        return (
-          <div
-            className="d-flex justify-content-between align-items-center"
-            style={{ cursor: "pointer" }}
-          >
-            <RowEdit index={params.row.id} />
-          </div>
-        );
-      }
-    }
+    // {
+    //   field: "actions",
+    //   headerName: "Actions",
+    //   sortable: false,
+    //   width: 140,
+    //   disableClickEventBubbling: true,
+    //   renderCell: (params) => {
+    //     return (
+    //       <div
+    //         className="d-flex justify-content-between align-items-center"
+    //         style={{ cursor: "pointer" }}
+    //       >
+    //         <RowEdit index={params.row.id} />
+    //       </div>
+    //     );
+    //   }
+    // }
   ];
   
 export default function Main() {
@@ -179,16 +179,16 @@ export default function Main() {
          </div>
           <div>
           <div className={style.tablestyle}>
-            {/* <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
+            {/* <a style={{padding:15,justifyContent:'flex-end',display:'flex',fontSize:18}} href={'/users'}>See More</a> */}
+            <div style={{padding:15,justifyContent:'flex-end',display:'flex'}}>
             <Button
               variant="contained"
               color="primary"
-              //onClick={history.push('/users/add')}
-              startIcon={<AddIcon />}>
-              Add Data
+              onClick={()=>history.push('/users')}>
+              See More
               </Button>
-            </div> */}
-            <DataGrid getRowId={(r) => r.user_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
+            </div>
+            <DataGrid getRowId={(r) => r.user_id} className={style.data} rows={data} columns={columns} pageSize={5} />
           </div>
           </div>
         </div>

@@ -87,7 +87,7 @@ export default function MainAdd() {
               setOpen(true)
               setcode(false)
               setmessage(res.message)
-              setTimeout(function(){ history.push('/users'); }, 1000);
+              setTimeout(function(){ history.push('/news'); }, 1000);
             }
             else if (res.error==true){
               setOpen(true)
@@ -130,10 +130,10 @@ export default function MainAdd() {
                 <TextField fullWidth id="standard-required" label="Title" value={title} onChange={e => setTitle(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField type="password" fullWidth id="standard-required" label="Link" value={link} onChange={e => setLink(e.target.value)}/>
+                <TextField fullWidth id="standard-required" label="Link" value={link} onChange={e => setLink(e.target.value)}/>
               </Grid>
               <Grid item xs ={6}>
-                <TextField type="password" multiline fullWidth id="standard-required" label="Description" value={desc} onChange={e => setDesc(e.target.value)}/>
+                <TextField multiline fullWidth id="standard-required" label="Description" value={desc} onChange={e => setDesc(e.target.value)}/>
               </Grid>
           </Grid>
               <div style={{margin:20,display:'flex',flexDirection:'row'}}>
@@ -148,7 +148,7 @@ export default function MainAdd() {
               <Button
               variant="contained"
               color="primary"
-              onClick={()=> history.goBack()}
+              onClick={()=> history.push('/news')}
               >
               Cancel
               </Button>
