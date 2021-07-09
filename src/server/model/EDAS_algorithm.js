@@ -29,6 +29,7 @@ const Recommendation = {
       dbConn.query(query, (err, res) => {
         if (err) reject(err)
         resolve(Object.values(JSON.parse(JSON.stringify(res))))
+
       })
     })
   },
@@ -36,8 +37,16 @@ const Recommendation = {
     return new Promise((resolve, reject) => {
       const query = 'SELECT * from eda_evaluations'
       dbConn.query(query, (err, res) => {
+        const obj = res
+        let data = []
         if (err) reject(err)
-        resolve(Object.values(JSON.parse(JSON.stringify(res))))
+        for (var i = 0; i < obj.length; i+=2) {
+          data.push({
+            value: [obj[i]?.value, obj[i+1]?.value],
+            doctor_id: obj[i].doctor_id,
+          })
+        }
+        resolve(data);
       })
     })
   },
@@ -53,4 +62,5 @@ const Recommendation = {
   },
 }
 
+// Recommendation.getMatriksKeputusan()
 module.exports = Recommendation

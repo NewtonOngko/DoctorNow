@@ -31,4 +31,12 @@ export function GetNewsByID (id,body) {
       body :body
     })
   }
+export function DeleteByID (id,body) {
+   return request({
+     url:  news.deletebyid.replace(':id',id),
+    method: 'DELETE',
+    body :body
+   })
+ }
+
 

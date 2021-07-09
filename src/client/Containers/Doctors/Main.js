@@ -73,13 +73,6 @@ const useStyles = makeStyles({
           >
             <EditIcon style={{ color: blue[500] }} />
           </IconButton>
-          <IconButton
-            color="secondary"
-            aria-label="add an alarm"
-            onClick={handleEditClick}
-          >
-            <DeleteIcon style={{ color: red[500] }} />
-          </IconButton>
           </>
         }
       />
