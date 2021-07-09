@@ -124,5 +124,5 @@ Recommendation.getMatriksKeputusan()
 		return temp
 	})
 
-	// Recommendation.postEDASAlgorithm(arrAS)
+	Recommendation.postEDASAlgorithm(arrAS)
 })
