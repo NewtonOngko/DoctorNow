@@ -188,7 +188,7 @@ export default function Main() {
               See More
               </Button>
             </div>
-            <DataGrid getRowId={(r) => r.user_id} className={style.data} rows={data} columns={columns} pageSize={5} />
+            <DataGrid getRowId={(r) => r.user_id} className={style.data} rows={data} columns={columns} pageSize={10} />
           </div>
           </div>
         </div>

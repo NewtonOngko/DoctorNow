@@ -49,6 +49,8 @@ export default function UserReport(props) {
         .catch((err)=> console.log(err))
     },[])
   return (
+    <>
+    <p style={{fontSize:24,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>User Reports</p>
     <TableContainer component={Paper}>
       {loading && <Loading/>}
       <Table className={classes.table} aria-label="customized table">
@@ -76,5 +78,6 @@ export default function UserReport(props) {
         </TableBody>
       </Table>
     </TableContainer>
+    </>
   );
 }
