@@ -69,10 +69,10 @@ const useStyles = makeStyles({
 
   const columns = [
     { field: 'consultation_id', headerName: 'ID', width: 100 },
-    { field: 'user_id', headerName: 'User', width: 120 },
-    { field: 'doctor_id', headerName: 'Doctor', width: 120 },
+    { field: 'user', headerName: 'User', width: 120 },
+    { field: 'doctor', headerName: 'Doctor', width: 120 },
     {
-      field: 'hospital_id',
+      field: 'hospital',
       headerName: 'Hospital',
       width: 150,
     },
@@ -159,7 +159,7 @@ export default function Main() {
               Add Data
               </Button> */}
             </div>
-            <DataGrid getRowId={(r) => r.consultation_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
+            <DataGrid getRowId={(r) => r.consultation_id} className={style.data} rows={data} columns={columns} pageSize={10} checkboxSelection />
           </div>
           </div>
         </div>

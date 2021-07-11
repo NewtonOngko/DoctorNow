@@ -165,7 +165,7 @@ export default function Main() {
               Add Data
               </Button> */}
             </div>
-            <DataGrid getRowId={(r) => r.transaction_id} className={style.data} rows={data} columns={columns} pageSize={5} checkboxSelection />
+            <DataGrid getRowId={(r) => r.transaction_id} className={style.data} rows={data} columns={columns} pageSize={10} checkboxSelection />
           </div>
           </div>
         </div>
