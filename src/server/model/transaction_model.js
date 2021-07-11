@@ -3,15 +3,16 @@
 const dbConn = require('../config/config.js');
 
 // doctor object create
-const Transaction = function consultationData(transaction) {
+const Transaction = function transactionData(transaction) {
   this.user_id = transaction.user_id;
   this.purchase_type = transaction.purchase_type;
   this.payment_type = transaction.payment_type ? transaction.payment_type : 'TRANSFER';
-  this.price = transaction.price;
+  this.gross_amount = transaction.gross_amount;
   this.is_paid = transaction.is_paid ? transaction.is_paid : 1;
 
   this.created_at = new Date();
   this.updated_at = new Date();
+  
 };
 
 Transaction.create = function createTransaction(newTransaction, result) {
