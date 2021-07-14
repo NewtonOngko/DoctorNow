@@ -18,13 +18,17 @@ exports.create = function addTransaction(req, res) {
         'transaction' +
         Date.now() +
         newTransaction.user_id +
-        '-' + 
+        '-' +
         newTransaction.payment_type +
-        '-' + 
+        '-' +
         newTransaction.user_id,
       gross_amount: newTransaction.gross_amount,
+      payment: '12345678'
     },
     newTransaction,
+    bca_va: {
+      va_number: '12345678',
+    },
   }
 
   snap
@@ -32,6 +36,7 @@ exports.create = function addTransaction(req, res) {
     .then((transaction) => {
       // transaction token
       let transactionToken = transaction.token
+
       console.log('transactionToken:', transactionToken)
 
       // transaction redirect url

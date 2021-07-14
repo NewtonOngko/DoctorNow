@@ -40,7 +40,14 @@ Transaction.findById = function getTransactionById(id, result) {
 };
 
 Transaction.findAll = function getAllTransaction(result) {
-  dbConn.query('Select * from transactions', (err, res) => {
+  dbConn.query(`SELECT transactions.transaction_id ,users.full_name as user ,doctors.full_name as doctor ,hospitals.hospital_name as hospital,transactions.gross_amount , transactions.payment_status ,transactions.created_at ,transactions.updated_at 
+  FROM transactions
+  JOIN users
+  ON transactions.user_id =users.user_id 
+  JOIN doctors
+  on transactions .doctor_id =doctors .doctor_id 
+  JOIN hospitals
+  on transactions .hospital_id = hospitals .hospital_id`, (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(null, err);

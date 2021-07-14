@@ -191,7 +191,7 @@ export default function MainAdd() {
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Add Doctors</p>
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Add Doctor</p>
           <div className={style.tablestyle}>
           <p style={{fontSize:30,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:15}}>BASIC INFORMATION</p>
           <Grid container direction="row" spacing ={2} style={{padding:20}}>
