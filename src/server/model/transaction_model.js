@@ -3,15 +3,16 @@
 const dbConn = require('../config/config.js');
 
 // doctor object create
-const Transaction = function consultationData(transaction) {
+const Transaction = function transactionData(transaction) {
   this.user_id = transaction.user_id;
   this.purchase_type = transaction.purchase_type;
   this.payment_type = transaction.payment_type ? transaction.payment_type : 'TRANSFER';
-  this.price = transaction.price;
+  this.gross_amount = transaction.gross_amount;
   this.is_paid = transaction.is_paid ? transaction.is_paid : 1;
 
   this.created_at = new Date();
   this.updated_at = new Date();
+  
 };
 
 Transaction.create = function createTransaction(newTransaction, result) {
@@ -39,7 +40,14 @@ Transaction.findById = function getTransactionById(id, result) {
 };
 
 Transaction.findAll = function getAllTransaction(result) {
-  dbConn.query('Select * from transactions', (err, res) => {
+  dbConn.query(`SELECT transactions.transaction_id ,users.full_name as user ,doctors.full_name as doctor ,hospitals.hospital_name as hospital,transactions.gross_amount , transactions.payment_status ,transactions.created_at ,transactions.updated_at 
+  FROM transactions
+  JOIN users
+  ON transactions.user_id =users.user_id 
+  JOIN doctors
+  on transactions .doctor_id =doctors .doctor_id 
+  JOIN hospitals
+  on transactions .hospital_id = hospitals .hospital_id`, (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(null, err);

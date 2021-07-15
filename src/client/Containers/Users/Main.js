@@ -33,14 +33,14 @@ const useStyles = makeStyles({
     },
     listitem:{
       backgroundColor:'white',
-      width:'300px',
-      height:'100px',
+      width:'550px',
+      height:'200px',
       margin:'20px',
       borderRadius:'20px',
     },
     tablestyle:{
       backgroundColor:'white',
-      height: '450px',
+      height: '750px',
       width: 'auto',
       margin:'20px',
       borderRadius:'20px',
@@ -48,7 +48,7 @@ const useStyles = makeStyles({
     data:{
       border:0,
       padding:15,
-      height:'400px'
+      height:'700px'
     }
   });
   const RowEdit = ({ index }) => {
@@ -120,7 +120,7 @@ const useStyles = makeStyles({
       field: "actions",
       headerName: "Actions",
       sortable: false,
-      width: 140,
+      width: 1000,
       disableClickEventBubbling: true,
       renderCell: (params) => {
         return (

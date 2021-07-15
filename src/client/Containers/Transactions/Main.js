@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     },
     tablestyle:{
       backgroundColor:'white',
-      height: '450px',
+      height: '750px',
       width: 'auto',
       margin:'20px',
       borderRadius:'20px',
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     data:{
       border:0,
       padding:15,
-      height:'400px'
+      height:'720px'
     }
   });
   const RowEdit = ({ index }) => {
@@ -75,20 +75,15 @@ const useStyles = makeStyles({
 
   const columns = [
     { field: 'transaction_id', headerName: 'ID', width: 100 },
-    { field: 'user_id', headerName: 'User', width: 120 },
-    { field: 'purchase_type', headerName: 'Purchase', width: 120 },
+    { field: 'user', headerName: 'User', width: 350 },
+    { field: 'doctor', headerName: 'Doctor', width: 350 },
     {
-      field: 'payment_type',
-      headerName: 'Payment',
+      field: 'payment_status',
+      headerName: 'Payment Status',
       width: 150,
     },
     {
-      field: 'is_paid',
-      headerName: 'Status',
-      width: 150,
-    },
-    {
-      field: 'price',
+      field: 'gross_amount',
       headerName: 'Price',
       width: 150,
     },

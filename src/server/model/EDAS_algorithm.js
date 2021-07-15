@@ -45,6 +45,7 @@ const Recommendation = {
             doctor_id: obj[i].doctor_id,
           })
         }
+        console.log(data);
         resolve(data);
       })
     })
