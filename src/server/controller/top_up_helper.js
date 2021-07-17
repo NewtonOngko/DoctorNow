@@ -16,7 +16,7 @@ exports.create = function addTopUp(req, res) {
   console.log('data', newTopUp)
   let parameter = {
     transaction_details: {
-      order_id: 'topups -' + Date.now() + ' - user - ' + newTopUp.user_id,
+      order_id: 'topup -' + Date.now() + ' - user - ' + newTopUp.user_id,
       gross_amount: newTopUp.gross_amount,
     //   payment: '12345678',
     },
