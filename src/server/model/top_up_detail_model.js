@@ -9,8 +9,8 @@ const TopUpDetail = function topUpDetailData(topUpDetail) {
   this.transaction_status = topUpDetail.transaction_status
   this.transaction_id = topUpDetail.transaction_id
   this.signature_key = topUpDetail.signature_key
-  ;(this.payment_type = topUpDetail.payment_type),
-    (this.order_id = topUpDetail.order_id)
+  this.payment_type = topUpDetail.payment_type
+  this.order_id = topUpDetail.order_id
   this.gross_amount = topUpDetail.gross_amount
   this.fraud_status = topUpDetail.fraud_status
 
