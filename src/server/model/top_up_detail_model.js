@@ -4,7 +4,6 @@ const dbConn = require('../config/config.js')
 
 // top up object create
 const TopUpDetail = function topUpDetailData(topUpDetail) {
-  this.user_id = topUpDetail.user_id
   this.transaction_time = topUpDetail.transaction_time
   this.transaction_status = topUpDetail.transaction_status
   this.transaction_id = topUpDetail.transaction_id
