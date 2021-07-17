@@ -93,4 +93,4 @@ TopUpDetail.delete = function deleteTopUpDetail(id, result) {
   })
 }
 
-module.exports = TopUp
+module.exports = TopUpDetail
