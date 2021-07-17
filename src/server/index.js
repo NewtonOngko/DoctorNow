@@ -48,6 +48,7 @@ const changePasswordUserRoutes = require('./routes/change_password_user_routes.j
 const changePasswordDoctorRoutes = require('./routes/change_password_doctor_routes.js')
 const topUpRoutes = require('./routes/top_up_routes.js')
 const topUpDetailRoutes = require('./routes/top_up_detail_routes.js')
+const withdrawRoutes = require('./routes/withdraw_routes.js')
 
 // using as middleware
 app.use('/users', userRoutes)
@@ -67,6 +68,7 @@ app.use('/change-password/user', changePasswordUserRoutes)
 app.use('/change-password/doctor', changePasswordDoctorRoutes)
 app.use('/top-up', topUpRoutes)
 app.use('/top-up-detail', topUpDetailRoutes)
+app.use('/withdraw', withdrawRoutes)
 
 // listen for requests
 app.listen(port, () => {
