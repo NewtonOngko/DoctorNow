@@ -20,7 +20,6 @@ exports.create = function addTopUp(req, res) {
       gross_amount: newTopUp.gross_amount,
     },
     newTopUp,
-  
   }
 
   snap
@@ -44,7 +43,7 @@ exports.create = function addTopUp(req, res) {
 }
 
 exports.findById = function getTopupById(req, res) {
-  newTopUp.findById(req.params.id, (err, topUp) => {
+  TopUp.findById(req.params.id, (err, topUp) => {
     if (err) res.send(err)
     res.json(topUp)
   })
@@ -65,5 +64,14 @@ exports.delete = function deleteTopUp(req, res) {
   TopUp.delete(req.params.id, (err) => {
     if (err) res.send(err)
     res.json({ error: false, message: 'Top Up deleted' })
+  })
+}
+
+exports.get = function getTopUpData(req, res) {
+  TopUp.get((err, topUp) => {
+    console.log('get all topUp')
+    if (err) res.send(err)
+    console.log('res', topUp)
+    res.send(topUp)
   })
 }

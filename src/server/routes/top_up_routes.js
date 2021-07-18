@@ -4,7 +4,7 @@ const router = express.Router();
 const topUpController = require('../controller/top_up_helper.js');
 
 // Retrieve all users
-router.get('/', topUpController.findAll);
+router.get('/', topUpController.get);
 
 // Create a new user
 router.post('/', topUpController.create);
@@ -17,5 +17,7 @@ router.put('/:id', topUpController.update);
 
 // Delete a user with id
 router.delete('/:id', topUpController.delete);
+
+// router.get('/all', topUpController.get);
 
 module.exports = router;
