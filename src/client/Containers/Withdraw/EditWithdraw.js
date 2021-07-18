@@ -12,10 +12,10 @@ import { blue, red } from '@material-ui/core/colors';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Gap from '../../Components/Gap'
-import {UpdateTransactions,GetTransByID} from '../../Request/service/transactions'
+import {UpdateWithdraw,GetWithdrawByID} from '../../Request/service/transactions'
 import {storage} from "../../Components/Firebase"
 import Avatar from 'react-avatar';
-import {selectTransactionId} from "../../Features/viewSlice"
+import {selectTopUpId} from "../../Features/viewSlice"
 import { useSelector } from 'react-redux';
 import PublishIcon from '@material-ui/icons/Publish';
 import Alert from '@material-ui/lab/Alert';
@@ -73,15 +73,14 @@ const useStyles = makeStyles({
       value: '0',
       label: 'Inactive',
     }
-  ];
+  ]; 
 
 export default function EditTransactions() {
     const style = useStyles()
-    const [user, setUser] = React.useState('');
-    const [purchase, setPurchase] = React.useState('');
-    const [payment, setPayment] = React.useState('');
-    const [price, setPrice] = React.useState('');
-    const [paid, setpaid] = React.useState(''); 
+    const [name, setname] = React.useState('');
+    const [status, setStatus] = React.useState('');
+    const [account, setAccount] = React.useState('');
+    const [amount, setAmount] = React.useState('');
 
 
     const [loading,setloading]= useState(false)
@@ -93,7 +92,7 @@ export default function EditTransactions() {
     const [imageAsFile, setImageAsFile] = useState('')
     const [imageAsUrl, setImageAsUrl] = useState(allInputs)
 
-    const TransactionId = useSelector(selectTransactionId);
+    const TransactionId = useSelector(selectTopUpId);
     //console.log(imageAsFile)
     const handleImageAsFile =  async(e) => {
          const image = e.target.files[0]
@@ -142,12 +141,11 @@ export default function EditTransactions() {
       const onSaveData=()=>{
         setloading(true);
         console.log('imageurl',JSON.stringify(imageAsUrl.imgUrl))
-        UpdateTransactions(TransactionId.id,{
-          user_id: user,
-          purchase_type :purchase,
-          payment_type:payment,
-          price :price,
-          is_paid :paid,
+        UpdateWithdraw(TransactionId.id,{
+          doctor_id: name,
+          withdraw_status :status,
+          account_receiver:account,
+          amount :amount,
         }).then(
           res =>{
             console.log(res)
@@ -155,7 +153,7 @@ export default function EditTransactions() {
               setOpen(true)
               setcode(false)
               setmessage(res.message)
-              setTimeout(function(){ history.push('/hospital'); }, 1000);
+              setTimeout(function(){ history.push('/withdraw'); }, 1000);
             }
             else if (res.error==true){
               setOpen(true)
@@ -174,14 +172,13 @@ export default function EditTransactions() {
       }
     useEffect(()=>{
       console.log(TransactionId.id)
-      GetTransByID(TransactionId.id)
+      GetWithdrawByID(TransactionId.id)
       .then((res)=> {
         console.log(res)
-        setUser(res[0].user_id)
-        setPayment(res[0].payment_type)
-        setPurchase(res[0].purchase_type)
-        setpaid(res[0].is_paid)
-        setPrice(res[0].gross_amount)
+        setname(res[0].doctor_id)
+        setStatus(res[0].withdraw_status)
+        setAccount(res[0].account_receiver)
+        setAmount(res[0].amount)
       })
       .catch((err)=> {
       console.log(err)
@@ -207,20 +204,17 @@ export default function EditTransactions() {
             <Snackbar open={open} autoHideDuration={3000}  onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
               {PushAlert(code,message)}
             </Snackbar>
-            <Grid item xs ={6 }>
-                <TextField variant="filled" fullWidth id="standard-required" label="User Id" value={user} onChange={e => setUser(e.target.value)}  />
+            <Grid item xs ={6}>
+                <TextField variant="filled" fullWidth id="standard-required" label="Doctor Name" value={name} onChange={e => setname(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Purchase Type" value={purchase} onChange={e => setPurchase(e.target.value)}  />
+                <TextField variant="filled" fullWidth id="standard-required" label="Status" value={status} onChange={e => setStatus(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Payment Type" value={payment} onChange={e => setPayment(e.target.value)}  />
+                <TextField variant="filled" fullWidth id="standard-required" label="Account Receiver" value={account} onChange={e => setAccount(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Paid Status" value={paid} onChange={e => setpaid(e.target.value)}  />
-              </Grid>
-              <Grid item xs ={6}>
-                 <TextField variant="filled" fullWidth id="standard-error-helper-text" label="Price" name="email" value={price} onChange={e => setPrice(e.target.value)} helperText={Errortext} />
+                <TextField variant="filled" fullWidth id="standard-required" label="Request Amount" value={amount} onChange={e => setAmount(e.target.value)}  />
               </Grid>
             </Grid>
             <div style={{margin:20,display:'flex',flexDirection:'row',justifyContent:'flex-end'}}>

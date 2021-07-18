@@ -9,6 +9,7 @@ import ReportsIcon from '../../client/Assets/Reports.png';
 import UsersIcon from '../../client/Assets/Users.png';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 
 export const SidebarData = [
     {
@@ -25,6 +26,11 @@ export const SidebarData = [
         title:"Transactions",
         icon: <ReceiptIcon/>,
         link:"/transactions"
+    },
+    {
+        title:"Withdraw",
+        icon: <AccountBalanceWalletIcon/>,
+        link:"/withdraw"
     },
     {
         title:"Doctors",

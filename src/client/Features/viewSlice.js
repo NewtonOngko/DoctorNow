@@ -9,7 +9,8 @@ export const userSlice = createSlice({
         doctorId:null,
         hospitalId:null,
         transactionId:null,
-        newsId:null
+        newsId:null,
+        topupId:null,
     },
     reducers:{
         appointment:(state,action)=>{
@@ -30,10 +31,13 @@ export const userSlice = createSlice({
         news:(state,action)=>{
             state.newsId = action.payload
         },
+        topUp:(state,action)=>{
+            state.topupId = action.payload
+        },
     }
 })
 
-export const {appointment,consultation,doctor,hospital,transaction,news} = userSlice.actions;
+export const {appointment,consultation,doctor,hospital,transaction,news,topUp} = userSlice.actions;
 
 export const  selectAppointmentId =(state) => state.viewidReducer.appointmentId;
 export const  selectConsultationId =(state) => state.viewidReducer.consultationId;
@@ -41,5 +45,6 @@ export const  selectDoctorId =(state) => state.viewidReducer.doctorId;
 export const  selectHospitalId =(state) => state.viewidReducer.hospitalId;
 export const  selectTransactionId =(state) => state.viewidReducer.transactionId;
 export const  selectNewsId =(state) => state.viewidReducer.newsId;
+export const  selectTopUpId =(state) => state.viewidReducer.topupId;
 
 export default userSlice.reducer;

@@ -40,7 +40,7 @@ const useStyles = makeStyles({
     data:{
       border:0,
       padding:15,
-      height:'400px'
+      height:'700px'
     }
   });
   const RowEdit = ({ index }) => {

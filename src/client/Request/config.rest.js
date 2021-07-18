@@ -11,8 +11,8 @@ export default {
   API_HOST: prodhost,
   //API_HOST: host,
   //API_URL: `${host}${version}`,
-  //API_URL: `${prodhost}`,//production
-  API_URL: `${host}:${port01}`,
+  API_URL: `${prodhost}`,//production
+  //API_URL: `${host}:${port01}`,
   REST: {
     auth: {
       login: '/admin/login',
@@ -53,6 +53,11 @@ export default {
       updatenews:'/news/:id',
       getbyid:'/news/:id',
       deletebyid:'/news/:id'
+    },
+    topup:{
+      topup : '/top-up',
+      withdraw : '/withdraw',
+      updateWithdraw : '/withdraw/:id'
     }
   }
 }

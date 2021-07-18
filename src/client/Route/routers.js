@@ -34,6 +34,10 @@ import Transactions from '../Containers/Transactions/Transactions';
 import TransactionsMain from '../Containers/Transactions/Main';
 import EditTransactions from '../Containers/Transactions/EditTransactions';
 
+import Withdraw from '../Containers/Withdraw/Withdraw';
+import WithdrawMain from '../Containers/Withdraw/Main';
+import EditWithdraw from '../Containers/Withdraw/EditWithdraw';
+
 
 
 import Consultation from '../Containers/Consultation/Consultation';
@@ -147,6 +151,23 @@ export default class Routers extends Component {
                             <Redirect exact from={path + "/"} to={path} />
                           </Switch>
                         </News>
+                      )}
+                    />
+                    <Route
+                      path={"/withdraw"}
+                      render={({ match: { path } }) => (
+                        <Withdraw>
+                          <Switch>
+                            <Route
+                              exact
+                              path={path + "/"}
+                              component={WithdrawMain}
+                            />
+                            {/* <Route path={`${path}/topup`} component={AddNews} /> */}
+                            <Route path={`${path}/edit`} component={EditWithdraw} />
+                            <Redirect exact from={path + "/"} to={path} />
+                          </Switch>
+                        </Withdraw>
                       )}
                     />
                     <Route path="/consultation" component={Consultation}/>
