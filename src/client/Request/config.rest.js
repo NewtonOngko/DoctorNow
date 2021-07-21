@@ -19,40 +19,48 @@ export default {
     },
     user: {
       main: '/users',
-      adduser :'/users',
-      updateuser:'/users/:id',
-      getbyid:'/users/:id'
+      adduser: '/users',
+      updateuser: '/users/:id',
+      getbyid: '/users/:id',
     },
     doctor: {
       main: '/doctors',
-      addDoctor :'/doctors',
-      updatedoctor:'/doctors/:id',
-      getdoctorbyid:'/doctors/:id'
+      addDoctor: '/doctors',
+      updatedoctor: '/doctors/:id',
+      getdoctorbyid: '/doctors/:id',
     },
     hospital: {
       main: '/hospitals',
-      addHospital :'/hospitals',
-      updateHospital:'/hospitals/:id',
-      gethospitalbyid:'/hospitals/:id'
+      addHospital: '/hospitals',
+      updateHospital: '/hospitals/:id',
+      gethospitalbyid: '/hospitals/:id',
     },
     consultation: {
       main: '/consultations',
-      addConsultation :'/consultations'
+      addConsultation: '/consultations',
     },
     appointment: {
       main: '/appointments',
     },
     transactions: {
       main: '/transactions',
-      updatetrans :'/transactions/:id',
-      getbyid :'/transactions/:id'
+      updatetrans: '/transactions/:id',
+      getbyid: '/transactions/:id',
     },
     news: {
       main: '/news',
-      addnews :'/news',
-      updatenews:'/news/:id',
-      getbyid:'/news/:id',
-      deletebyid:'/news/:id'
-    }
-  }
+      addnews: '/news',
+      updatenews: '/news/:id',
+      getbyid: '/news/:id',
+      deletebyid: '/news/:id',
+    },
+    topUp: {
+      main: '/top-up',
+    },
+    withdraw: {
+      main: '/withdraw',
+      updatewithdraw: '/withdraw/:id',
+      getbyid: '/withdraw/:id',
+    },
+  },
 }

@@ -1,159 +1,178 @@
-import React, { Component } from "react";
-import { Router, Switch, Route,Link,  useParams,useRouteMatch } from "react-router-dom";
-import { Redirect } from "react-router";
+import React, { Component } from 'react'
+import {
+  Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch,
+} from 'react-router-dom'
+import { Redirect } from 'react-router'
 
-import Users from '../Containers/Users/Users';
-import UsersMain from '../Containers/Users/Main';
-import AddUsers from '../Containers/Users/MainAdd';
-import EditUsers from '../Containers/Users/EditUser';
+import Users from '../Containers/Users/Users'
+import UsersMain from '../Containers/Users/Main'
+import AddUsers from '../Containers/Users/MainAdd'
+import EditUsers from '../Containers/Users/EditUser'
 
-import Appointment from '../Containers/Appointment/Appointment';
-import AppointmentMain from '../Containers/Appointment/Main';
-import EditAppointment from '../Containers/Appointment/EditAppointment';
+import Appointment from '../Containers/Appointment/Appointment'
+import AppointmentMain from '../Containers/Appointment/Main'
+import EditAppointment from '../Containers/Appointment/EditAppointment'
 
-import Doctors from '../Containers/Doctors/Doctors';
-import DoctorsMain from '../Containers/Doctors/Main';
-import AddDoctors from '../Containers/Doctors/MainAdd';
-import EditDoctors from '../Containers/Doctors/EditDoctor';
+import Doctors from '../Containers/Doctors/Doctors'
+import DoctorsMain from '../Containers/Doctors/Main'
+import AddDoctors from '../Containers/Doctors/MainAdd'
+import EditDoctors from '../Containers/Doctors/EditDoctor'
 
-import Hospital from '../Containers/Hospital/Hospital';
-import HospitalMain from '../Containers/Hospital/Main';
-import AddHospital from '../Containers/Hospital/MainAdd';
-import EditHospital from '../Containers/Hospital/EditHospital';
+import Hospital from '../Containers/Hospital/Hospital'
+import HospitalMain from '../Containers/Hospital/Main'
+import AddHospital from '../Containers/Hospital/MainAdd'
+import EditHospital from '../Containers/Hospital/EditHospital'
 
-import News from '../Containers/News/News';
-import NewsMain from '../Containers/News/Main';
-import AddNews from '../Containers/News/MainAdd';
-import EditNews from '../Containers/News/EditNews';
+import News from '../Containers/News/News'
+import NewsMain from '../Containers/News/Main'
+import AddNews from '../Containers/News/MainAdd'
+import EditNews from '../Containers/News/EditNews'
 
-import history from '../../client/Route/history';
-import Login from '../../client/Containers/Login';
-import Dashboard from '../Containers/DashBoard/Dashboard';
+import history from '../../client/Route/history'
+import Login from '../../client/Containers/Login'
+import Dashboard from '../Containers/DashBoard/Dashboard'
 
-import Transactions from '../Containers/Transactions/Transactions';
-import TransactionsMain from '../Containers/Transactions/Main';
-import EditTransactions from '../Containers/Transactions/EditTransactions';
+import Transactions from '../Containers/Transactions/Transactions'
+import TransactionsMain from '../Containers/Transactions/Main'
+import EditTransactions from '../Containers/Transactions/EditTransactions'
 
+import Consultation from '../Containers/Consultation/Consultation'
+import Reports from '../Containers/Reports/Reports'
+import Sidebar from '../../client/Components/Sidebar'
 
+import TopUpMain from '../Containers/TopUp/Main'
 
-import Consultation from '../Containers/Consultation/Consultation';
-import Reports from '../Containers/Reports/Reports';
-import Sidebar from '../../client/Components/Sidebar';
+import WithdrawMain from '../Containers/Withdraw/Main'
+import EditWithdraw from '../Containers/Withdraw/EditWithdraw'
 
 export default class Routers extends Component {
-    render() {
-        //let { match, url } = useRouteMatch();
-        return (
-          <>
-            <Router history={history}>
-                <Switch>
-                    <Route path="/" exact component={Login} />
-                    <Route path="/dashboard" component={Dashboard} />
+  render() {
+    //let { match, url } = useRouteMatch();
+    return (
+      <>
+        <Router history={history}>
+          <Switch>
+            <Route path="/" exact component={Login} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route
+              path={'/appointment'}
+              render={({ match: { path } }) => (
+                <Appointment>
+                  <Switch>
                     <Route
-                      path={"/appointment"}
-                      render={({ match: { path } }) => (
-                        <Appointment>
-                          <Switch>
-                            <Route
-                              exact
-                              path={path + "/"}
-                              component={AppointmentMain}
-                            />
-                            <Route path={`${path}/edit`} component={EditAppointment} />
-                            <Redirect exact from={path + "/"} to={path} />
-                          </Switch>
-                        </Appointment>
-                      )}
+                      exact
+                      path={path + '/'}
+                      component={AppointmentMain}
                     />
+                    <Route path={`${path}/edit`} component={EditAppointment} />
+                    <Redirect exact from={path + '/'} to={path} />
+                  </Switch>
+                </Appointment>
+              )}
+            />
+            <Route
+              path={'/users'}
+              render={({ match: { path } }) => (
+                <Users>
+                  <Switch>
+                    <Route exact path={path + '/'} component={UsersMain} />
+                    <Route path={`${path}/add`} component={AddUsers} />
+                    <Route path={`${path}/edit`} component={EditUsers} />
+                    <Redirect exact from={path + '/'} to={path} />
+                  </Switch>
+                </Users>
+              )}
+            />
+            <Route
+              path={'/doctors'}
+              render={({ match: { path } }) => (
+                <Doctors>
+                  <Switch>
+                    <Route exact path={path + '/'} component={DoctorsMain} />
+                    <Route path={`${path}/add`} component={AddDoctors} />
+                    <Route path={`${path}/edit`} component={EditDoctors} />
+                    <Redirect exact from={path + '/'} to={path} />
+                  </Switch>
+                </Doctors>
+              )}
+            />
+            <Route
+              path={'/hospital'}
+              render={({ match: { path } }) => (
+                <Hospital>
+                  <Switch>
+                    <Route exact path={path + '/'} component={HospitalMain} />
+                    <Route path={`${path}/add`} component={AddHospital} />
+                    <Route path={`${path}/edit`} component={EditHospital} />
+                    <Redirect exact from={path + '/'} to={path} />
+                  </Switch>
+                </Hospital>
+              )}
+            />
+            <Route
+              path={'/transactions'}
+              render={({ match: { path } }) => (
+                <Transactions>
+                  <Switch>
                     <Route
-                      path={"/users"}
-                      render={({ match: { path } }) => (
-                        <Users>
-                          <Switch>
-                            <Route
-                              exact
-                              path={path + "/"}
-                              component={UsersMain}
-                            />
-                            <Route path={`${path}/add`} component={AddUsers} />
-                            <Route path={`${path}/edit`} component={EditUsers} />
-                            <Redirect exact from={path + "/"} to={path} />
-                          </Switch>
-                        </Users>
-                      )}
+                      exact
+                      path={path + '/'}
+                      component={TransactionsMain}
                     />
-                    <Route
-                      path={"/doctors"}
-                      render={({ match: { path } }) => (
-                        <Doctors>
-                          <Switch>
-                            <Route
-                              exact
-                              path={path + "/"}
-                              component={DoctorsMain}
-                            />
-                            <Route path={`${path}/add`} component={AddDoctors} />
-                            <Route path={`${path}/edit`} component={EditDoctors} />
-                            <Redirect exact from={path + "/"} to={path} />
-                          </Switch>
-                        </Doctors>
-                      )}
-                    />
-                    <Route
-                      path={"/hospital"}
-                      render={({ match: { path } }) => (
-                        <Hospital>
-                          <Switch>
-                            <Route
-                              exact
-                              path={path + "/"}
-                              component={HospitalMain}
-                            />
-                            <Route path={`${path}/add`} component={AddHospital} />
-                            <Route path={`${path}/edit`} component={EditHospital} />
-                            <Redirect exact from={path + "/"} to={path} />
-                          </Switch>
-                        </Hospital>
-                      )}
-                    />
-                    <Route
-                      path={"/transactions"}
-                      render={({ match: { path } }) => (
-                        <Transactions>
-                          <Switch>
-                            <Route
-                              exact
-                              path={path + "/"}
-                              component={TransactionsMain}
-                            />
-                            <Route path={`${path}/edit`} component={EditTransactions} />
-                            <Redirect exact from={path + "/"} to={path} />
-                          </Switch>
-                        </Transactions>
-                      )}
-                    />
-                    <Route
-                      path={"/news"}
-                      render={({ match: { path } }) => (
-                        <News>
-                          <Switch>
-                            <Route
-                              exact
-                              path={path + "/"}
-                              component={NewsMain}
-                            />
-                            <Route path={`${path}/add`} component={AddNews} />
-                            <Route path={`${path}/edit`} component={EditNews} />
-                            <Redirect exact from={path + "/"} to={path} />
-                          </Switch>
-                        </News>
-                      )}
-                    />
-                    <Route path="/consultation" component={Consultation}/>
-                    <Route path="/report" component={Reports}/>
-                </Switch>
-            </Router>
-          </>
-        )
-    }
+                    <Route path={`${path}/edit`} component={EditTransactions} />
+                    <Redirect exact from={path + '/'} to={path} />
+                  </Switch>
+                </Transactions>
+              )}
+            />
+            <Route
+              path={'/news'}
+              render={({ match: { path } }) => (
+                <News>
+                  <Switch>
+                    <Route exact path={path + '/'} component={NewsMain} />
+                    <Route path={`${path}/add`} component={AddNews} />
+                    <Route path={`${path}/edit`} component={EditNews} />
+                    <Redirect exact from={path + '/'} to={path} />
+                  </Switch>
+                </News>
+              )}
+            />
+            <Route
+              path={'/top-up'}
+              render={({ match: { path } }) => (
+                <News>
+                  <Switch>
+                    <Route exact path={path + '/'} component={TopUpMain} />
+                    <Redirect exact from={path + '/'} to={path} />
+                  </Switch>
+                </News>
+              )}
+            />
+
+            <Route
+              path={'/withdraw'}
+              render={({ match: { path } }) => (
+                <News>
+                  <Switch>
+                    <Route exact path={path + '/'} component={WithdrawMain} />
+                    <Route path={`${path}/edit`} component={EditWithdraw} />
+                    <Redirect exact from={path + '/'} to={path} />
+                  </Switch>
+                </News>
+              )}
+            />
+            <Route path="/consultation" component={Consultation} />
+
+            <Route path="/report" component={Reports} />
+          </Switch>
+        </Router>
+      </>
+    )
+  }
 }
