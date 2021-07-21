@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     },
     tablestyle:{
       backgroundColor:'white',
-      height: '750px',
+      height: 'auto',
       width: 'auto',
       margin:'20px',
       borderRadius:'20px',
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
     data:{
       border:0,
       padding:15,
-      height:'720px'
+      height:'700px'
     }
   });
   const RowEdit = ({ index }) => {

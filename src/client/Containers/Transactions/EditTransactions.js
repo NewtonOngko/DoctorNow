@@ -181,7 +181,7 @@ export default function EditTransactions() {
         setPayment(res[0].payment_type)
         setPurchase(res[0].purchase_type)
         setpaid(res[0].is_paid)
-        setPrice(res[0].price)
+        setPrice(res[0].gross_amount)
       })
       .catch((err)=> {
       console.log(err)

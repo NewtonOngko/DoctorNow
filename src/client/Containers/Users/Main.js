@@ -40,7 +40,7 @@ const useStyles = makeStyles({
     },
     tablestyle:{
       backgroundColor:'white',
-      height: '750px',
+      height: 'auto',
       width: 'auto',
       margin:'20px',
       borderRadius:'20px',
