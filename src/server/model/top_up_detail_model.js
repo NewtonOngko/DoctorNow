@@ -58,7 +58,7 @@ TopUpDetail.findAll = function getAllTopUpDetail(result) {
 
 TopUpDetail.update = function updateTopUpDetail(id, topUpDetail, result) {
   const arrTopUpDetail = []
-  const arrTopUpDetail1 = Object.keys(topUp)
+  const arrTopUpDetail1 = Object.keys(topUpDetail)
   var query = 'UPDATE top_up SET '
 
   for (var i = 0; i < arrTopUpDetail1.length; i++) {
@@ -67,9 +67,9 @@ TopUpDetail.update = function updateTopUpDetail(id, topUpDetail, result) {
     if (i < arrTopUpDetail1.length - 1) {
       query += ','
     }
-    arrTopUpDetail.push(topUp[arrTopUpDetail1[i]])
+    arrTopUpDetail.push(topUpDetail[arrTopUpDetail1[i]])
   }
-  query += 'WHERE top_up_id=?'
+  query += 'WHERE top_up_detail_id=?'
   arrTopUpDetail.push(id)
   dbConn.query(query, arrTopUpDetail, (err, res) => {
     if (err) {

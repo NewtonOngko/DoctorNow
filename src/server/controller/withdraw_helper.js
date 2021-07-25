@@ -11,7 +11,6 @@ exports.findAll = function getWithdraw(req, res) {
 
 exports.create = function addWithdraw(req, res) {
   const newWithdraw = new Withdraw(req.body)
-  console.log('data', newWithdraw)
   Withdraw.create(newWithdraw, (err, withdraw) => {
     if (err) res.send(err)
     res.json({
