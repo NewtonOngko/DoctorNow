@@ -5,7 +5,6 @@ const dbConn = require('../config/config.js');
 // news object create
 const Rating = function ratingData(news) {
   this.doctor_id = news.doctor_id;
-  this.hospital_id = news.hospital_id;
   this.rating = news.rating;
 
   this.created_at = new Date();
@@ -48,19 +47,29 @@ Rating.findAll = function getAllRating(result) {
   });
 };
 
-Rating.update = function updatRating(id, ratings, result) {
-  dbConn.query('UPDATE ratings SET doctor_id=?,hospital_id=?,rating=? WHERE id = ?', [
-    ratings.doctor_id,
-    ratings.hospital_id,
-    ratings.rating,
-    id], (err, res) => {
-    if (err) {
-      console.log('error: ', err);
-      result(null, err);
-    } else {
-      result(null, res);
+Rating.update = function updatRating(id, rating, result) {
+  const arrRating = []
+  const arrRating1 = Object.keys(rating)
+  var query = 'UPDATE ratings SET '
+
+  for (var i = 0; i < arrRating1.length; i++) {
+    query += arrRating1[i] + '= ?'
+
+    if (i < arrRating1.length - 1) {
+      query += ','
     }
-  });
+    arrRating.push(rating[arrRating1[i]])
+  }
+  query += 'WHERE rating_id=?'
+  arrRating.push(id)
+  dbConn.query(query, arrRating, (err, res) => {
+    if (err) {
+      console.log('error: ', err)
+      result(null, err)
+    } else {
+      result(null, res)
+    }
+  })
 };
 
 Rating.delete = function deleteRating(id, result) {

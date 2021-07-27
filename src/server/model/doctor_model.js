@@ -15,16 +15,19 @@ dotenv.config()
 
 // doctor object create
 const Doctor = function doctorData(doctor) {
+  this.hospital_id = doctor.hospital_id
+  this.signature_name = doctor.signature_name
   this.full_name = doctor.full_name
   this.str_no = doctor.str_no
   this.email = doctor.email
-  this.phone_number = doctor.phone_number
   this.password = doctor.password
+  this.specialist = doctor.specialist
   this.work_experience = doctor.work_experience
-  this.address = doctor.address
   this.gender = doctor.gender
   this.profile_picture = doctor.profile_picture
-  this.is_active = doctor.is_active
+  this.wallet = doctor.wallet
+  this.bank_account = doctor.bank_account
+  this.bank_name = doctor.bank_name
 
   this.created_at = new Date()
   this.updated_at = new Date()
@@ -32,6 +35,8 @@ const Doctor = function doctorData(doctor) {
 
 Doctor.create = function createDoctor(newDoctor, result) {
   newDoctor.password = generateHash(newDoctor.password)
+  newDoctor.email = newDoctor.signature_name+'@mydoctor.com'
+  newDoctor.wallet = 0.00
   dbConn.query('INSERT INTO doctors set ? ', newDoctor, (err, res) => {
     if (err) {
       console.log('error: ', err)
@@ -92,7 +97,7 @@ Doctor.update = function updateDoctor(id, doctor, result) {
 }
 
 Doctor.delete = function deleteDoctor(id, result) {
-  dbConn.query('DELETE FROM doctors WHERE id = ?', [id], (err, res) => {
+  dbConn.query('DELETE FROM doctors WHERE doctor_id = ?', [id], (err, res) => {
     if (err) {
       console.log('error: ', err)
       result(null, err)

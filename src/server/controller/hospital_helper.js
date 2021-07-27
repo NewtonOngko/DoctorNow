@@ -12,23 +12,11 @@ exports.findAll = function getHospitals(req, res) {
 exports.create = function addHospital(req, res) {
   const newHospital = new Hospital(req.body)
 
-  if (
-    newHospital.hospital_name == null ||
-    newHospital.email == null ||
-    newHospital.phone_number == null ||
-    newHospital.location == null ||
-    newHospital.description == null
-  ) {
+  if (newHospital.hospital_name == null) {
     res
       .status(400)
       .send({ error: true, message: 'Please provide all required field' })
-  } else if (
-    newHospital.hospital_name == '' ||
-    newHospital.email == '' ||
-    newHospital.phone_number == '' ||
-    newHospital.location == '' ||
-    newHospital.description == ''
-  ) {
+  } else if (newHospital.hospital_name == '') {
     res.status(400).send({ error: true, message: 'required' })
   } else {
     Hospital.create(newHospital, (err, hospital) => {

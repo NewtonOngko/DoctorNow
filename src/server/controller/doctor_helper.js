@@ -1,3 +1,4 @@
+const { generateHash } = require('../config/encrypt_password.js');
 const Doctor = require('../model/doctor_model.js');
 
 exports.findAll = function getDoctors(req, res) {
@@ -13,13 +14,14 @@ exports.findAll = function getDoctors(req, res) {
 exports.create = function addDoctor(req, res) {
   const newDoctor = new Doctor(req.body);
 
-  if (newDoctor.full_name == null || newDoctor.str_no == null || newDoctor.email == null || newDoctor.phone_number == null || newDoctor.password == null || newDoctor.work_experience == null || newDoctor.address == null || newDoctor.gender == null  || newDoctor.is_active == null) {
+  if (newDoctor.full_name == null || newDoctor.str_no == null || newDoctor.signature_name == null) {
     res.status(400).send({ error: true, message: 'Please provide all required field' });
-  }  else if (newDoctor.full_name == '' || newDoctor.str_no == '' || newDoctor.email == '' || newDoctor.phone_number == '' || newDoctor.password == '' || newDoctor.work_experience == '' || newDoctor.address == '' || newDoctor.gender == ''  || newDoctor.is_active == '') {
+  }  else if (newDoctor.full_name == '' || newDoctor.str_no == '' || newDoctor.signature_name == '') {
     res.status(400).send({ error: true, message: 'required' });
   } 
   else {
     Doctor.create(newDoctor, (err, doctor) => {
+      newDoctor.password = generateHash('12345678');
       if (err) res.send(err);
       res.json({ error: false, message: 'Doctor added', data: doctor });
     });

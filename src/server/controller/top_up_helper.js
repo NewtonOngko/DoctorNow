@@ -50,14 +50,10 @@ exports.findById = function getTopupById(req, res) {
 }
 
 exports.update = function updateTopUp(req, res) {
-  if (newTopUp.amount == null || newTopUp.status == null) {
-    res.status(400).send({ error: true, message: 'required' })
-  } else {
-    TopUp.update(req.params.id, new TopUp(req.body), (err) => {
-      if (err) res.send(err)
-      res.json({ error: false, message: 'Top Up updated' })
-    })
-  }
+  TopUp.update(req.params.id, new TopUp(req.body), (err) => {
+    if (err) res.send(err)
+    res.json({ error: false, message: 'Top Up updated' })
+  })
 }
 
 exports.delete = function deleteTopUp(req, res) {

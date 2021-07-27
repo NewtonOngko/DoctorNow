@@ -7,6 +7,8 @@ const Hospital = function hospitalData(hospital) {
   this.hospital_name = hospital.hospital_name;
   this.email = hospital.email;
   this.phone_number = hospital.phone_number;
+  this.longitude = hospital.longitude;
+  this.latitude = hospital.latitude;
   this.location = hospital.location;
   this.description = hospital.description;
 

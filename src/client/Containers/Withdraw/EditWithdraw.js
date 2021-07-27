@@ -12,10 +12,10 @@ import { blue, red } from '@material-ui/core/colors';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import Gap from '../../Components/Gap'
-import {UpdateWithdraw,GetWithdrawByID} from '../../Request/service/transactions'
+import {UpdateWithdraw,GetWithdrawByID} from '../../Request/service/withdraw'
 import {storage} from "../../Components/Firebase"
 import Avatar from 'react-avatar';
-import {selectTopUpId} from "../../Features/viewSlice"
+import {selectWithdrawId} from "../../Features/viewSlice"
 import { useSelector } from 'react-redux';
 import PublishIcon from '@material-ui/icons/Publish';
 import Alert from '@material-ui/lab/Alert';
@@ -86,7 +86,7 @@ export default function EditTransactions() {
     const [imageAsFile, setImageAsFile] = useState('')
     const [imageAsUrl, setImageAsUrl] = useState(allInputs)
 
-    const TransactionId = useSelector(selectTopUpId);
+    const TransactionId = useSelector(selectWithdrawId);
     //console.log(imageAsFile)
     const handleImageAsFile =  async(e) => {
          const image = e.target.files[0]
@@ -165,8 +165,8 @@ export default function EditTransactions() {
         })
       }
     useEffect(()=>{
-      console.log(TransactionId.id)
-      GetWithdrawByID(TransactionId.id)
+      // console.log(TransactionId.id)
+      UpdateWithdraw(TransactionId)
       .then((res)=> {
         console.log(res)
         setname(res[0].doctor_id)
@@ -193,7 +193,7 @@ export default function EditTransactions() {
       <>
       <div className={style.container} >
         <Header/>
-        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Doctor Information</p>
+        <p style={{fontSize:28,fontWeight:'bold',fontFamily: 'Noto Sans JP',margin:20}}>Withdraw Information</p>
             <Grid container direction="row" spacing={2} style={{padding:20}}>
             <Snackbar open={open} autoHideDuration={3000}  onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
               {PushAlert(code,message)}

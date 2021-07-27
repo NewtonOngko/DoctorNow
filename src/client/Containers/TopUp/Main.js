@@ -8,7 +8,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
 import { blue, red } from '@material-ui/core/colors'
-import { GetWithdrawAll } from '../../Request/service/withdraw'
+import { GetTopUpAll } from '../../Request/service/top_up'
 import { transaction } from '../../Features/viewSlice'
 import { useDispatch } from 'react-redux'
 import history from '../../Route/history'
@@ -42,75 +42,84 @@ const useStyles = makeStyles({
     height: '720px',
   },
 })
-const RowEdit = ({ index }) => {
-  const dispatch = useDispatch()
-  const handleEditClick = () => {
-    console.log(index.withdraw_id)
-    history.push('/withdraw/edit')
-    dispatch(
-      transaction({
-        id: index.withdraw_id,
-      }),
-    )
-  }
-  const handleDeleteClick = () => {
-    // some action
-  }
-  return (
-    <FormControlLabel
-      control={
-        <>
-          <IconButton
-            color="secondary"
-            aria-label="add an alarm"
-            onClick={handleEditClick}
-          >
-            <EditIcon style={{ color: blue[500] }} />
-          </IconButton>
-        </>
-      }
-    />
-  )
-}
+//   const RowEdit = ({ index }) => {
+//     const dispatch = useDispatch()
+//     const handleEditClick = () => {
+//       console.log(index.transaction_id)
+//       history.push('/transactions/edit')
+//       dispatch(
+//         transaction({
+//           id : index.transaction_id,
+//         })
+//       );
+//     };
+//     const handleDeleteClick = () => {
+//       // some action
+//     };
+//     return (
+//       <FormControlLabel
+//         control={
+//           <>
+//           <IconButton
+//             color="secondary"
+//             aria-label="add an alarm"
+//             onClick={handleEditClick}
+//           >
+//             <EditIcon style={{ color: blue[500] }} />
+//           </IconButton>
+//           </>
+//         }
+//       />
+//     );
+//   };
 
 const columns = [
-  { field: 'withdraw_id', headerName: 'ID', width: 100 },
-  { field: 'doctor_id', headerName: 'Doctor', width: 350 },
-  { field: 'withdraw Status', headerName: 'Status', width: 350 },
+  { field: 'top_up_id', headerName: 'ID', width: 100 },
+  { field: 'user', headerName: 'User', width: 350 },
+  { field: 'gross_amount', headerName: 'Price', width: 350 },
   {
-    field: 'amount',
-    headerName: 'Price',
+    field: 'order_id',
+    headerName: 'Order ID',
     width: 150,
   },
   {
-    field: 'account_receiver',
-    headerName: 'Account',
+    field: 'payment_type',
+    headerName: 'Payment Type',
     width: 150,
   },
   {
-    field: 'actions',
-    headerName: 'Actions',
-    sortable: false,
-    width: 140,
-    disableClickEventBubbling: true,
-    renderCell: (params) => {
-      return (
-        <div
-          className="d-flex justify-content-between align-items-center"
-          style={{ cursor: 'pointer' }}
-        >
-          <RowEdit index={params.row} />
-        </div>
-      )
-    },
+    field: 'transaction_status',
+    headerName: 'Status',
+    width: 150,
+  },
+  {
+    field: 'transaction_time',
+    headerName: 'Request Date',
+    width: 150,
   },
 ]
+
+// const rows = [
+//   { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
+//   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
+//   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+//   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
+//   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
+//   { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
+//   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
+//   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
+//   { id: 10, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+//   { id: 11, lastName: 'Wijaya', firstName: 'Gil', age: 65 },
+//   { id: 12, lastName: 'Saputra', firstName: 'Nico', age: 65 },
+//   { id: 13, lastName: 'Wong', firstName: 'SOI', age: 65 },
+//   { id: 14, lastName: 'Gohza', firstName: 'HER', age: 65 },
+// ];
 
 export default function Main() {
   const style = useStyles()
   const [data, setdata] = useState([])
   useEffect(() => {
-    GetWithdrawAll()
+    GetTopUpAll()
       .then((res) => setdata(res))
       .catch((err) => console.log(err))
   }, [])
@@ -126,7 +135,7 @@ export default function Main() {
             margin: 15,
           }}
         >
-          Withdraw
+          Top Up History
         </p>
         {/* <div style={{display:'flex',flexDirection:'row'}}>
          <div className={style.listitem}>
@@ -159,7 +168,7 @@ export default function Main() {
               </Button> */}
             </div>
             <DataGrid
-              getRowId={(r) => r.withdraw_id}
+              getRowId={(r) => r.top_up_id}
               className={style.data}
               rows={data}
               columns={columns}
