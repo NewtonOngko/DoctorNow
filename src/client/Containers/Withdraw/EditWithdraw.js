@@ -54,24 +54,18 @@ const useStyles = makeStyles({
     },
   });
 
-  const Genderoption = [
-    {
-      value: 'Male',
-      label: 'Male',
-    },
-    {
-      value: 'Female',
-      label: 'Female',
-    }
-  ];
   const Statusoption = [
     {
-      value: '1',
-      label: 'Active',
+      value: 'Pending',
+      label: 'Pending',
     },
     {
-      value: '0',
-      label: 'Inactive',
+      value: 'Accept',
+      label: 'Accept',
+    },
+    {
+      value: 'Reject',
+      label: 'Reject',
     }
   ]; 
 
@@ -208,8 +202,17 @@ export default function EditTransactions() {
                 <TextField variant="filled" fullWidth id="standard-required" label="Doctor Name" value={name} onChange={e => setname(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Status" value={status} onChange={e => setStatus(e.target.value)}  />
+                <TextField select fullWidth variant="filled" id="filled-select-currency" label="Status" value={status} onChange={e => setStatus(e.target.value)} >
+                    {Statusoption.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
+              {/* <Grid item xs ={6}>
+                <TextField variant="filled" fullWidth id="standard-required" label="Status" value={status} onChange={e => setStatus(e.target.value)}  />
+              </Grid> */}
               <Grid item xs ={6}>
                 <TextField variant="filled" fullWidth id="standard-required" label="Account Receiver" value={account} onChange={e => setAccount(e.target.value)}  />
               </Grid>
