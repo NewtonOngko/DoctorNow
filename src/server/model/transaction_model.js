@@ -18,7 +18,7 @@ const Transaction = function transactionData(transaction) {
 };
 
 Transaction.create = function createTransaction(newTransaction, result) {
-  dbConn.query('INSERT INTO transactions set ? ', newTransaction, (err, res) => {
+  dbConn.query('call insert_transaction_and_appointment(?,?,?,?,?,?,?)', [newTransaction.user_id,newTransaction.doctor_id,newTransaction.transaction_no,newTransaction.transaction_date,newTransaction.amount,newTransaction.transaction_type,newTransaction.transaction_status], (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(err, null);
@@ -42,7 +42,7 @@ Transaction.findById = function getTransactionById(id, result) {
 };
 
 Transaction.findAll = function getAllTransaction(result) {
-  dbConn.query(`SELECT transactions.transaction_id ,users.full_name as user ,doctors.full_name as doctor , transactions.transaction_no, transactions.transaction_date, transactions.amount , transactions.transaction_type, transactions.transaction_status 
+  dbConn.query(`SELECT transactions.transaction_id ,user.user_id as user_id,doctors.doctor_id as doctor_id,users.full_name as user ,doctors.full_name as doctor , transactions.transaction_no, transactions.transaction_date, transactions.amount , transactions.transaction_type, transactions.transaction_status 
   FROM transactions
   JOIN users
   ON transactions.user_id =users.user_id 

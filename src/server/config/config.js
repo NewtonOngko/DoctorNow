@@ -2,10 +2,10 @@ const { env } = process;
 const mysql = require('mysql');
 
 const dbConfig = {
-  host: env.DB_HOST || 'remotemysql.com',
-  user: env.DB_USER || 'gbSm65qWO0',
-  password: env.DB_PASSWORD || 'TsiRHWudYt',
-  database: env.DB_NAME || 'gbSm65qWO0',
+  host: env.DB_HOST || '185.28.21.155',
+  user: env.DB_USER || 'u166022488_doctornow',
+  password: env.DB_PASSWORD || 'Skripsi2020',
+  database: env.DB_NAME || 'u166022488_doctornow',
 };
 let config;
 function handleDisconnect() {
