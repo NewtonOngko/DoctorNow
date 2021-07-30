@@ -18,7 +18,9 @@ exports.create = function addTopUp(req, res) {
     transaction_details: {
       order_id: 'topup -' + Date.now() + '-user-' + newTopUp.user_id,
       gross_amount: newTopUp.gross_amount,
+      custom_field1:`${newTopUp.user_id}`,
     },
+    custom_field1:newTopUp.user_id,
     newTopUp,
   }
 

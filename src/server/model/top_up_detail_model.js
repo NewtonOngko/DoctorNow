@@ -10,6 +10,7 @@ const TopUpDetail = function topUpDetailData(topUpDetail) {
   this.signature_key = topUpDetail.signature_key
   this.payment_type = topUpDetail.payment_type
   this.order_id = topUpDetail.order_id
+  this.user_id = topUpDetail.custom_field1
   this.gross_amount = topUpDetail.gross_amount
   this.fraud_status = topUpDetail.fraud_status
 
@@ -18,6 +19,7 @@ const TopUpDetail = function topUpDetailData(topUpDetail) {
 }
 
 TopUpDetail.create = function createTopUp(newTopUpDetail, result) {
+  console.log('data Top Up',newTopUpDetail)
   dbConn.query(
     'INSERT INTO top_up_detail set ? ',
     newTopUpDetail,

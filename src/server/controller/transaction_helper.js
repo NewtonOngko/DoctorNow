@@ -30,7 +30,7 @@ exports.findById = function getTransactionById(req, res) {
 }
 
 exports.update = function updateTransaction(req, res) {
-  Transaction.update(req.params.id, new Transaction(req.body), (err) => {
+  Transaction.update(req.params.id, req.body, (err) => {
     if (err) res.send(err)
     res.json({ error: false, message: 'Transaction updated' })
   })
