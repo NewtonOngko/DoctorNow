@@ -86,7 +86,7 @@ export default function EditTransactions() {
     const [imageAsFile, setImageAsFile] = useState('')
     const [imageAsUrl, setImageAsUrl] = useState(allInputs)
 
-    const TransactionId = useSelector(selectWithdrawId);
+    const WithdrawId = useSelector(selectWithdrawId);
     //console.log(imageAsFile)
     const handleImageAsFile =  async(e) => {
          const image = e.target.files[0]
@@ -135,7 +135,7 @@ export default function EditTransactions() {
       const onSaveData=()=>{
         setloading(true);
         console.log('imageurl',JSON.stringify(imageAsUrl.imgUrl))
-        UpdateWithdraw(TransactionId.id,{
+        UpdateWithdraw(WithdrawId.id,{
           doctor_id: name,
           withdraw_status :status,
           account_receiver:account,
@@ -165,8 +165,8 @@ export default function EditTransactions() {
         })
       }
     useEffect(()=>{
-      // console.log(TransactionId.id)
-      UpdateWithdraw(TransactionId)
+       console.log(WithdrawId)
+      GetWithdrawByID(WithdrawId.id)
       .then((res)=> {
         console.log(res)
         setname(res[0].doctor_id)

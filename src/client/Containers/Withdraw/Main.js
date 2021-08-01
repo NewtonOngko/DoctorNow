@@ -9,7 +9,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
 import { blue, red } from '@material-ui/core/colors'
 import { GetWithdrawAll } from '../../Request/service/withdraw'
-import { transaction } from '../../Features/viewSlice'
+import { transaction, withdraw } from '../../Features/viewSlice'
 import { useDispatch } from 'react-redux'
 import history from '../../Route/history'
 
@@ -48,7 +48,7 @@ const RowEdit = ({ index }) => {
     console.log(index.withdraw_id)
     history.push('/withdraw/edit')
     dispatch(
-      transaction({
+      withdraw({
         id: index.withdraw_id,
       }),
     )
