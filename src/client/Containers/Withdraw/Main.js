@@ -74,7 +74,7 @@ const RowEdit = ({ index }) => {
 }
 
 const columns = [
-  { field: 'withdraw_id', headerName: 'ID', width: 100 },
+  // { field: 'withdraw_id', headerName: 'ID', width: 100 },
   { field: 'doctor_id', headerName: 'Doctor', width: 350 },
   { field: 'withdraw Status', headerName: 'Status', width: 350 },
   {

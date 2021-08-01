@@ -74,7 +74,7 @@ const useStyles = makeStyles({
 //   };
 
 const columns = [
-  { field: 'top_up_id', headerName: 'ID', width: 100 },
+  // { field: 'top_up_id', headerName: 'ID', width: 100 },
   { field: 'user', headerName: 'User', width: 350 },
   { field: 'gross_amount', headerName: 'Price', width: 350 },
   {
@@ -82,21 +82,21 @@ const columns = [
     headerName: 'Order ID',
     width: 150,
   },
-  {
-    field: 'payment_type',
-    headerName: 'Payment Type',
-    width: 150,
-  },
-  {
-    field: 'transaction_status',
-    headerName: 'Status',
-    width: 150,
-  },
-  {
-    field: 'transaction_time',
-    headerName: 'Request Date',
-    width: 150,
-  },
+  // {
+  //   field: 'payment_type',
+  //   headerName: 'Payment Type',
+  //   width: 150,
+  // },
+  // {
+  //   field: 'transaction_status',
+  //   headerName: 'Status',
+  //   width: 150,
+  // },
+  // {
+  //   field: 'transaction_time',
+  //   headerName: 'Request Date',
+  //   width: 150,
+  // },
 ]
 
 // const rows = [
