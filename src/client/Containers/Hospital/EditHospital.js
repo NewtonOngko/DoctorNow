@@ -82,6 +82,8 @@ export default function EditHospital() {
     const [Email, setEmail] = React.useState('');
     const [location, setLocation] = React.useState('');
     const [description, setDescription] = React.useState(''); 
+    const [latitude, setLatitude] = React.useState(''); 
+    const [longitude, setLongitude] = React.useState(''); 
 
 
     const [loading,setloading]= useState(false)
@@ -146,8 +148,10 @@ export default function EditHospital() {
           hospital_name: name,
           email :Email,
           phone_number:phonenumber,
-          location :location,
+          latitude :latitude,
+          longitude : longitude,
           description :description,
+
         }).then(
           res =>{
             console.log(res)
@@ -180,7 +184,8 @@ export default function EditHospital() {
         setName(res[0].hospital_name)
         setPhonenumber(res[0].phone_number)
         setEmail(res[0].email)
-        setLocation(res[0].location)
+        setLatitude(res[0].latitude)
+        setLongitude(res[0].longitude)
         setDescription(res[0].description)
       })
       .catch((err)=> {
@@ -232,7 +237,10 @@ export default function EditHospital() {
                 <TextField variant="filled" fullWidth type="number" id="standard-required" label="Phone Number" value={phonenumber} onChange={e => setPhonenumber(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
-                <TextField variant="filled" fullWidth id="standard-required" label="Location" value={location} onChange={e => setLocation(e.target.value)}  />
+                <TextField variant="filled" fullWidth id="standard-required" label="Latitude" value={latitude} onChange={e => setLatitude(e.target.value)}  />
+              </Grid>
+              <Grid item xs ={6}>
+                <TextField variant="filled" fullWidth id="standard-required" label="Longitude" value={longitude} onChange={e => setLongitude(e.target.value)}  />
               </Grid>
               <Grid item xs ={6}>
                 <TextField variant="filled" fullWidth id="standard-required" label="Description" value={description} onChange={e => setDescription(e.target.value)}  />
