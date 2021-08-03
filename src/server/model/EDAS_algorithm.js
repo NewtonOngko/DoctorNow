@@ -1,66 +1,67 @@
-const dbConn = require('../config/config.js')
+const dbConn = require("../config/config.js");
 
 const Recommendation = {
   getRecomendation(result) {
-    const query = 'SELECT * FROM recommendations'
+    const query = "SELECT * FROM recommendations";
+
     dbConn.query(query, (err, res) => {
       if (err) {
-        console.log('error: ', err);
+        console.log("error: ", err);
         result(null, err);
       } else {
-        console.log('users : ', res);
+        console.log("users : ", res);
         result(null, res);
       }
     });
   },
   getAlternative() {
     return new Promise((resolve, reject) => {
-      const query = 'SELECT * FROM doctors'
+      const query = "SELECT * FROM doctors";
       dbConn.query(query, (err, res) => {
-        if (err) reject(err)
-        resolve(Object.values(JSON.parse(JSON.stringify(res))))
-      })
-    })
+        if (err) reject(err);
+        resolve(Object.values(JSON.parse(JSON.stringify(res))));
+      });
+    });
   },
   getCriteria() {
     return new Promise((resolve, reject) => {
-      const query = 'SELECT * FROM eda_criterias'
+      const query = "SELECT * FROM eda_criterias";
       dbConn.query(query, (err, res) => {
-        if (err) reject(err)
-        resolve(Object.values(JSON.parse(JSON.stringify(res))))
-
-      })
-    })
+        if (err) reject(err);
+        resolve(Object.values(JSON.parse(JSON.stringify(res))));
+      });
+    });
   },
   getMatriksKeputusan() {
     return new Promise((resolve, reject) => {
-      const query = 'SELECT * from eda_evaluations'
+      const query = "SELECT * from eda_evaluations";
       dbConn.query(query, (err, res) => {
-        const obj = res
-        let data = []
-        if (err) reject(err)
-        for (var i = 0; i < obj.length; i+=2) {
+        const obj = res;
+        let data = [];
+        if (err) reject(err);
+        for (var i = 0; i < obj.length; i += 2) {
           data.push({
-            value: [obj[i]?.value, obj[i+1]?.value],
+            value: [obj[i]?.value, obj[i + 1]?.value],
             doctor_id: obj[i].doctor_id,
-          })
+          });
         }
-        console.log(data);
+        // console.log(data);
         resolve(data);
-      })
-    })
+      });
+    });
   },
   postEDASAlgorithm(AS) {
     return new Promise((resolve, reject) => {
-      const query =
-        'INSERT INTO recommendations (doctor_id, hospital_id, score) VALUES ?'
+      const query = `insert into recommendations (recommendation_id,doctor_id,score) 
+      values ? ON DUPLICATE KEY UPDATE score = Values(score), doctor_id=Values(doctor_id);`;
+      // const query = "INSERT INTO recommendations (doctor_id, score)  VALUES ?";
       dbConn.query(query, [AS], (err, res) => {
-        if (err) reject(err)
-        resolve('sucess')
-      })
-    })
+        if (err) reject(err);
+        resolve("sucess");
+      });
+    });
   },
-}
+};
 
 // Recommendation.getMatriksKeputusan()
-module.exports = Recommendation
+module.exports = Recommendation;

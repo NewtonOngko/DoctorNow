@@ -27,17 +27,17 @@ export const SidebarData = [
     title: 'Transactions',
     icon: <ReceiptIcon />,
     link: '/transactions',
+  }, {
+    title: 'Users',
+    icon: <img src={UsersIcon} />,
+    link: '/users',
   },
   {
     title: 'Doctors',
     icon: <img src={DoctorIcon} />,
     link: '/doctors',
   },
-  {
-    title: 'Users',
-    icon: <img src={UsersIcon} />,
-    link: '/users',
-  },
+ 
   {
     title: 'Hospital',
     icon: <img src={HealthIcon} />,

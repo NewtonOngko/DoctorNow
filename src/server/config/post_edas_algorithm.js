@@ -1,129 +1,129 @@
-const Recommendation = require('../model/EDAS_algorithm.js')
+const Recommendation = require("../model/EDAS_algorithm.js");
 
 Recommendation.getMatriksKeputusan().then(async (res) => {
-  let matriksKeputusanData = res
-
+  let matriksKeputusanData = res;
+  // matriksKeputusanData.length = 5;
+  console.log('matriks keputusan',res)
   //hitung solusi rata - rata
-  const N = res.length
-  let AV = new Array(2).fill(0)
-
-  var i = 0
+  const N = matriksKeputusanData.length;
+  let AV = new Array(2).fill(0);
+  console.log('hitung rata-rata',res)
   matriksKeputusanData.forEach((el) => {
     el.value.forEach((c, i) => {
-      AV[i] += c
-    })
-  })
+      AV[i] += c;
+    });
+  });
 
   AV.forEach((el, i) => {
-    AV[i] = el / N
-  })
-
-  console.log('AV', AV)
+    AV[i] = el / N;
+  });
 
   // Menghitung Jarak Positif/Negatif dari Rata-rata (PDA/NDA)
-  let PDA = []
-  const attributeData = await Recommendation.getCriteria()
+  let PDA = [];
+  const attributeData = await Recommendation.getCriteria();
   matriksKeputusanData.forEach((el) => {
-    let temp = []
+    let temp = [];
 
     el.value.forEach((c, i) => {
-      const val = attributeData[0][i] === 'benefit' ? AV[i] - c : c - AV[i]
-      const res = Math.max(0, val / AV[i])
-      temp.push(res)
-    })
-    PDA.push(temp)
-  })
+      const val = attributeData[i].attribute === "cost" ? AV[i] - c : c - AV[i];
+      const res = Math.max(0, val / AV[i]);
+      temp.push(res);
+    });
+    PDA.push(temp);
+  });
 
-  let NDA = []
+  let NDA = [];
   matriksKeputusanData.forEach((el) => {
-    let temp = []
+    let temp = [];
     el.value.forEach((c, i) => {
-      const val = attributeData[0][i] === 'benefit' ? c - AV[i] : AV[i] - c
-      const res = Math.max(0, val / AV[i])
-      temp.push(res)
-    })
-    NDA.push(temp)
-  })
+      const val = attributeData[i].attribute === "cost" ? c - AV[i] : AV[i] - c;
+      const res = Math.max(0, val / AV[i]);
+      temp.push(res);
+    });
+    NDA.push(temp);
+  });
 
   // Menghitung Jumlah Terbobot PDA/NDA (SP / SN)
-  const W = await Recommendation.getCriteria()
-  getWeight = W.map((item) => {
-    return item.weight
-  })
+  const W = await Recommendation.getCriteria();
+  let getWeight = W.map((item) => {
+    return item.weight;
+  });
 
-  let SP = []
+  let SP = [];
   PDA.forEach((el, i) => {
-    let sum = 0
+    let sum = 0;
     el.forEach((u) => {
-      sum += u
-    })
-    SP.push(getWeight[0] * sum)
-  })
+      sum += u;
+    });
+    SP.push(getWeight[0] * sum);
+  });
 
-  let SN = []
+  let SN = [];
   NDA.forEach((el) => {
-    let sum = 0
+    let sum = 0;
     el.forEach((u) => {
-      sum += u
-    })
-    SN.push(getWeight[1] * sum)
-  })
+      sum += u;
+    });
+    SN.push(getWeight[1] * sum);
+  });
 
   //Menghitung Nilai Normalisasi SP/SN
-  let NSP = []
-  let NSN = []
+  let NSP = [];
+  let NSN = [];
 
-  let maxSP = -1
+  let maxSP = -1;
   SP.forEach((el) => {
-    maxSP = Math.max(el, maxSP)
-  })
+    maxSP = Math.max(el, maxSP);
+  });
   SP.forEach((el) => {
-    const val = el / maxSP
-    NSP.push(val)
-  })
+    const val = el / maxSP;
+    NSP.push(val);
+  });
 
   //NSN
+  let maxSN = -1;
   SN.forEach((el) => {
-    maxSN = Math.max(el, maxSP)
-  })
+    maxSN = Math.max(el, maxSN);
+  });
   SN.forEach((el) => {
-    const val = el / maxSN
-    NSN.push(1 - val)
-  })
+    const val = el / maxSN;
+    NSN.push(1 - val);
+  });
 
   //apraisal score
-  const AS = []
-  const alternativeData = await Recommendation.getAlternative()
+  const AS = [];
+  const alternativeData = await Recommendation.getAlternative();
 
-  filteredAlternativeData = alternativeData.map(
+  let filteredAlternativeData = alternativeData.map(
     ({ doctor_id, hospital_id }) => ({
       doctor_id,
       hospital_id,
-    }),
-  )
+    })
+  );
 
-  const mappedScore = new Map()
+  const mappedScore = new Map();
 
   matriksKeputusanData.forEach(({ doctor_id }, i) => {
-    const res = (NSP[i] + NSN[i]) / 2
-    mappedScore.set(doctor_id, res)
-  })
+    const res = (NSP[i] + NSN[i]) / 2;
+    mappedScore.set(doctor_id, res);
+  });
 
   filteredAlternativeData.forEach((el, i) => {
     AS.push({
       info: el,
       score: mappedScore.get(i + 1) || 0,
-    })
-  })
+    });
+  });
 
-  AS.sort((a, b) => b.score - a.score)
+  AS.sort((a, b) => b.score - a.score);
 
   const arrAS = AS.map(({ info, score }) => {
-    let temp = []
-    Object.values(info).forEach((value) => temp.push(value))
-    temp.push(score)
-    return temp
-  })
+    let temp = [];
+    temp.push(info.doctor_id);
+    temp.push(score);
+    return temp;
+  });
+  console.log(arrAS);
 
-  Recommendation.postEDASAlgorithm(arrAS)
-})
+  Recommendation.postEDASAlgorithm(arrAS).then((res) => console.log(res));
+});
