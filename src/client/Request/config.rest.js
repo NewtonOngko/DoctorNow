@@ -46,6 +46,7 @@ export default {
       main: '/transactions',
       updatetrans: '/transactions/:id',
       getbyid: '/transactions/:id',
+      getbyuserid: '/transactions/user/:id',
     },
     news: {
       main: '/news',

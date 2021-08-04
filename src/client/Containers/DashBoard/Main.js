@@ -40,7 +40,7 @@ const useStyles = makeStyles({
     data:{
       border:0,
       padding:15,
-      height:'700px'
+      height:'600px'
     }
   });
   const RowEdit = ({ index }) => {
@@ -188,7 +188,7 @@ export default function Main() {
               See More
               </Button>
             </div>
-            <DataGrid getRowId={(r) => r.user_id} className={style.data} rows={data} columns={columns} pageSize={10} />
+            <DataGrid getRowId={(r) => r.user_id} className={style.data} rows={data} columns={columns} pageSize={8} />
           </div>
           </div>
         </div>

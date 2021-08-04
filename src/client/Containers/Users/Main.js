@@ -19,6 +19,7 @@ import {
 } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import {user} from '../../Features/userSlice'
+import {transactionUser} from '../../Features/viewSlice'
 import{GetUserAll}from '../../Request/service/users'
 
 
@@ -81,6 +82,32 @@ const useStyles = makeStyles({
       />
     );
   };
+  const RowHistory = ({ index }) => {
+    const dispatch = useDispatch()
+    const handleEditClick = () => {
+      console.log(index.user_id)
+      history.push('/users/history')
+      dispatch(
+        transactionUser({
+          id : index.user_id,
+        })
+      );
+    };
+    return (
+      <FormControlLabel
+        control={
+          <>
+          <Button
+          variant="contained"
+          color="inherit"
+          onClick={handleEditClick}>
+          History
+          </Button>
+          </>
+        }
+      />
+    );
+  };
 
 
   const columns = [
@@ -120,7 +147,7 @@ const useStyles = makeStyles({
       field: "actions",
       headerName: "Actions",
       sortable: false,
-      width: 1000,
+      width: 100,
       disableClickEventBubbling: true,
       renderCell: (params) => {
         return (
@@ -132,7 +159,23 @@ const useStyles = makeStyles({
           </div>
         );
       }
-    }
+    },
+    {
+      field: 'history',
+      headerName: 'history',
+      type: 'Link',
+      width: 200,
+      renderCell: (params) => {
+        return(
+          <div
+          className="d-flex justify-content-between align-items-center"
+          style={{ cursor: "pointer" }}
+        >
+          <RowHistory index={params.row} />
+        </div>
+        )
+      }
+    },
   ];
   
   const rows = [

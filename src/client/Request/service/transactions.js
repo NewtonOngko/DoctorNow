@@ -24,6 +24,13 @@ export function GetTransByID (id,body) {
       body :body
     })
   }
+  export function GetTransByUserID (id,body) {
+    return request({
+      url:  transactions.getbyuserid.replace(':id',id),
+      method: 'GET',
+      body :body
+    })
+  }
 export function GetTopup (body) {
     return request({
       url:  topup.topup,

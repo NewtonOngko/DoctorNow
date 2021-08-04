@@ -11,7 +11,8 @@ export const userSlice = createSlice({
     transactionId: null,
     newsId: null,
     topUpId: null,
-    withdrawId: null
+    withdrawId: null,
+    transactionuserId: null,
   },
   reducers: {
     appointment: (state, action) => {
@@ -28,6 +29,9 @@ export const userSlice = createSlice({
     },
     transaction: (state, action) => {
       state.transactionId = action.payload
+    },
+    transactionUser: (state, action) => {
+      state.transactionuserId = action.payload
     },
     news: (state, action) => {
       state.newsId = action.payload
@@ -51,6 +55,7 @@ export const {
   news,
   topUp,
   withdraw,
+  transactionUser
 } = userSlice.actions
 
 export const selectAppointmentId = (state) => state.viewidReducer.appointmentId
@@ -59,6 +64,7 @@ export const selectConsultationId = (state) =>
 export const selectDoctorId = (state) => state.viewidReducer.doctorId
 export const selectHospitalId = (state) => state.viewidReducer.hospitalId
 export const selectTransactionId = (state) => state.viewidReducer.transactionId
+export const selectTransactionUserId = (state) => state.viewidReducer.transactionuserId
 export const selectNewsId = (state) => state.viewidReducer.newsId
 export const selectTopUpId = (state) => state.viewidReducer.topUpId
 export const selectWithdrawId = (state) => state.viewidReducer.withdrawId

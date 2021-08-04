@@ -13,6 +13,7 @@ import Users from '../Containers/Users/Users'
 import UsersMain from '../Containers/Users/Main'
 import AddUsers from '../Containers/Users/MainAdd'
 import EditUsers from '../Containers/Users/EditUser'
+import History from '../Containers/Users/History'
 
 import Appointment from '../Containers/Appointment/Appointment'
 import AppointmentMain from '../Containers/Appointment/Main'
@@ -82,6 +83,7 @@ export default class Routers extends Component {
                   <Switch>
                     <Route exact path={path + '/'} component={UsersMain} />
                     <Route path={`${path}/add`} component={AddUsers} />
+                    <Route path={`${path}/history`} component={History} />
                     <Route path={`${path}/edit`} component={EditUsers} />
                     <Redirect exact from={path + '/'} to={path} />
                   </Switch>
